@@ -115,7 +115,7 @@ function template_generic_menu_dropdown_above()
   echo '
   <div id="admin_menu">
     <div class="container">
-      <nav class="navbar is-light is-ao" role="navigation" aria-label="admin navigation">
+      <nav class="navbar is-light is-pensieve" role="navigation" aria-label="admin navigation">
         <div class="burger navbar-burger" data-target="adminMenu">
           <span></span>
           <span></span>
@@ -187,7 +187,7 @@ function template_generic_menu_dropdown_above()
 
   // This is the main table - we need it so we can keep the content to the right of it.
   echo '
-<div id="admin_content" class="container">';
+<div id="admin_content" class="container mt-4">';
 
   // It's possible that some pages have their own tabs they wanna force...
   if (!empty($context['tabs']))

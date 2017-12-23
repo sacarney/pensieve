@@ -223,7 +223,7 @@ function template_body_above()
 
   // BANNER & SITENAME
   echo'
-  <div class="hero is-small is-primary is-ao is-bg">
+  <div class="hero is-small is-primary is-pensieve is-bg">
     <div class="hero-body">
       <div class="container">
         <h1 class="title">Absit Omen</h1>
@@ -243,7 +243,7 @@ function template_body_above()
     if ($context['user']['is_logged'])
     {
       echo'
-      <div class="navbar is-light is-ao">
+      <div class="navbar is-light is-pensieve">
         <div class="container">
           <div class="navbar-brand">
       ';
@@ -306,21 +306,21 @@ function template_body_above()
                     <span class="icon">
                       <span class="fa fa-envelope"></span>
                     </span>
-                    <span>427 <span class="sr-only">messages</span></span>
+                    <span>', $context['user']['messages'],'<span class="sr-only">messages</span></span>
                   </span>
                   ';
                     // Unread messages?
                     if($context['user']['unread_messages'])
                       echo'
-                      <span class="button is-small is-warning">', $context['user']['unread_messages'],'</span>
+                      <span class="button is-small is-warning">', $context['user']['unread_messages'],' new</span>
                       '; // endif unread messages
 
                   echo'
                   </a>
                 </p>
                 <p class="control">
-                  <a href="', $scripturl, '?action=unread" class="button is-ao is-primary is-small" href="#">Unread</a>
-                  <a href="', $scripturl, '?action=unreadreplies" class="button is-ao is-primary is-small" href="#">Replies</a>
+                  <a href="', $scripturl, '?action=unread" class="button is-pensieve is-primary is-small" href="#">Unread</a>
+                  <a href="', $scripturl, '?action=unreadreplies" class="button is-pensieve is-primary is-small" href="#">Replies</a>
                 </p>
                 <p class="control">
                   <a href="', $scripturl, '?action=logout" class="button is-light is-small" href="#">Logout</a>
@@ -446,7 +446,7 @@ function template_menu()
   global $context, $settings, $options, $scripturl, $txt;
 
   echo'
-  <nav class="navbar is-ao">
+  <nav class="navbar is-pensieve">
     <div class="container">
       <div class="navbar-brand">
         <a href="', $scripturl, '" class="navbar-item is-hidden-desktop">
