@@ -235,61 +235,58 @@ function template_maintenance()
 
 <section class="login-page page-content">
     <div>
+    <form action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], '"', empty($context['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $context['session_id'] . '\');"' : '', '>
+      <div class="card login-card">
+        <div class="card-header">
+          <p class="card-header-title">', $txt['admin_login'], '</p>
+        </div>
+        <div class="card-content">
 
-<form action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], '"', empty($context['disable_login_hashing']) ? ' onsubmit="hashLoginPassword(this, \'' . $context['session_id'] . '\');"' : '', '>
+        <p class="notification is-warning">', $context['description'], '</p>
 
-<div class="card login-card">
-  <div class="card-header">
-    <p class="card-header-title">', $txt['admin_login'], '</p>
+          <div class="field">
+            <label for="user" class="label">', $txt['username'], '</label>
+            <div class="control">
+              <input type="text" name="user" size="20" class="input_text input" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="passwrd" class="label">', $txt['password'], '</label>
+            <div class="control">
+              <input type="password" name="passwrd" size="20" class="input_password input" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="cookielength" class="label">', $txt['mins_logged_in'], '</label>
+            <div class="control">
+              <input type="text" name="cookielength" size="4" maxlength="4" value="', $modSettings['cookieTime'], '"', $context['never_expire'] ? ' disabled="disabled"' : '', ' class="input input_text" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label for="cookieneverexp" class="checkbox">
+                <input type="checkbox" name="cookieneverexp"', $context['never_expire'] ? ' checked="checked"' : '', ' class="checkbox input_check" onclick="this.form.cookielength.disabled = this.checked;" />
+                  ', $txt['always_logged_in'], '
+              </label>
+            </div>
+          </div>
+
+          <div class="field is-grouped">
+            <p class="control">
+              <input type="submit" value="', $txt['login'], '" class="button is-primary button_submit" />
+            </p>
+            <p class="help"><a href="', $scripturl, '?action=reminder">', $txt['forgot_your_password'], '</a></p>
+            
+            <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+            <input type="hidden" name="hash_passwrd" value="" />
+          </div>
+
+        </div>
+      </div>
+    </form>
   </div>
-  <div class="card-content">
-
-  <p class="notification is-warning">', $context['description'], '</p>
-
-    <div class="field">
-      <label for="user" class="label">', $txt['username'], '</label>
-      <div class="control">
-        <input type="text" name="user" size="20" class="input_text input" />
-      </div>
-    </div>
-    <div class="field">
-      <label for="passwrd" class="label">', $txt['password'], '</label>
-      <div class="control">
-        <input type="password" name="passwrd" size="20" class="input_password input" />
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="cookielength" class="label">', $txt['mins_logged_in'], '</label>
-      <div class="control">
-        <input type="text" name="cookielength" size="4" maxlength="4" value="', $modSettings['cookieTime'], '"', $context['never_expire'] ? ' disabled="disabled"' : '', ' class="input input_text" />
-      </div>
-    </div>
-    <div class="field">
-      <div class="control">
-        <label for="cookieneverexp" class="checkbox">
-          <input type="checkbox" name="cookieneverexp"', $context['never_expire'] ? ' checked="checked"' : '', ' class="checkbox input_check" onclick="this.form.cookielength.disabled = this.checked;" />
-            ', $txt['always_logged_in'], '
-        </label>
-      </div>
-    </div>
-
-    <div class="field is-grouped">
-      <p class="control">
-        <input type="submit" value="', $txt['login'], '" class="button is-primary button_submit" />
-      </p>
-      <p class="help"><a href="', $scripturl, '?action=reminder">', $txt['forgot_your_password'], '</a></p>
-      
-      <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-      <input type="hidden" name="hash_passwrd" value="" />
-    </div>
-
-  </div>
-</div>
-</form>
-</div>
 </section>
-
 ';
 }
 
@@ -303,45 +300,45 @@ function template_admin_login()
     <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/sha1.js"></script>
 
     <section class="login-page page-content">
-        <div>
+      <div>
 
-    <form action="', $scripturl, $context['get_data'], '" method="post" accept-charset="', $context['character_set'], '" name="frmLogin" id="frmLogin" onsubmit="hashAdminPassword(this, \'', $context['user']['username'], '\', \'', $context['session_id'], '\');">
+        <form action="', $scripturl, $context['get_data'], '" method="post" accept-charset="', $context['character_set'], '" name="frmLogin" id="frmLogin" onsubmit="hashAdminPassword(this, \'', $context['user']['username'], '\', \'', $context['session_id'], '\');">
 
-    <div class="card login-card">
-      <div class="card-header">
-        <p class="card-header-title">', $txt['login'], '</p>
-      </div>
-      <div class="card-content">
+          <div class="card login-card">
+            <div class="card-header">
+              <p class="card-header-title">', $txt['login'], '</p>
+            </div>
+            <div class="card-content">
     ';
 
-  if (!empty($context['incorrect_password']))
-    echo '
-      <p class="notification is-danger">', $txt['admin_incorrect_password'], '</p>';
+    if (!empty($context['incorrect_password']))
+      echo '
+        <p class="notification is-danger">', $txt['admin_incorrect_password'], '</p>';
 
-  echo '
-    <div class="field">
-      <label for="admin_pass" class="label">
-      ', $txt['password'], ' 
-      <a href="', $scripturl, '?action=helpadmin;help=securityDisable_why" onclick="return reqWin(this.href);" class="help"><img src="', $settings['images_url'], '/helptopics.gif" alt="', $txt['help'], '" /></a>
-      </label>
-      <div class="control">
-        <input type="password" name="admin_pass" size="20" class="input_password input" />
-      </div>
-    </div>
-    <div class="field is-grouped">
-      <p class="control">
-        <input type="submit" value="', $txt['login'], '" class="button is-primary button_submit" />
-      </p>
-    </div>
-';
+      echo '
+        <div class="field">
+          <label for="admin_pass" class="label">
+          ', $txt['password'], ' 
+          <a href="', $scripturl, '?action=helpadmin;help=securityDisable_why" onclick="return reqWin(this.href);" class="help"><img src="', $settings['images_url'], '/helptopics.gif" alt="', $txt['help'], '" /></a>
+          </label>
+          <div class="control">
+            <input type="password" name="admin_pass" size="20" class="input_password input" />
+          </div>
+        </div>
+        <div class="field is-grouped">
+          <p class="control">
+            <input type="submit" value="', $txt['login'], '" class="button is-primary button_submit" />
+          </p>
+        </div>
+      ';
 
   // Make sure to output all the old post data.
-  echo $context['post_data'], '
-  <input type="hidden" name="admin_hash_pass" value="" />
+      echo $context['post_data'], '
+          <input type="hidden" name="admin_hash_pass" value="" />
+        </div>
+      </div>
+    </form>
   </div>
-</div>
-</form>
-</div>
 </section>';
 
   // Focus on the password box.
