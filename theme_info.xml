@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <theme-info xmlns="http://www.simplemachines.org/xml/theme-info" xmlns:smf="http://www.simplemachines.org/">
 	<!-- For the id, always use something unique - put your name, a colon, and then the package name. -->
-	<id>smf:flow</id>
+	<id>smf:pensieve</id>
 	<version>2.0.14</version>
 	<!-- Theme name, used purely for aesthetics. -->
-	<name>Flow Beta</name>
+	<name>Pensieve</name>
 	<!-- Author: your email address or contact information. The name attribute is optional. -->
 	<author name="Sarah Carney">sarah@illustriouscreative.com</author>
 	<!-- Website... where to get updates and more information. -->
