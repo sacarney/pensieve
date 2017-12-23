@@ -59,51 +59,51 @@ hr {
   color: #45C3B8;
 }
 
-.button.is-ao {
+.button.is-pensieve {
   color: whitesmoke;
   background: #009999;
   border-color: transparent;
 }
 
-.button.is-ao:hover,
-.button.is-ao:focus {
+.button.is-pensieve:hover,
+.button.is-pensieve:focus {
   background: #006666;
   color: #f1f1f1;
 }
 
-.button.is-ao.is-outlined {
+.button.is-pensieve.is-outlined {
   background-color: transparent;
     border-color: #00d1b2;
     color: #00d1b2;
 }
 
-.button.is-ao.is-outlined:hover,
-.button.is-ao.is-outliend:focus {
+.button.is-pensieve.is-outlined:hover,
+.button.is-pensieve.is-outliend:focus {
   background: #006666;
   color: #f1f1f1;
   border-color: #006666;
 }
 
-.button.is-ao.is-inverted {
+.button.is-pensieve.is-inverted {
   background: #eee;
   color: #009999;
 }
 
-.button.is-ao.is-inverted:hover,
-.button.is-ao.is-inverted:focus {
+.button.is-pensieve.is-inverted:hover,
+.button.is-pensieve.is-inverted:focus {
   color: #f1f1f1;
   background: #006666;
 }
 
 /* --- Navbar --- */
 
-.navbar.is-ao {
+.navbar.is-pensieve {
   color: whitesmoke;
   background: #222;
   font-family: 'Amaranth';
 }
-.navbar.is-ao .navbar-item,
-.navbar.is-ao .navbar-link {
+.navbar.is-pensieve .navbar-item,
+.navbar.is-pensieve .navbar-link {
   color: whitesmoke;
 }
 
@@ -111,31 +111,31 @@ hr {
   border-color: #45C3B8;
 }
 
-.navbar.is-ao a.navbar-item:hover, 
-.navbar.is-ao a.navbar-item.is-active, 
-.navbar.is-ao a.navbar-link:hover, 
-.navbar.is-ao a.navbar-link.is-active {
+.navbar.is-pensieve a.navbar-item:hover, 
+.navbar.is-pensieve a.navbar-item.is-active, 
+.navbar.is-pensieve a.navbar-link:hover, 
+.navbar.is-pensieve a.navbar-link.is-active {
   background-color: #006666;
 }
 
-.navbar.is-ao .navbar-start > a.navbar-item:hover, 
-.navbar.is-ao .navbar-start > a.navbar-item.is-active, 
-.navbar.is-ao .navbar-start .navbar-link:hover, 
-.navbar.is-ao .navbar-start .navbar-link.is-active, 
-.navbar.is-ao .navbar-end > a.navbar-item:hover, 
-.navbar.is-ao .navbar-end > a.navbar-item.is-active, 
-.navbar.is-ao .navbar-end .navbar-link:hover, 
-.navbar.is-ao .navbar-end .navbar-link.is-active {
+.navbar.is-pensieve .navbar-start > a.navbar-item:hover, 
+.navbar.is-pensieve .navbar-start > a.navbar-item.is-active, 
+.navbar.is-pensieve .navbar-start .navbar-link:hover, 
+.navbar.is-pensieve .navbar-start .navbar-link.is-active, 
+.navbar.is-pensieve .navbar-end > a.navbar-item:hover, 
+.navbar.is-pensieve .navbar-end > a.navbar-item.is-active, 
+.navbar.is-pensieve .navbar-end .navbar-link:hover, 
+.navbar.is-pensieve .navbar-end .navbar-link.is-active {
   background-color: #006666;
 }
 
-.navbar.is-ao .navbar-item.has-dropdown:hover .navbar-link, 
-.navbar.is-ao .navbar-item.has-dropdown.is-active .navbar-link {
+.navbar.is-pensieve .navbar-item.has-dropdown:hover .navbar-link, 
+.navbar.is-pensieve .navbar-item.has-dropdown.is-active .navbar-link {
   background-color: #006666;
   color: whitesmoke;
 }
 
-.navbar.is-ao .navbar-dropdown a.navbar-item.is-active {
+.navbar.is-pensieve .navbar-dropdown a.navbar-item.is-active {
   background-color: #006666;
   color: whitesmoke;
 }
@@ -183,7 +183,7 @@ hr {
 .card-content { padding: 0.75rem; }
 
 /* --- Hero --- */
-.hero.is-ao {
+.hero.is-pensieve {
   background: #009999;
 }
 
@@ -192,13 +192,13 @@ hr {
   background-size: cover;
 }
 
-.hero.is-ao.is-bold {
+.hero.is-pensieve.is-bold {
   background: linear-gradient(141deg, #009999 0%, #45C3B8 100%);
 }
 
 /* --- Notifications --- */
 
-.notification.is-ao {
+.notification.is-pensieve {
   background-color: #4a4a4a;
   color: whitesmoke;
 }
@@ -208,7 +208,7 @@ hr {
 }
 
 /* --- Tags --- */
-.tag.is-ao {
+.tag.is-pensieve {
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
   color: whitesmoke;
