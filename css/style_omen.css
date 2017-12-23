@@ -1,1 +1,478 @@
-a { color: mediumorchid !important; }
+/* 
+ * Styles for the Omen variant of the Pensieve theme.
+ * 
+ * The modifier class is-pensieve is pretty helpful for customizing new variants.
+ */
+
+@import url('https://fonts.googleapis.com/css?family=Amaranth:400,700|PT+Serif:400,700|Roboto:400,500');
+
+
+/* --- Variables --- */
+:root {
+  --cyan: #45C3B8;
+  --darkcyan: #009999;
+  --darkercyan: #017575;
+}
+
+
+/* --- Typography --- */
+
+body {
+  color: whitesmoke;
+  font-family: 'PT Serif', serif;
+  background: #333;
+}
+
+h1, h2, h3, h4, h5, h6, 
+.title, .subtitle {
+  display: block;
+  color: #dadada;
+  font-family: 'Amaranth';
+  font-weight: normal;
+}
+
+.content h1, 
+.content h2, 
+.content h3, 
+.content h4, 
+.content h5, 
+.content h6 {
+  color: whitesmoke;
+}
+
+a { 
+  color: var(--cyan); 
+  transition: all ease 300ms; 
+}
+
+a:hover { color: #009999; }
+
+.content strong { color: #ddd; }
+
+.content blockquote {
+  background-color: #4a4a4a;
+  border-left: 5px solid #009999;
+}
+
+.content pre {
+  color: #fefefe;
+  background-color: #4a4a4a;
+}
+
+hr {
+  background-color: #4a4a4a;
+}
+
+strong { color: whitesmoke; }
+
+/* --- ## Buttons --- */
+
+.button {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+}
+
+.button.is-text {
+  color: var(--cyan);
+}
+
+.button.is-primary {
+  color: whitesmoke;
+  background: #009999;
+  border-color: transparent;
+}
+
+.button.is-primary:hover,
+.button.is-primary:focus {
+  background: var(--darkercyan);
+  color: #f1f1f1;
+}
+
+.button.is-primary.is-outlined {
+  background-color: transparent;
+    border-color: var(--cyan);
+    color: var(--cyan);
+}
+
+.button.is-primary.is-outlined:hover,
+.button.is-primary.is-outliend:focus {
+  background: var(--darkceryan);
+  color: #f1f1f1;
+  border-color: var(--darkercyan);
+}
+
+.button.is-primary.is-inverted {
+  background: #eee;
+  color: #009999;
+}
+
+.button.is-primary.is-inverted:hover,
+.button.is-primary.is-inverted:focus {
+  color: #f1f1f1;
+  background: var(--darkcyan);
+}
+
+.button.is-light {
+  color: #363636;
+  background: #ddd;
+  border-color: transparent;
+}
+
+.button.is-light:hover,
+.button.is-light:focus {
+  background: #ccc;
+  color: #363636;
+}
+
+/* --- ## Navbar --- */
+
+.navbar.is-pensieve {
+  color: whitesmoke;
+  background: #222;
+  font-family: 'Amaranth';
+}
+.navbar.is-pensieve .navbar-item,
+.navbar.is-pensieve .navbar-link {
+  color: whitesmoke;
+}
+
+.navbar-link::after {
+  border-color: var(--cyan);
+}
+
+.navbar.is-pensieve a.navbar-item:hover, 
+.navbar.is-pensieve a.navbar-item.is-active, 
+.navbar.is-pensieve a.navbar-link:hover, 
+.navbar.is-pensieve a.navbar-link.is-active {
+  background-color: var(--darkcyan);
+}
+
+.navbar.is-pensieve .navbar-start > a.navbar-item:hover, 
+.navbar.is-pensieve .navbar-start > a.navbar-item.is-active, 
+.navbar.is-pensieve .navbar-start .navbar-link:hover, 
+.navbar.is-pensieve .navbar-start .navbar-link.is-active, 
+.navbar.is-pensieve .navbar-end > a.navbar-item:hover, 
+.navbar.is-pensieve .navbar-end > a.navbar-item.is-active, 
+.navbar.is-pensieve .navbar-end .navbar-link:hover, 
+.navbar.is-pensieve .navbar-end .navbar-link.is-active {
+  background-color: var(--darkcyan);
+}
+
+.navbar.is-pensieve .navbar-item.has-dropdown:hover .navbar-link, 
+.navbar.is-pensieve .navbar-item.has-dropdown.is-active .navbar-link {
+  background-color: var(--darkcyan);
+  color: whitesmoke;
+}
+
+.navbar.is-pensieve .navbar-dropdown a.navbar-item.is-active {
+  background-color: var(--darkcyan);
+  color: whitesmoke;
+}
+
+.navbar-burger {
+  color: whitesmoke;
+  background: #009999;
+  border: 0;
+  border-radius: 0;
+}
+.navbar-burger:hover {
+  color: whitesmoke;
+  background: var(--darkcyan);
+}
+
+.navbar-burger span {
+  height: 3px;
+}
+
+@media screen and (max-width: 1023px) {
+  .navbar-menu {
+    background: #333;
+  }
+}
+
+/* --- ## Breadcrumbs --- */
+
+.breadcrumb a { color: var(--cyan); }
+
+.breadcrumb a:hover { color: #009999; }
+
+.breadcrumb li.is-active a { color: whitesmoke; }
+
+.breadcrumb li + li::before { color: #aaa; }
+
+
+/* --- ## Cards & Boxes --- */
+
+.card, .box {
+  color: whitesmoke;
+  background: #222;
+}
+
+/* --- ## Hero --- */
+.hero.is-pensieve {
+  background: #009999;
+}
+
+.hero.is-bg {
+  background-image: url(../images/theme/aobg.png);
+  background-size: cover;
+}
+
+.hero.is-pensieve.is-bold {
+  background: linear-gradient(141deg, #009999 0%, var(--cyan) 100%);
+}
+
+/* --- ## Notifications --- */
+
+.notification {
+  background-color: #4a4a4a;
+  color: whitesmoke;
+}
+
+.message-header {
+  font-family: 'Amaranth';
+}
+
+/* --- ## Tags --- */
+.tag.is-pensieve {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  color: whitesmoke;
+  background: #009999;
+}
+
+/* --- Dropdowns --- */
+
+.dropdown,
+.navbar-dropdown {
+  font-family: 'Roboto';
+}
+
+.dropdown a.dropdown-item.is-active {
+  background: var(--darkcyan);
+}
+.dropdown .dropdown-content,
+.navbar-dropdown {
+  color: whitesmoke;
+  background: #4a4a4a;
+}
+
+.dropdown a.dropdown-item,
+.navbar-dropdown a.navbar-item {
+  color: whitesmoke;
+}
+
+.dropdown a.dropdown-item:hover,
+.navbar-dropdown a.navbar-item:hover {
+  background: #009999;
+  color: whitesmoke;
+}
+
+.dropdown-divider,
+.navbar-divider {
+  background-color: #777;
+}
+
+/* --- Menu --- */
+
+.menu-label {
+  font-family: 'Amaranth';
+  font-size: 1rem;
+  color: #ccc;
+}
+
+.menu-list li ul {
+  border-left: 1px solid #4a4a4a;
+}
+
+.menu-list a { color: whitesmoke; }
+  
+.menu-list a:hover {
+  color: whitesmoke;
+  background-color: #009999;
+}
+.menu-list a.is-active {
+  background-color: var(--darkcyan);
+}
+
+/* --- Pagination --- */
+
+.pagination-previous, 
+.pagination-next, 
+.pagination-link {
+  border-color: #4a4a4a;
+  font-family: 'Roboto';
+  font-weight: 500;
+}
+
+.pagination-link.is-current {
+  background: #009999;
+  border-color: #009999;
+}
+
+.pagination-link.is-current:hover {
+  color: whitesmoke;
+}
+
+.pagination-previous:hover, .pagination-next:hover, .pagination-link:hover {
+  border-color: #009999;
+  color: var(--cyan);
+}
+
+/* --- Panel --- */
+
+.panel-tabs a {
+  border-color: var(--cyan);
+  font-family: 'Roboto';
+}
+
+.panel-tabs a.is-active {
+  color: whitesmoke;
+  border-bottom-color: whitesmoke;
+}
+.panel-icon { color: #ddd; }
+
+.panel-block { color: whitesmoke; }
+
+.panel-block.is-active .panel-icon { color: var(--cyan); }
+
+a.panel-block:hover, 
+label.panel-block:hover {
+  color: whitesmoke;
+  background-color: var(--darkcyan);
+}
+
+.panel-block.is-active {
+  border-left-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.panel-heading:first-child, 
+.panel-tabs:first-child, 
+.panel-block:first-child,
+.panel-heading, .panel-tabs, .panel-block{
+  border-color: #4a4a4a;
+}
+
+.panel-heading {
+  font-family: 'Amaranth';
+  background: var(--darkcyan);
+  color: whitesmoke;
+}
+
+/* --- Tabs --- */
+
+.tabs ul {
+  border-bottom-color: #555;
+}
+
+.tabs a {
+  color: whitesmoke;
+  border-bottom-color: #555;
+}
+
+.tabs a:hover {
+  color: #009999;
+  border-bottom-color: #009999;
+}
+
+.tabs li.is-active a {
+  border-bottom-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.tabs.is-boxed li.is-active a {
+  background-color: #333;
+  border-color: #4a4a4a;
+}
+
+.tabs.is-boxed a:hover {
+  background-color: var(--darkcyan);
+  color: whitesmoke;
+  border-bottom-color: #4a4a4a;
+}
+
+.tabs.is-toggle a {
+  border-color: #4a4a4a;
+}
+
+.tabs.is-toggle a:hover {
+  background-color: var(--darkcyan);
+  color: whitesmoke;
+  border-color: var(--darkcyan);
+}
+
+.tabs.is-toggle li.is-active a {
+  background-color: #009999;
+  border-color: #009999;
+  color: #fff;
+  z-index: 1;
+}
+
+/* --- ## Footer --- */
+
+.footer {
+  background-color: #222;
+  padding: 3rem 1.5rem 6rem;
+}
+
+/* --- ## Forms --- */
+
+.label {
+  color: whitesmoke;
+  font-family: 'Amaranth';
+  font-weight: normal;
+}
+
+.input, .textarea {
+  background: #222;
+  color: whitesmoke;
+  border-color: var(--darkcyan);
+}
+.checkbox, 
+.radio {
+  font-family: 'Roboto'
+}
+
+.checkbox:hover, 
+.radio:hover {
+  color: #009999;
+}
+
+.select select {
+  background: #222;
+  color: whitesmoke;
+  border-color: var(--darkcyan);
+}
+
+.select:not(.is-multiple)::after {
+  border-color: var(--cyan);
+}
+
+.help {
+  font-family: 'Roboto';
+}
+
+.input[disabled],
+.textarea[disabled] {
+  color: #bbb;
+  background: #555;
+  border-color: var(--darkcyan);
+
+}
+
+/* --- Utility --- */
+
+.is-cyan { color: var(--cyan); }
+.is-cyan { color: #009999; }
+.is-darkercyan { color: var(--darkcyan); }
+
+.is-circle { border-radius: 100%; overflow: hidden; }
+
+.has-cyan-border { border: 1px solid cyan; }
+
+.align-items-center { align-items: center; }
+
+.has-bg-dark {
+  background: #222;
+}
