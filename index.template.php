@@ -1,0 +1,645 @@
+<?php
+/**
+ * Simple Machines Forum (SMF)
+ *
+ * @package SMF
+ * @author Simple Machines
+ * @copyright 2011 Simple Machines
+ * @license http://www.simplemachines.org/about/smf/license.php BSD
+ *
+ * @version 2.0.14
+ */
+
+/*  This template is, perhaps, the most important template in the theme. It
+  contains the main template layer that displays the header and footer of
+  the forum, namely with main_above and main_below. It also contains the
+  menu sub template, which appropriately displays the menu; the init sub
+  template, which is there to set the theme up; (init can be missing.) and
+  the linktree sub template, which sorts out the link tree.
+
+  The init sub template should load any data and set any hardcoded options.
+
+  The main_above sub template is what is shown above the main content, and
+  should contain anything that should be shown up there.
+
+  The main_below sub template, conversely, is shown after the main content.
+  It should probably contain the copyright statement and some other things.
+
+  The linktree sub template should display the link tree, using the data
+  in the $context['linktree'] variable.
+
+  The menu sub template should display all the relevant buttons the user
+  wants and or needs.
+
+  For more information on the templating system, please see the site at:
+  http://www.simplemachines.org/
+*/
+
+// Initialize the template... mainly little settings.
+function template_init()
+{
+  global $context, $settings, $options, $txt, $user_info, $scripturl;
+
+  /* Use images from default theme when using templates from the default theme?
+    if this is 'always', images from the default theme will be used.
+    if this is 'defaults', images from the default theme will only be used with default templates.
+    if this is 'never' or isn't set at all, images from the default theme will not be used. */
+  $settings['use_default_images'] = 'never';
+
+  /* What document type definition is being used? (for font size and other issues.)
+    'xhtml' for an XHTML 1.0 document type definition.
+    'html' for an HTML 4.01 document type definition. */
+  $settings['doctype'] = 'xhtml';
+
+  /* The version this template/theme is for.
+    This should probably be the version of SMF it was created for. */
+  $settings['theme_version'] = '2.0';
+
+  /* Set a setting that tells the theme that it can render the tabs. */
+  $settings['use_tabs'] = true;
+
+  /* Use plain buttons - as opposed to text buttons? */
+  $settings['use_buttons'] = true;
+
+  /* Show sticky and lock status separate from topic icons? */
+  $settings['separate_sticky_lock'] = true;
+
+  /* Does this theme use the strict doctype? */
+  $settings['strict_doctype'] = false;
+
+  /* Does this theme use post previews on the message index? */
+  $settings['message_index_preview'] = false;
+
+  /* Set the following variable to true if this theme requires the optional theme strings file to be loaded. */
+  $settings['require_theme_strings'] = true;
+
+  /* Define theme variants. */
+  $settings['theme_variants'] = array('default', 'omen', 'gold');
+
+  // SUBACCOUNTS
+  $context['subaccount_dropdown'] = '';
+  if (!empty($user_info['subaccounts']))
+  {
+     $context['subaccount_dropdown'] = '
+      <form action="' . $scripturl . '?action=switchsubaccount" method="post" name="subaccount_drop" id="subaccount_drop" enctype="multipart/form-data">
+        <div class="select">
+          <select name="subaccount" size="1" onchange="document.subaccount_drop.submit()">
+            <option selected="selected">' . $txt['change_subaccount'] . '</option>';
+      foreach($user_info['subaccounts'] as $id => $subaccount)
+        $context['subaccount_dropdown'] .= '
+            <option value="' . $id . '">' . $subaccount['name'] . '</option>';
+      $context['subaccount_dropdown'] .= '
+          </select>
+        </div>
+        <input type="hidden" name="' . $context['session_var'] . '" value="' . $context['session_id'] . '" />
+      </form>';
+  }
+}
+
+// The main sub template above the content.
+function template_html_above()
+{
+  global $context, $settings, $options, $scripturl, $txt, $modSettings;
+
+  // Show right to left and the character set for ease of translating.
+  echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
+    <head>';
+
+  // The ?fin20 part of this link is just here to make sure browsers don't cache it wrongly.
+  echo '
+  <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/index', $context['theme_variant'], '.css?fin20" />';
+
+  // Some browsers need an extra stylesheet due to bugs/compatibility issues.
+  foreach (array('ie7', 'ie6', 'webkit') as $cssfix)
+    if ($context['browser']['is_' . $cssfix])
+      echo '
+  <link rel="stylesheet" type="text/css" href="', $settings['default_theme_url'], '/css/', $cssfix, '.css" />';
+
+  // RTL languages require an additional stylesheet.
+  if ($context['right_to_left'])
+    echo '
+  <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/rtl.css" />';
+
+  // The ?fin20 part of this link is just here to make sure browsers don't cache it wrongly.
+
+  echo '
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">';
+  echo'
+  <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/bulma.css">';
+  echo'
+  <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/style.css">';
+  
+  echo '
+  <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/style', $context['theme_variant'], '.css?fin20" />'; 
+
+
+  // Here comes the JavaScript bits!
+  echo '
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+  <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/script.js?fin20"></script>
+  <script type="text/javascript" src="', $settings['theme_url'], '/scripts/theme.js?fin20"></script>
+  <script type="text/javascript" src="', $settings['theme_url'], '/scripts/menu.js?fin20"></script>
+  <script type="text/javascript" src="', $settings['theme_url'], '/scripts/keyboard.js?fin20"></script>
+
+  <script type="text/javascript"><!-- // --><![CDATA[
+    var smf_theme_url = "', $settings['theme_url'], '";
+    var smf_default_theme_url = "', $settings['default_theme_url'], '";
+    var smf_images_url = "', $settings['images_url'], '";
+    var smf_scripturl = "', $scripturl, '";
+    var smf_iso_case_folding = ', $context['server']['iso_case_folding'] ? 'true' : 'false', ';
+    var smf_charset = "', $context['character_set'], '";', $context['show_pm_popup'] ? '
+    var fPmPopup = function ()
+    {
+      if (confirm("' . $txt['show_personal_messages'] . '"))
+        window.open(smf_prepareScriptUrl(smf_scripturl) + "action=pm");
+    }
+    addLoadEvent(fPmPopup);' : '', '
+    var ajax_notification_text = "', $txt['ajax_in_progress'], '";
+    var ajax_notification_cancel_text = "', $txt['modify_cancel'], '";
+  // ]]></script>';
+
+  echo '
+  <meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />
+  <meta name="description" content="', $context['page_title_html_safe'], '" />', !empty($context['meta_keywords']) ? '
+  <meta name="keywords" content="' . $context['meta_keywords'] . '" />' : '', '
+  <title>', $context['page_title_html_safe'], '</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">';
+
+  // Please don't index these Mr Robot.
+  if (!empty($context['robot_no_index']))
+    echo '
+  <meta name="robots" content="noindex" />';
+
+  // Present a canonical url for search engines to prevent duplicate content in their indices.
+  if (!empty($context['canonical_url']))
+    echo '
+  <link rel="canonical" href="', $context['canonical_url'], '" />';
+
+  // Show all the relative links, such as help, search, contents, and the like.
+  echo '
+  <link rel="help" href="', $scripturl, '?action=help" />
+  <link rel="search" href="', $scripturl, '?action=search" />
+  <link rel="contents" href="', $scripturl, '" />';
+
+  // If RSS feeds are enabled, advertise the presence of one.
+  if (!empty($modSettings['xmlnews_enable']) && (!empty($modSettings['allow_guestAccess']) || $context['user']['is_logged']))
+    echo '
+  <link rel="alternate" type="application/rss+xml" title="', $context['forum_name_html_safe'], ' - ', $txt['rss'], '" href="', $scripturl, '?type=rss;action=.xml" />';
+
+  // If we're viewing a topic, these should be the previous and next topics, respectively.
+  if (!empty($context['current_topic']))
+    echo '
+  <link rel="prev" href="', $scripturl, '?topic=', $context['current_topic'], '.0;prev_next=prev" />
+  <link rel="next" href="', $scripturl, '?topic=', $context['current_topic'], '.0;prev_next=next" />';
+
+  // If we're in a board, or a topic for that matter, the index will be the board's index.
+  if (!empty($context['current_board']))
+    echo '
+  <link rel="index" href="', $scripturl, '?board=', $context['current_board'], '.0" />';
+
+  // Output any remaining HTML headers. (from mods, maybe?)
+  echo $context['html_headers'];
+
+  echo '
+</head>
+<body>';
+}
+
+// Before BoardIndex.template.php begins...
+function template_body_above()
+{
+  global $context, $settings, $options, $scripturl, $txt, $modSettings;
+
+  echo'
+  <header>
+    <div class="skiplink">
+      <a class="invisible button is-small is-dark" href="#maincontent">Skip to main content</a>
+    </div>
+  ';
+
+  // Show the main menu
+  template_menu();
+
+  // BANNER & SITENAME
+  echo'
+  <div class="hero is-small is-primary is-ao is-bg">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">Absit Omen</h1>
+        <p class="subtitle">Harry Potter RPG</p>
+      </div>
+    </div>
+  </div>
+  ';
+
+  // PROFILE
+
+  echo '
+  
+  ';
+
+  // If the user is logged in, display stuff like their name, new messages, etc.
+    if ($context['user']['is_logged'])
+    {
+      echo'
+      <div class="navbar is-light is-ao">
+        <div class="container">
+          <div class="navbar-brand">
+      ';
+          
+            // AVATAR
+            if (!empty($context['user']['avatar'])) {
+              echo'
+              <a href="', $scripturl, '?action=profile" class="navbar-item">', $context['user']['avatar']['image'], '</a>
+              ';
+            } else {
+              echo'
+              <a href="', $scripturl, '?action=profile" class="navbar-item">
+                <span class="icon">
+                  <span class="fa fa-user-circle-o"></span>
+                </span>
+              </a>';
+            }
+
+            // Mobile Unread Messages
+            if($context['user']['unread_messages'])
+              echo'
+              <div class="navbar-item is-paddingless is-hidden-desktop">
+                <a href="', $scripturl, '?action=pm" class="button is-warning">
+                  <span class="icon">
+                    <span class="fa fa-envelope-o"></span>
+                  </span>
+                  <span>', $context['user']['unread_messages'],'</span>
+                </a>
+              </div>
+              '; 
+
+            // PROFILE NAME
+            echo'
+            <a class="navbar-item is-hidden-mobile" href="', $scripturl, '?action=profile">', $context['user']['name'],'</a>
+            ';
+
+            // SUBACCOUNTS
+            echo'
+            <div class="navbar-item">', $context['subaccount_dropdown'], '</div>
+            '; // end subaccounts
+
+          echo'
+            <div class="burger navbar-burger" data-target="userMenu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          ';
+
+        echo'
+        <div class="navbar-menu" id="userMenu">
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="field is-grouped">
+
+                <p class="control">
+                  <a href="', $scripturl, '?action=pm" class="buttons has-addons is-inline-flex">
+                  <span class="button is-small is-primary">
+                    <span class="icon">
+                      <span class="fa fa-envelope"></span>
+                    </span>
+                    <span>427 <span class="sr-only">messages</span></span>
+                  </span>
+                  ';
+                    // Unread messages?
+                    if($context['user']['unread_messages'])
+                      echo'
+                      <span class="button is-small is-warning">', $context['user']['unread_messages'],'</span>
+                      '; // endif unread messages
+
+                  echo'
+                  </a>
+                </p>
+                <p class="control">
+                  <a href="', $scripturl, '?action=unread" class="button is-ao is-primary is-small" href="#">Unread</a>
+                  <a href="', $scripturl, '?action=unreadreplies" class="button is-ao is-primary is-small" href="#">Replies</a>
+                </p>
+                <p class="control">
+                  <a href="', $scripturl, '?action=logout" class="button is-light is-small" href="#">Logout</a>
+                </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      ';
+
+      // Maintenance mode?
+      if ($context['in_maintenance'] && $context['user']['is_admin'])
+        echo '
+          <p>', $txt['maintain_mode_on'], '</p>
+        ';
+
+    } // endif logged in
+
+  echo'
+      </div>
+    </div>
+  </header>
+  '; // End Profile
+
+  // BREADCRUMB
+  theme_linktree();
+
+  // BEGIN MAIN
+  echo'
+  <main class="section is-small" id="maincontent">
+  ';
+}
+
+// THIS IS WHERE THE BOARD INDEX IS!
+
+function template_body_below()
+{
+  global $context, $settings, $options, $scripturl, $txt, $modSettings;
+
+
+  // BEGIN INFO CENTER
+
+  template_info_center();
+
+  // END INFO CENTER
+
+  echo'
+  </main>
+  '; // End main
+
+
+  // Show the "Powered by" and "Valid" logos, as well as the copyright. Remember, the copyright must be somewhere!
+  echo '
+  <footer class="footer">
+    <div class="container">
+      <div class="has-text-centered is-size-7 is-uppercase">', theme_copyright(), '</div>
+    </div>
+  </footer>
+  ';
+}
+
+function template_html_below()
+{
+  global $context, $settings, $options, $scripturl, $txt, $modSettings;
+
+  echo '
+  </body></html>';
+}
+
+// Show a linktree. This is that thing that shows "My Community | General Category | General Discussion"..
+function theme_linktree($force_show = false)
+{
+  global $context, $settings, $options, $shown_linktree;
+
+  // If linktree is empty, just return - also allow an override.
+  if (empty($context['linktree']) || (!empty($context['dont_default_linktree']) && !$force_show))
+    return;
+
+  echo '
+  <div class="container is-hidden-touch">
+    <nav class="breadcrumb is-small mt-4" aria-label="breadcrumbs">
+      <ul>';
+
+  // Each tree item has a URL and name. Some may have extra_before and extra_after.
+  foreach ($context['linktree'] as $link_num => $tree)
+  {
+    echo '
+      <li', ($link_num == count($context['linktree']) - 1) ? ' class="is-active"' : '', '>';
+
+    // Show something before the link?
+    if (isset($tree['extra_before']))
+      echo $tree['extra_before'];
+
+    // Show the link, including a URL if it should have one.
+    echo $settings['linktree_link'] && isset($tree['url']) ? '
+        <a href="' . $tree['url'] . '"><span>' . $tree['name'] . '</span></a>' : '<span>' . $tree['name'] . '</span>';
+
+    // Show something after the link...?
+    if (isset($tree['extra_after']))
+      echo $tree['extra_after'];
+
+    // Don't show a separator for the last one.
+    if ($link_num != count($context['linktree']) - 1)
+      echo '';
+
+    echo '
+      </li>';
+  }
+  echo '
+      </ul>
+    </nav>
+  </div>
+  ';
+
+  $shown_linktree = true;
+}
+
+// Show the menu up top. Something like [home] [help] [profile] [logout]...
+function template_menu()
+{
+  global $context, $settings, $options, $scripturl, $txt;
+
+  echo'
+  <nav class="navbar is-ao">
+    <div class="container">
+      <div class="navbar-brand">
+        <a href="', $scripturl, '" class="navbar-item is-hidden-desktop">
+          <span class="icon is-medium">
+            <span class="fa fa-home"></span>
+          </span>
+        </a>
+        <div class="burger navbar-burger" data-target="mainMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="navbar-menu" id="mainMenu">
+  ';
+      foreach ($context['menu_buttons'] as $act => $button) {
+        if (!empty($button['sub_buttons'])) {
+          echo'
+          <div class="navbar-item has-dropdown is-hoverable">
+             <a class="navbar-link" href="', $button['href'], '">', $button['title'], '</a>
+             <div class="navbar-dropdown is-boxed">
+          ';
+            foreach ($button['sub_buttons'] as $childbutton) {
+              echo'
+              <a class="navbar-item" href="', $childbutton['href'], '">', $childbutton['title'], '</a>
+              ';
+            }
+          echo'
+            </div>
+          </div>
+          ';
+        }
+        else {
+          echo'
+          <a class="navbar-item" href="', $button['href'], '">', $button['title'], '</a>
+          ';
+        }
+      }
+
+        echo'
+      </div>
+    </div>
+  </nav>
+  ';
+}
+
+// Generate a strip of buttons.
+function template_button_strip($button_strip, $direction = 'top', $strip_options = array())
+{
+  global $settings, $context, $txt, $scripturl;
+
+  if (!is_array($strip_options))
+    $strip_options = array();
+
+  // List the buttons in reverse order for RTL languages.
+  if ($context['right_to_left'])
+    $button_strip = array_reverse($button_strip, true);
+
+  // Create the buttons...
+  $buttons = array();
+  foreach ($button_strip as $key => $value)
+  {
+    if (!isset($value['test']) || !empty($context[$value['test']]))
+
+      $buttons[] = '
+      <a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button ' . $value['class'] .' button_' . $key . (isset($value['active']) ? ' ' : ' ') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . '>
+        <span class="icon is-small">
+          <i class="fa '. $value['icon'] .'"></i>
+        </span>
+        <span class="' . $value['hidden'] . ' button-label">' . $txt[$value['text']] . '</span>
+      </a>
+      ';
+  }
+
+  // No buttons? No button strip either.
+  if (empty($buttons))
+    return;
+
+  // Make the last one, as easy as possible.
+  $buttons[count($buttons) - 1] = str_replace('<span>', '<span class="last">', $buttons[count($buttons) - 1]);
+
+  echo '
+    <div class="thread-tools-menu"', (empty($buttons) ? ' style="display: none;"' : ''), (!empty($strip_options['id']) ? ' id="' . $strip_options['id'] . '"': ''), '>',
+        implode('', $buttons), '
+    </div>';
+}
+
+function template_info_center()
+{
+  global $context, $settings, $options, $txt, $scripturl, $modSettings;
+
+  // Here's where the "Info Center" starts...
+  echo '
+    <div class="container mt-3">
+      <div class="columns">
+  ';
+
+  // RECENT POSTS
+  if (!empty($settings['number_recent_posts']) && (!empty($context['latest_posts']) || !empty($context['latest_post'])))
+  {
+    echo'
+    <div class="column">
+      <div class="card h-100">
+        <div class="card-header">
+          <h2 class="card-header-title title is-5">
+            <span class="icon is-medium">
+              <span class="fa fa-clock-o"></span>
+            </span>
+            <a href="', $scripturl, '?action=recent">', $txt['recent_posts'], '</a>
+          </h2>
+        </div>
+        <div class="card-content">
+          <ul>
+      ';
+
+      foreach ($context['latest_posts'] as $post)
+      echo '
+      <li>', $post['link'], '<span class="is-uppercase is-muted is-size-7"> ', $txt['by'], ' </span> ', $post['poster']['link'], ' <span class="is-muted">/</span> ', $post['time'], '</li>
+      '; 
+
+    echo'
+          </ul>
+        </div>
+      </div> 
+    </div>
+    '; // end box, end column
+  }
+  
+  // USERS ONLINE
+  echo '
+  <div class="column">
+    <div class="card h-100">
+      <div class="card-header">
+        <h2 class="card-header-title title is-5">
+          <span class="icon is-medium">
+            <span class="fa fa-user-circle-o"></span>
+          </span
+          <a href="' . $scripturl . '?action=who' . '">', $txt['online_users'], '</a>
+        </h2>
+      </div>
+    <div class="card-content">
+  ';
+
+      // # Users & # Guests Online
+      echo'
+      <p>
+        <span class="is-size-4">', comma_format($context['num_users_online']), ' </span>',
+        $context['num_users_online'] == 1 ? $txt['user'] : $txt['users'], '
+        <span class="is-cyan">&</span>
+        <span class="is-size-4">', comma_format($context['num_guests']), ' </span>',
+        $context['num_guests'] == 1 ? $txt['guest'] : $txt['guests'], '
+      </p>
+      ';
+
+      // Online users
+      if (!empty($context['users_online']))
+      {
+        echo'
+        <hr>
+
+        <p class="subtitle is-5 is-marginless">', sprintf($txt['users_active'], $modSettings['lastActive']), '</p>
+        
+        <p>', implode(', ', $context['list_users_online']);
+
+          // Showing membergroups?
+          if (!empty($settings['show_group_key']) && !empty($context['membergroups']))
+          echo '
+          <br />[' . implode(']&nbsp;&nbsp;[', $context['membergroups']) . ']';'</p>
+        ';
+      }
+
+      // Most users online
+      echo'
+      <p>
+        <span class="is-uppercase is-size-7 is-muted">', $txt['most_online_today'], ':</span>
+        ', comma_format($modSettings['mostOnlineToday']), '
+        <br>
+        <span class="is-uppercase is-size-7 is-muted">', $txt['most_online_ever'], ':</span>
+        ', comma_format($modSettings['mostOnline']), '<span class="is-muted"> on </span>
+        ', timeformat($modSettings['mostDate']), '
+      </p>
+      ';
+
+    echo '
+    </div>
+      </div> 
+    </div>
+    '; // end box, end column
+
+  echo'
+  </div>
+  </div>
+  '; // end columns, end container, end section
+}
+
+?>
