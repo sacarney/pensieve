@@ -221,16 +221,38 @@ function template_body_above()
   // Show the main menu
   template_menu();
 
-  // BANNER & SITENAME
+  // BANNER, SITENAME, & NEWS
   echo'
   <div class="hero is-small is-primary is-pensieve is-bg">
     <div class="hero-body">
       <div class="container">
-        <h1 class="title">Absit Omen</h1>
-        <p class="subtitle">Harry Potter RPG</p>
+        <div class="columns align-items-center">
+          <div class="column">
+            <h1 class="title">
+              <a href="', $scripturl, '">', empty($context['header_logo_url_html_safe']) ? $context['forum_name'] : '<img src="' . $context['header_logo_url_html_safe'] . '" alt="' . $context['forum_name'] . '" />', '</a>
+            </h1>';
+            if (!empty($settings['site_slogan']))
+              echo' <p class="subtitle">', $settings['site_slogan'] ,'</p>';
+
+            echo'
+          </div>
+          <div class="column">';
+
+          // Show a random news item? (or you could pick one from news_lines...)
+          if (!empty($settings['enable_news']))
+            echo '
+              <div>
+                <p>', $context['random_news_line'], '</p>
+              </div>';
+
+          echo'
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+
   ';
 
   // PROFILE
@@ -242,7 +264,15 @@ function template_body_above()
   // If the user is logged in, display stuff like their name, new messages, etc.
     if ($context['user']['is_logged'])
     {
+
+      // Maintenance mode?
+      if ($context['in_maintenance'] && $context['user']['is_admin'])
+        echo '
+          <div class="notification is-warning mb-0 has-text-centered">', $txt['maintain_mode_on'], '</div>
+        ';
+
       echo'
+
       <div class="navbar is-light is-pensieve">
         <div class="container">
           <div class="navbar-brand">
@@ -333,11 +363,7 @@ function template_body_above()
     </div>
       ';
 
-      // Maintenance mode?
-      if ($context['in_maintenance'] && $context['user']['is_admin'])
-        echo '
-          <p>', $txt['maintain_mode_on'], '</p>
-        ';
+      
 
     } // endif logged in
 
