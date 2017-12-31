@@ -14,14 +14,13 @@ function template_main()
 {
   global $context, $settings, $options, $txt, $scripturl, $modSettings;
 
-  /*
+  
   // STATS
   if (!$settings['show_stats_index'])
-    echo '', 
-      $txt['members'], ': ', $context['common_stats']['total_members'], '<br>', 
+    echo '', $txt['members'], ': ', $context['common_stats']['total_members'], '<br>', 
       $txt['posts_made'], ': ', $context['common_stats']['total_posts'], '<br>', 
       $txt['topics'], ': ', $context['common_stats']['total_topics'], '<br>',
-      ($settings['show_latest_member'] ? '' . $txt['welcome_member'] . '' . $context['common_stats']['latest_member']['link'] . '' . $txt['newest_member'] : '') , ;
+      ($settings['show_latest_member'] ? '' . $txt['welcome_member'] . '' . $context['common_stats']['latest_member']['link'] . '' . $txt['newest_member'] : '') ,'';
 
   // NEWS
   if ($settings['show_newsfader'] && !empty($context['fader_news_lines']))
@@ -38,7 +37,7 @@ function template_main()
     echo '
     </ul>
     ';
-  } */
+  } 
 
   // BOARD INDEX
   echo'
