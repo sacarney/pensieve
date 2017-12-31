@@ -19,7 +19,7 @@ function template_generic_menu_sidebar_above()
   echo '
   <div class="container">
     <div id="main_container" class="columns">
-      <div id="left_admsection" class="menu column is-3">
+      <div id="left_admsection" class="menu column is-3 pt-0">
         <span id="admin_menu"></span>';
 
   // What one are we rendering?
@@ -31,13 +31,17 @@ function template_generic_menu_sidebar_above()
   foreach ($menu_context['sections'] as $section)
   {
     // Show the section header - and pump up the line spacing for readability.
-    echo '<p class="menu-label">';
+    echo '<p class="menu-label is-flex">';
 
     if ($firstSection && !empty($menu_context['can_toggle_drop_down']))
     {
       echo '
-        <a href="', $menu_context['toggle_url'], '">', $section['title'],'<img style="margin: 0 5px; vertical-align: middle;" src="', $context['menu_image_path'], '/change_menu', $context['right_to_left'] ? '' : '2', '.png" alt="!" />
-        </a>';
+      <span class="flex-grow-1">', $section['title'],'</span>
+      <a href="', $menu_context['toggle_url'], '">
+        <span class="icon button is-secondary">
+          <span class="fa fa-angle-double-right"></span>
+        </span>
+      </a>';
     }
     else
     {
@@ -100,7 +104,7 @@ function template_generic_menu_sidebar_below()
   echo '
     </div>
     </div>
-  </div><br class="clear" />';
+  </div>';
 }
 
 // This contains the html for the side bar of the admin center, which is used for all admin pages.
@@ -174,9 +178,11 @@ function template_generic_menu_dropdown_above()
 
   if (!empty($menu_context['can_toggle_drop_down']))
     echo '
-    <div class="navbar-end is-hidden-touch">
-      <a href="', $menu_context['toggle_url'], '" class="navbar-item">
-        <img id="menu_toggle" src="', $context['menu_image_path'], '/change_menu', $context['right_to_left'] ? '2' : '', '.png" alt="*" />
+    <div class="navbar-end is-hidden-touch m-3">
+      <a href="', $menu_context['toggle_url'], '">
+        <span class="icon button is-secondary">
+          <span class="fa fa-angle-double-left"></span>
+        </span>
       </a>
     </div>
     ';
@@ -187,7 +193,7 @@ function template_generic_menu_dropdown_above()
 
   // This is the main table - we need it so we can keep the content to the right of it.
   echo '
-<div id="admin_content" class="container mt-4">';
+<div id="admin_content" class="container mt-4 mb-4 pb-4">';
 
   // It's possible that some pages have their own tabs they wanna force...
   if (!empty($context['tabs']))
@@ -266,7 +272,13 @@ function template_generic_menu_tabs(&$menu_context)
       echo '<img src="', $settings['images_url'], '/icons/', !empty($selected_tab['icon']) ? $selected_tab['icon'] : $tab_context['icon'], '" alt="" class="icon" />';
 
     if (!empty($selected_tab['help']) || !empty($tab_context['help']))
-      echo '<a href="', $scripturl, '?action=helpadmin;help=', !empty($selected_tab['help']) ? $selected_tab['help'] : $tab_context['help'], '" onclick="return reqWin(this.href);" class="help"><img src="', $settings['images_url'], '/helptopics.gif" alt="', $txt['help'], '" class="icon" /></a>';
+      echo '
+        <a href="', $scripturl, '?action=helpadmin;help=', !empty($selected_tab['help']) ? $selected_tab['help'] : $tab_context['help'], '" onclick="return reqWin(this.href);">
+          <span class="icon">
+            <span class="fa fa-question-circle is-size-5"></span>
+          </span>
+        </a>
+      ';
 
     echo $tab_context['title'];
   }
@@ -318,7 +330,7 @@ function template_generic_menu_tabs(&$menu_context)
   </div>';
 
   echo '
-  <p class="notification is-size-7">
+  <p class="notification is-size-6-5">
     ', !empty($selected_tab['description']) ? $selected_tab['description'] : $tab_context['description'], '
   </p>';
   }
@@ -349,7 +361,7 @@ function template_generic_menu_tabs(&$menu_context)
 
     echo '
   </p>
-  <p class="notification is-size-7">', isset($selected_tab['description']) ? $selected_tab['description'] : $tab_context['description'], '</p>';
+  <p class="notification is-size-6-5">', isset($selected_tab['description']) ? $selected_tab['description'] : $tab_context['description'], '</p>';
   }
 }
 
