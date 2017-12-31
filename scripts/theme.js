@@ -39,3 +39,15 @@ function smf_addButton(sButtonStripId, bUseImage, oOptions)
 	oButtonStripList.appendChild(oNewButton);
 }
 
+// Invert all checkboxes at once by clicking a single checkbox.
+function invertAll(oInvertCheckbox, oForm, sMask, bIgnoreDisabled)
+{
+	for (var i = 0; i < oForm.length; i++)
+	{
+		if (!('name' in oForm[i]) || (typeof(sMask) == 'string' && oForm[i].name.substr(0, sMask.length) != sMask && oForm[i].id.substr(0, sMask.length) != sMask))
+			continue;
+
+		if (!oForm[i].disabled || (typeof(bIgnoreDisabled) == 'boolean' && bIgnoreDisabled))
+			oForm[i].checked = oInvertCheckbox.checked;
+	}
+}
