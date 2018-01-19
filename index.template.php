@@ -538,7 +538,7 @@ function template_button_strip($button_strip, $direction = 'top', $strip_options
     if (!isset($value['test']) || !empty($context[$value['test']]))
 
       $buttons[] = '
-      <a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button ' . $value['class'] .' button_' . $key . (isset($value['active']) ? ' ' : ' ') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . '>
+      <a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button is-small ' . $value['class'] .' button_' . $key . (isset($value['active']) ? ' ' : ' ') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . '>
         <span class="icon is-small">
           <i class="fa '. $value['icon'] .'"></i>
         </span>

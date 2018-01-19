@@ -1792,7 +1792,7 @@ function template_file_permissions()
   <form action="', $scripturl, '?action=admin;area=packages;sa=perms;', $context['session_var'], '=', $context['session_id'], '" method="post" accept-charset="', $context['character_set'], '">
     <h3 class="title is-5 mb-4">', $txt['package_file_perms'], '</h3>
 
-    <table width="100%" class="table is-narrow is-striped">
+    <table width="100%" class="table is-narrow is-striped mb-0">
       <thead>
         <tr>
           <th width="30%">', $txt['package_file_perms_name'], '</th>
@@ -1808,7 +1808,7 @@ function template_file_permissions()
   foreach ($context['file_tree'] as $name => $dir)
   {
     echo '
-      <tbody class="is-size-7 word-break-break-word">
+      <tbody class=" word-break-break-word">
         <tr>
           <td width="30%">';
 
@@ -1908,32 +1908,32 @@ function template_permission_show_contents($ident, $contents, $level, $has_more 
         $drawn_div = true;
         echo '
       </table>
-      <table border="0" width="100%" class="table is-narrow is-striped" id="', $js_ident, '">';
+      <table width="100%" class="table is-narrow is-striped mb-0" id="', $js_ident, '">';
       }
 
       $cur_ident = preg_replace('~[^A-Za-z0-9_\-=:]~', ':-:', $ident . '/' . $name);
       echo '
-      <tr class="windowbg" id="content_', $cur_ident, '">
-        <td class="smalltext" width="30%">' . str_repeat('&nbsp;', $level * 5), '
+      <tr id="content_', $cur_ident, '">
+        <td width="30%">' . str_repeat('&nbsp;', $level * 5), '
           ', (!empty($dir['type']) && $dir['type'] == 'dir_recursive') || !empty($dir['list_contents']) ? '<a id="link_' . $cur_ident . '" href="' . $scripturl . '?action=admin;area=packages;sa=perms;find=' . base64_encode($ident . '/' . $name) . ';back_look=' . $context['back_look_data'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '#fol_' . $cur_ident . '" onclick="return expandFolder(\'' . $cur_ident . '\', \'' . addcslashes($ident . '/' . $name, "'\\") . '\');">' : '';
 
       if (!empty($dir['type']) && ($dir['type'] == 'dir' || $dir['type'] == 'dir_recursive'))
         echo '
-          <img src="', $settings['default_images_url'], '/board.gif" alt="*" />';
+          <span style="float: left;" class="icon"><span class="fa fa-folder"></span></span>';
 
       echo '
           ', $name, '
           ', (!empty($dir['type']) && $dir['type'] == 'dir_recursive') || !empty($dir['list_contents']) ? '</a>' : '', '
         </td>
-        <td class="smalltext">
+        <td>
           <span class="', ($dir['perms']['chmod'] ? 'success' : 'error'), '">', ($dir['perms']['chmod'] ? $txt['package_file_perms_writable'] : $txt['package_file_perms_not_writable']), '</span>
           ', ($dir['perms']['perms'] ? '&nbsp;(' . $txt['package_file_perms_chmod'] . ': ' . substr(sprintf('%o', $dir['perms']['perms']), -4) . ')' : ''), '
         </td>
-        <td align="center" width="8%" class="perm_read"><input type="radio" name="permStatus[', $ident . '/' . $name, ']" value="read" class="input_radio" /></td>
-        <td align="center" width="8%" class="perm_write"><input type="radio" name="permStatus[', $ident . '/' . $name, ']" value="writable" class="input_radio" /></td>
-        <td align="center" width="8%" class="perm_execute"><input type="radio" name="permStatus[', $ident . '/' . $name, ']" value="execute" class="input_radio" /></td>
-        <td align="center" width="8%" class="perm_custom"><input type="radio" name="permStatus[', $ident . '/' . $name, ']" value="custom" class="input_radio" /></td>
-        <td align="center" width="8%" class="perm_nochange"><input type="radio" name="permStatus[', $ident . '/' . $name, ']" value="no_change" checked="checked" class="input_radio" /></td>
+        <td width="8%" class="has-text-centered vertical-align-middle perm_read"><input type="radio" name="permStatus[', $ident . '/' . $name, ']" value="read" class="input_radio" /></td>
+        <td width="8%" class="has-text-centered vertical-align-middle perm_write"><input type="radio" name="permStatus[', $ident . '/' . $name, ']" value="writable" class="input_radio" /></td>
+        <td width="8%" class="has-text-centered vertical-align-middle perm_execute"><input type="radio" name="permStatus[', $ident . '/' . $name, ']" value="execute" class="input_radio" /></td>
+        <td width="8%" class="has-text-centered vertical-align-middle perm_custom"><input type="radio" name="permStatus[', $ident . '/' . $name, ']" value="custom" class="input_radio" /></td>
+        <td width="8%" class="has-text-centered vertical-align-middle perm_nochange"><input type="radio" name="permStatus[', $ident . '/' . $name, ']" value="no_change" checked="checked" class="input_radio" /></td>
       </tr>
       <tr id="insert_div_loc_' . $cur_ident . '" style="display: none;"><td></td></tr>';
 
@@ -1948,8 +1948,8 @@ function template_permission_show_contents($ident, $contents, $level, $has_more 
   // We have more files to show?
   if ($has_more)
     echo '
-  <tr class="windowbg" id="content_', $js_ident, '_more">
-    <td class="smalltext" width="40%">' . str_repeat('&nbsp;', $level * 5), '
+  <tr id="content_', $js_ident, '_more">
+    <td width="40%">' . str_repeat('&nbsp;', $level * 5), '
       &#171; <a href="' . $scripturl . '?action=admin;area=packages;sa=perms;find=' . base64_encode($ident) . ';fileoffset=', ($context['file_offset'] + $context['file_limit']), ';' . $context['session_var'] . '=' . $context['session_id'] . '#fol_' . preg_replace('~[^A-Za-z0-9_\-=:]~', ':-:', $ident) . '">', $txt['package_file_perms_more_files'], '</a> &#187;
     </td>
     <td colspan="6"></td>
@@ -1970,7 +1970,7 @@ function template_permission_show_contents($ident, $contents, $level, $has_more 
     </table><script type="text/javascript"><!-- // --><![CDATA[
       expandFolder(\'', $js_ident, '\', \'\');
     // ]]></script>
-    <table border="0" width="100%" class="table_grid">
+    <table width="100%" class="table is-narrow is-striped mb-0">
       <tr style="display: none;"><td></td></tr>';
   }
 }
@@ -2057,7 +2057,7 @@ function template_action_permissions() // @TODO
           <input type="hidden" name="method" value="', $context['method'], '" />
           <input type="hidden" name="action_changes" value="1" />
           <div class="righttext padding">
-            <input type="submit" name="go" id="cont" value="', $txt['not_done_continue'], '" class="button_submit" />
+            <input type="submit" name="go" id="cont" value="', $txt['not_done_continue'], '" class="button is-primary" />
           </div>
         </div>
         <span class="botslice"><span></span></span>
