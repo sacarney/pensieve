@@ -86,7 +86,7 @@ function template_main()
         // New
         if ($board['new'] || $board['children_new'])
         echo '
-        <span class="icon has-new">
+        <span class="icon has-new" title="New Posts">
           <i class="fa fa-star"></i>
           <span class="sr-only">This board has new posts</span>
         </span>
@@ -95,7 +95,7 @@ function template_main()
         // Redirects
         elseif ($board['is_redirect'])
         echo '
-        <span class="icon has-redirect">
+        <span class="icon has-redirect" title="Redirects">
           <i class="fa fa-link"></i>
           <span class="sr-only">This is a redirect</span>
         </span>
@@ -104,7 +104,7 @@ function template_main()
         // No New
         else
         echo '
-        <span class="icon has-no-new">
+        <span class="icon has-no-new" title="No New Posts">
           <i class="fa fa-star-o"></i>
           <span class="sr-only">This board has no new posts</span>
         </span>
@@ -135,6 +135,31 @@ function template_main()
             ', implode(', ', $board['link_moderators']), '
           </p>
           ';
+          
+        // Child Boards
+        if (!empty($board['children']))
+        {
+          // Build the list of child boards
+          $children = array();
+          foreach ($board['children'] as $child)
+          {
+            if (!$child['is_redirect'])
+              $child['link'] = '<a href="' . $child['href'] . '" ' . ($child['new'] ? 'class="" ' : '') . 'title="' . ($child['new'] ? $txt['new_posts'] : $txt['old_posts']) . ' (' . $txt['board_topics'] . ': ' . comma_format($child['topics']) . ', ' . $txt['posts'] . ': ' . comma_format($child['posts']) . ')">' . $child['name'] . ($child['new'] ? '</a> <a href="' . $scripturl . '?action=unread;board=' . $child['id'] . '" title="' . $txt['new_posts'] . ' (' . $txt['board_topics'] . ': ' . comma_format($child['topics']) . ', ' . $txt['posts'] . ': ' . comma_format($child['posts']) . ')">' : '') . '</a>';
+            else
+              $child['link'] = '<a href="' . $child['href'] . '" title="' . comma_format($child['posts']) . ' ' . $txt['redirects'] . '">' . $child['name'] . '</a>';
+
+            // Has it posts awaiting approval?
+            if ($child['can_approve_posts'] && ($child['unapproved_posts'] || $child['unapproved_topics']))
+              $child['link'] .= ' <a href="' . $scripturl . '?action=moderate;area=postmod;sa=' . ($child['unapproved_topics'] > 0 ? 'topics' : 'posts') . ';brd=' . $child['id'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '" title="' . sprintf($txt['unapproved_posts'], $child['unapproved_topics'], $child['unapproved_posts']) . '" class="">(!)</a>';
+
+            $children[] = $child['new'] ? '<strong>' . $child['link'] . '</strong>' : $child['link'];
+          }
+          // Show the list of child boards
+          echo '
+          <div id="board_', $board['id'], '_children">
+            <span class="is-size-7 is-muted is-uppercase">', $txt['parent_boards'], ': </span>', implode(', ', $children), '</div>
+          ';
+        } 
         
       echo '
       </div>
@@ -176,32 +201,6 @@ function template_main()
     echo '
     </div>
     ';
-
-    // Child boards
-    /*
-        // Child Boards
-        if (!empty($board['children']))
-        {
-          // Build the list of child boards
-          $children = array();
-          foreach ($board['children'] as $child)
-          {
-            if (!$child['is_redirect'])
-              $child['link'] = '<a href="' . $child['href'] . '" ' . ($child['new'] ? 'class="" ' : '') . 'title="' . ($child['new'] ? $txt['new_posts'] : $txt['old_posts']) . ' (' . $txt['board_topics'] . ': ' . comma_format($child['topics']) . ', ' . $txt['posts'] . ': ' . comma_format($child['posts']) . ')">' . $child['name'] . ($child['new'] ? '</a> <a href="' . $scripturl . '?action=unread;board=' . $child['id'] . '" title="' . $txt['new_posts'] . ' (' . $txt['board_topics'] . ': ' . comma_format($child['topics']) . ', ' . $txt['posts'] . ': ' . comma_format($child['posts']) . ')">' : '') . '</a>';
-            else
-              $child['link'] = '<a href="' . $child['href'] . '" title="' . comma_format($child['posts']) . ' ' . $txt['redirects'] . '">' . $child['name'] . '</a>';
-
-            // Has it posts awaiting approval?
-            if ($child['can_approve_posts'] && ($child['unapproved_posts'] || $child['unapproved_topics']))
-              $child['link'] .= ' <a href="' . $scripturl . '?action=moderate;area=postmod;sa=' . ($child['unapproved_topics'] > 0 ? 'topics' : 'posts') . ';brd=' . $child['id'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '" title="' . sprintf($txt['unapproved_posts'], $child['unapproved_topics'], $child['unapproved_posts']) . '" class="">(!)</a>';
-
-            $children[] = $child['new'] ? '<strong>' . $child['link'] . '</strong>' : $child['link'];
-          }
-          // Show the list of child boards
-          echo '
-          <div id="board_', $board['id'], '_children">', $txt['parent_boards'], ': ', implode(', ', $children), '</div>
-          ';
-        } */
 
     // Close each board
     echo '

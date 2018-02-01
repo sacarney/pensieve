@@ -21,7 +21,7 @@ function template_main()
   if (!empty($settings['display_who_viewing']))
     {
       echo'
-      <div class="who-is-viewing">';
+      <div class="who-is-viewing container mb-3 is-size-7">';
         if ($settings['display_who_viewing'] == 1)
           echo count($context['view_members']), ' ', count($context['view_members']) === 1 ? $txt['who_member'] : $txt['members'];
         else
@@ -33,14 +33,41 @@ function template_main()
 
   echo'
     <div class="container">
-  ';
-
-  // Child board nonsense here
+  '; 
 
   // DESCRIPTION
   if (!empty($options['show_board_desc']) && $context['description'] != '')
     echo '
   <p class="notification">', $context['description'], '</p>';
+
+
+  // Show the "Child Boards: ". (there's a link_children but we're going to bold the new ones...)
+      if (!empty($board['children']))
+      { 
+        // Sort the links into an array with new boards bold so it can be imploded.
+        $children = array();
+        /* Each child in each board's children has:
+            id, name, description, new (is it new?), topics (#), posts (#), href, link, and last_post. */
+        foreach ($board['children'] as $child)
+        {
+          if (!$child['is_redirect'])
+            $child['link'] = '<a href="' . $child['href'] . '" ' . ($child['new'] ? 'class="new_posts" ' : '') . 'title="' . ($child['new'] ? $txt['new_posts'] : $txt['old_posts']) . ' (' . $txt['board_topics'] . ': ' . comma_format($child['topics']) . ', ' . $txt['posts'] . ': ' . comma_format($child['posts']) . ')">' . $child['name'] . ($child['new'] ? '</a> <a href="' . $scripturl . '?action=unread;board=' . $child['id'] . '" title="' . $txt['new_posts'] . ' (' . $txt['board_topics'] . ': ' . comma_format($child['topics']) . ', ' . $txt['posts'] . ': ' . comma_format($child['posts']) . ')"><img src="' . $settings['lang_images_url'] . '/new.gif" class="new_posts" alt="" />' : '') . '</a>';
+          else
+            $child['link'] = '<a href="' . $child['href'] . '" title="' . comma_format($child['posts']) . ' ' . $txt['redirects'] . '">' . $child['name'] . '</a>';
+
+          // Has it posts awaiting approval?
+          if ($child['can_approve_posts'] && ($child['unapproved_posts'] | $child['unapproved_topics']))
+            $child['link'] .= ' <a href="' . $scripturl . '?action=moderate;area=postmod;sa=' . ($child['unapproved_topics'] > 0 ? 'topics' : 'posts') . ';brd=' . $child['id'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '" title="' . sprintf($txt['unapproved_posts'], $child['unapproved_topics'], $child['unapproved_posts']) . '" class="moderation_link">(!)</a>';
+
+          $children[] = $child['new'] ? '<strong>' . $child['link'] . '</strong>' : $child['link'];
+        }
+        echo '
+        <tr id="board_', $board['id'], '_children">
+          <td colspan="3" class="children windowbg">
+            <strong>', $txt['parent_boards'], '</strong>: ', implode(', ', $children), '
+          </td>
+        </tr>';
+      }
 
   // BUTTONS
   $normal_buttons = array(
@@ -120,7 +147,7 @@ function template_main()
       echo'
         <div class="card-header is-hidden-mobile">
           <div class="columns card-header-title">
-            <div class="column is-1"></div>
+            <div class="column is-narrow"><span class="icon"><span class="fa"></span></span></div>
             <div class="column', $options['display_quick_mod'] == 1 ? ' is-5' : ' is-6', '">
               <span class="board-header-title">Subject/Started By</span>
             </div>
@@ -184,6 +211,16 @@ function template_main()
       else
         $topic_icon ='fa-star-o';
 
+      // Tooltip
+      if ($topic['is_poll'])
+        $topic_tooltip = 'Poll';
+      elseif ($topic['is_locked'])
+        $topic_tooltip = 'Locked';
+      elseif ($topic['new'])
+        $topic_tooltip = 'New Posts';
+      else
+        $topic_tooltip ='No New Posts';
+
       /*if ($topic['is_sticky'])
         echo'
         <div class="sticky-tab"><i class="fa fa-thumb-tack"></i></div>
@@ -193,7 +230,7 @@ function template_main()
         <div class="columns is-mobile">
           <div class="column is-narrow">
             <span class="icon">
-              <i class="fa ', $topic_icon, '"></i>
+              <i class="fa ', $topic_icon, '" title="', $topic_tooltip ,'"></i>
             </span>
           </div>
 
