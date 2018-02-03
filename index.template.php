@@ -312,21 +312,18 @@ function template_body_above()
 
             // SUBACCOUNTS
             echo'
-            <div class="navbar-item">', $context['subaccount_dropdown'], '</div>
+            <div class="navbar-item">
+              <div class="select is-small">
+                <select>
+                  <option>Option</option>
+                  <option>Option 2</option>
+                </select>
+              </div>
+            ', $context['subaccount_dropdown'], '
+            </div>
             '; // end subaccounts
 
-          echo'
-            <div class="burger navbar-burger" data-target="userMenu">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-          ';
-
         echo'
-        <div class="navbar-menu" id="userMenu">
-          <div class="navbar-end">
             <div class="navbar-item">
               <div class="field is-grouped">
 
@@ -348,18 +345,14 @@ function template_body_above()
                   echo'
                   </a>
                 </p>
+
                 <p class="control">
                   <a href="', $scripturl, '?action=unread" class="button is-pensieve is-primary is-small" href="#">Unread</a>
                   <a href="', $scripturl, '?action=unreadreplies" class="button is-pensieve is-primary is-small" href="#">Replies</a>
                 </p>
-                <p class="control">
-                  <a href="', $scripturl, '?action=logout" class="button is-light is-small" href="#">Logout</a>
-                </p>
 
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
     </div>
       ';
 

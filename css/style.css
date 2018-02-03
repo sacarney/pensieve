@@ -18,6 +18,10 @@ legend { padding: 0 1rem; }
   .field-label { flex-grow: 2; }
 }
 
+:root {
+  --primary: #00d1b2;
+}
+
 /* ------------------------- */
 /* ACCESSIBILITY */
 /* ------------------------- */
@@ -95,8 +99,52 @@ legend { padding: 0 1rem; }
 /* POST */
 /* ------------------------- */
 
+.post-profile-image-mobile img {
+  height: 50px;
+  width: auto;
+}
+
+.the-post {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 769px) {
+  .the-post.the-post { padding-left: 1rem !important; }
+}
+
+.the-post-content {
+  flex-grow: 1;
+}
+
 .post-signature {
   border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.the-post-footer .column:nth-child(2) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* ------------------------- */
+/* POLL */
+/* ------------------------- */
+
+.voted:before {
+  content: '\f046';
+  font-family: fontawesome;
+  display: inline-flex;
+  margin-right: 0.5rem;
+}
+
+.bar-wrapper {
+  width: 100%;
+  height: 1rem;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.bar { 
+  height: 1rem;
+  background: var(--primary);
 }
 
 /* ------------------------- */
@@ -107,6 +155,43 @@ legend { padding: 0 1rem; }
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
+}
+
+/* Make Previous/Next look like buttons */
+.previous-next-buttons a {
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    box-shadow: none;
+    display: inline-flex;
+    font-size: 1rem;
+    height: 2.25em;
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding-bottom: calc(0.375em - 1px);
+    padding-left: calc(0.625em - 1px);
+    padding-right: calc(0.625em - 1px);
+    padding-top: calc(0.375em - 1px);
+    position: relative;
+    vertical-align: top;
+    user-select: none;
+    background-color: white;
+    border-color: #dbdbdb;
+    color: #363636;
+    cursor: pointer;
+    justify-content: center;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    text-align: center;
+    white-space: nowrap;
+
+    /* is-small */
+    border-radius: 2px;
+    font-size: 0.75rem;
+}
+
+.previous-next-buttons a:not(:last-child) {
+  margin-right: 0.5rem;
 }
 
 /* ------------------------- */

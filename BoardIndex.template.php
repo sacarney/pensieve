@@ -22,27 +22,31 @@ function template_main()
       $txt['topics'], ': ', $context['common_stats']['total_topics'], '<br>',
       ($settings['show_latest_member'] ? '' . $txt['welcome_member'] . '' . $context['common_stats']['latest_member']['link'] . '' . $txt['newest_member'] : '') ,'';
 
-  // NEWS
-  if ($settings['show_newsfader'] && !empty($context['fader_news_lines']))
-  {
-    echo '
-    <h2>', $txt['news'], '</h3>
-    <ul', empty($options['collapse_news_fader']) ? '' : ' style="display: none;"', '>
-    ';
 
-    foreach ($context['news_lines'] as $news)
-      echo '
-      <li>', $news, '</li>
-      ';
-    echo '
-    </ul>
-    ';
-  } 
 
   // BOARD INDEX
   echo'
   <div class="container">
   ';
+
+  // NEWS
+  if ($settings['show_newsfader'] && !empty($context['fader_news_lines']))
+  {
+    echo '
+    <div class="notification">
+      <h2 class="title is-5">', $txt['news'], '</h2>
+      <ul', empty($options['collapse_news_fader']) ? '' : ' style="display: none;"', '>
+      ';
+
+      foreach ($context['news_lines'] as $news)
+        echo '
+        <li class="mb-3">', $news, '</li>
+        ';
+      echo '
+      </ul>
+    </div>
+    ';
+  } 
 
   foreach ($context['categories'] as $category)
   {
