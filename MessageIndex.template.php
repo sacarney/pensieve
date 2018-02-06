@@ -99,14 +99,14 @@ function template_main()
             // Board info column
             echo '
             <div class="column is-6-desktop is-10-narrow">
-              <h3 class="title is-5 mb-2">
+              <h3 class="title is-5 mb-1">
                 <a class="is-size-6-mobile" href="', $board['href'], '" name="b', $board['id'], '">', $board['name'], '</a>
               </h3>
               ';
 
               if (!empty($board['description']))
                 echo'
-                <p class="is-muted mb-2">', $board['description'] , '</p>
+                <p class="is-muted mb-0">', $board['description'] , '</p>
                 ';
 
               // Board Moderators
@@ -163,7 +163,7 @@ function template_main()
             <div class="column is-hidden-mobile">';
               if (!empty($board['last_post']['id']))
                 echo '
-                <p>
+                <p class="is-size-6-5">
                   <span class="is-uppercase is-size-7">', $txt['last_post'], '</span>
                   <span class="is-uppercase is-size-7 is-muted"> ', $txt['by'], '</span> ', 
                   $board['last_post']['member']['link'] , ' 
@@ -351,7 +351,12 @@ function template_main()
         ';*/
 
       echo'
-        <div class="columns is-mobile">
+        <div class="columns is-mobile ', $topic_class ,'">';
+          if ($topic['is_sticky'])
+          echo'
+          <div class="sticky-tab"><i class="fa fa-thumb-tack"></i></div>
+          ';
+          echo'
           <div class="column is-narrow">
             <span class="icon">
               <i class="fa ', $topic_icon, '" title="', $topic_tooltip ,'"></i>
@@ -373,7 +378,7 @@ function template_main()
           </div>
 
           <div class="column is-hidden-mobile">
-            <p>
+            <p class="is-size-6-5">
               <span class="is-uppercase is-size-7">', $txt['last_post'], '</span>
               <span class="is-uppercase is-size-7 is-muted"> ', $txt['by'], '</span> ', 
               $topic['last_post']['member']['link'] , '  

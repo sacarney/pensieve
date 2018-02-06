@@ -202,8 +202,8 @@ function template_html_above()
   echo $context['html_headers'];
 
   echo '
-</head>
-<body>';
+  </head>
+  <body>';
 }
 
 // Before BoardIndex.template.php begins...
@@ -257,10 +257,6 @@ function template_body_above()
 
   // PROFILE
 
-  echo '
-  
-  ';
-
   // If the user is logged in, display stuff like their name, new messages, etc.
     if ($context['user']['is_logged'])
     {
@@ -272,42 +268,20 @@ function template_body_above()
         ';
 
       echo'
-
       <div class="navbar is-light is-pensieve">
         <div class="container">
           <div class="navbar-brand">
       ';
-          
-            // AVATAR
-            if (!empty($context['user']['avatar'])) {
-              echo'
-              <a href="', $scripturl, '?action=profile" class="navbar-item">', $context['user']['avatar']['image'], '</a>
-              ';
-            } else {
-              echo'
-              <a href="', $scripturl, '?action=profile" class="navbar-item">
-                <span class="icon">
-                  <span class="fa fa-user-circle-o"></span>
-                </span>
-              </a>';
-            }
 
-            // Mobile Unread Messages
-            if($context['user']['unread_messages'])
-              echo'
-              <div class="navbar-item is-paddingless is-hidden-desktop">
-                <a href="', $scripturl, '?action=pm" class="button is-warning">
-                  <span class="icon">
-                    <span class="fa fa-envelope-o"></span>
-                  </span>
-                  <span>', $context['user']['unread_messages'],'</span>
-                </a>
-              </div>
-              '; 
-
-            // PROFILE NAME
+            // NAME AND AVATAR
             echo'
-            <a class="navbar-item is-hidden-mobile" href="', $scripturl, '?action=profile">', $context['user']['name'],'</a>
+              <a class="navbar-item" href="', $scripturl ,'?action=profile">';
+              // Avatar
+              if (!empty($context['user']['avatar']))
+                echo '', $context['user']['avatar']['image'],'';
+              echo'
+                <span class="ml-2 is-hidden-mobile">', $context['user']['name'] ,'</span>
+              </a>
             ';
 
             // SUBACCOUNTS
@@ -315,7 +289,7 @@ function template_body_above()
             <div class="navbar-item">
               <div class="select is-small">
                 <select>
-                  <option>Option</option>
+                  <option>Switch Account</option>
                   <option>Option 2</option>
                 </select>
               </div>
@@ -328,7 +302,7 @@ function template_body_above()
               <div class="field is-grouped">
 
                 <p class="control">
-                  <a href="', $scripturl, '?action=pm" class="buttons has-addons is-inline-flex">
+                  <a href="', $scripturl, '?action=pm" class="buttons is-inline-flex">
                   <span class="button is-small is-primary">
                     <span class="icon">
                       <span class="fa fa-envelope"></span>
@@ -339,7 +313,7 @@ function template_body_above()
                     // Unread messages?
                     if($context['user']['unread_messages'])
                       echo'
-                      <span class="button is-small is-warning">', $context['user']['unread_messages'],' new</span>
+                      <span class="tag is-small is-rounded you-have-unread-messages">', $context['user']['unread_messages'],'</span>
                       '; // endif unread messages
 
                   echo'
@@ -377,16 +351,10 @@ function template_body_above()
 
 // THIS IS WHERE THE BOARD INDEX IS!
 
+// After BoardIndex.template.php ends...
 function template_body_below()
 {
   global $context, $settings, $options, $scripturl, $txt, $modSettings;
-
-
-  // BEGIN INFO CENTER
-
-  template_info_center();
-
-  // END INFO CENTER
 
   echo'
   </main>
@@ -397,7 +365,7 @@ function template_body_below()
   echo '
   <footer class="footer">
     <div class="container">
-      <div class="has-text-centered is-size-7 is-uppercase">', theme_copyright(), '</div>
+      <div class="has-text-centered is-size-7 is-uppercase">', theme_copyright(), ' | <a href="https://github.com/sacarney/pensieve">Pensieve Theme</a> by Sarah Carney</div>
     </div>
   </footer>
   ';
@@ -421,9 +389,10 @@ function theme_linktree($force_show = false)
     return;
 
   echo '
-  <div class="container is-hidden-touch">
-    <nav class="breadcrumb is-small mt-4" aria-label="breadcrumbs">
-      <ul>';
+  <div class="section is-small">
+    <div class="container">
+      <nav class="breadcrumb is-small" aria-label="breadcrumbs">
+        <ul>';
 
   // Each tree item has a URL and name. Some may have extra_before and extra_after.
   foreach ($context['linktree'] as $link_num => $tree)
@@ -453,6 +422,7 @@ function theme_linktree($force_show = false)
   echo '
       </ul>
     </nav>
+  </div>
   </div>
   ';
 
@@ -551,114 +521,6 @@ function template_button_strip($button_strip, $direction = 'top', $strip_options
     <div class="thread-tools-menu"', (empty($buttons) ? ' style="display: none;"' : ''), (!empty($strip_options['id']) ? ' id="' . $strip_options['id'] . '"': ''), '>',
         implode('', $buttons), '
     </div>';
-}
-
-function template_info_center()
-{
-  global $context, $settings, $options, $txt, $scripturl, $modSettings;
-
-  // Here's where the "Info Center" starts...
-  echo '
-    <div class="container mt-3">
-      <div class="columns">
-  ';
-
-  // RECENT POSTS
-  if (!empty($settings['number_recent_posts']) && (!empty($context['latest_posts']) || !empty($context['latest_post'])))
-  {
-    echo'
-    <div class="column">
-      <div class="card h-100">
-        <div class="card-header">
-          <h2 class="card-header-title title is-5">
-            <span class="icon is-medium">
-              <span class="fa fa-clock-o"></span>
-            </span>
-            <a href="', $scripturl, '?action=recent">', $txt['recent_posts'], '</a>
-          </h2>
-        </div>
-        <div class="card-content">
-          <ul>
-      ';
-
-      foreach ($context['latest_posts'] as $post)
-      echo '
-      <li>', $post['link'], '<span class="is-uppercase is-muted is-size-7"> ', $txt['by'], ' </span> ', $post['poster']['link'], ' <span class="is-muted">/</span> ', $post['time'], '</li>
-      '; 
-
-    echo'
-          </ul>
-        </div>
-      </div> 
-    </div>
-    '; // end box, end column
-  }
-  
-  // USERS ONLINE
-  echo '
-  <div class="column">
-    <div class="card h-100">
-      <div class="card-header">
-        <h2 class="card-header-title title is-5">
-          <span class="icon is-medium">
-            <span class="fa fa-user-circle-o"></span>
-          </span
-          <a href="' . $scripturl . '?action=who' . '">', $txt['online_users'], '</a>
-        </h2>
-      </div>
-    <div class="card-content">
-  ';
-
-      // # Users & # Guests Online
-      echo'
-      <p>
-        <span class="is-size-4">', comma_format($context['num_users_online']), ' </span>',
-        $context['num_users_online'] == 1 ? $txt['user'] : $txt['users'], '
-        <span class="is-cyan">&</span>
-        <span class="is-size-4">', comma_format($context['num_guests']), ' </span>',
-        $context['num_guests'] == 1 ? $txt['guest'] : $txt['guests'], '
-      </p>
-      ';
-
-      // Online users
-      if (!empty($context['users_online']))
-      {
-        echo'
-        <hr>
-
-        <p class="subtitle is-5 is-marginless">', sprintf($txt['users_active'], $modSettings['lastActive']), '</p>
-        
-        <p>', implode(', ', $context['list_users_online']);
-
-          // Showing membergroups?
-          if (!empty($settings['show_group_key']) && !empty($context['membergroups']))
-          echo '
-          <br />[' . implode(']&nbsp;&nbsp;[', $context['membergroups']) . ']';'</p>
-        ';
-      }
-
-      // Most users online
-      echo'
-      <p>
-        <span class="is-uppercase is-size-7 is-muted">', $txt['most_online_today'], ':</span>
-        ', comma_format($modSettings['mostOnlineToday']), '
-        <br>
-        <span class="is-uppercase is-size-7 is-muted">', $txt['most_online_ever'], ':</span>
-        ', comma_format($modSettings['mostOnline']), '<span class="is-muted"> on </span>
-        ', timeformat($modSettings['mostDate']), '
-      </p>
-      ';
-
-    echo '
-    </div>
-      </div> 
-    </div>
-    '; // end box, end column
-
-  echo'
-  </div>
-  </div>
-  '; // end columns, end container, end section
 }
 
 ?>

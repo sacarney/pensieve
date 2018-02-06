@@ -477,7 +477,7 @@ function template_showPosts()
         ', (!isset($context['attachments']) && empty($context['is_topics']) ? $txt['showMessages'] : (!empty($context['is_topics']) ? $txt['showTopics'] : $txt['showAttachments'])), ' - ', $context['member']['name'], '
       </h3>
     </div>
-    <nav class="pagination is-small">
+    <nav class="pagination is-small mb-2">
       <span>', $txt['pages'], ': ', $context['page_index'], '</span>
     </nav>';
 
@@ -643,7 +643,7 @@ function template_showPosts()
   }
   // Show more page numbers.
   echo '
-    <nav class="pagination is-small">
+    <nav class="pagination is-small mt-2">
       <span>', $txt['pages'], ': ', $context['page_index'], '</span>
     </nav>';
 }
