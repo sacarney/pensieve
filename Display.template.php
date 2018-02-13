@@ -203,6 +203,7 @@ function template_main()
     'reply' => array(
       'test' => 'can_reply', 
       'text' => 'reply', 
+      'class' => 'is-primary',
       'image' => 'reply.gif', 
       'icon' => 'fa-reply',
       'lang' => true, 
@@ -284,7 +285,6 @@ function template_main()
           echo'
         </div>
         <div class="level-right">', template_button_strip($normal_buttons, 'right'), '
-
         </div>
       </div>
     </div>';
@@ -783,6 +783,10 @@ function template_main()
       <div class="container">
         <a id="lastPost"></a>';
 
+       // Show to button strip again
+       echo'<div class="level-right">', template_button_strip($normal_buttons, 'right'), '
+        </div>'; 
+
       // Show the page index... "Pages: [1]".
       echo '
         <div class="level mt-2 mb-2">
@@ -851,8 +855,6 @@ function template_main()
   if ($context['can_restore_topic'])
     $mod_buttons[] = array('text' => 'restore_topic', 'image' => '', 'lang' => true, 'url' => $scripturl . '?action=restoretopic;topics=' . $context['current_topic'] . ';' . $context['session_var'] . '=' . $context['session_id']);  
 
-  // Show the lower breadcrumbs.
-  theme_linktree();
 
   // Allow adding new mod buttons easily.
   call_integration_hook('integrate_mod_buttons', array(&$mod_buttons));
@@ -919,7 +921,10 @@ function template_main()
         echo '
             <input class="button" type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'postmodify\', \'message\');" tabindex="', $context['tabindex']++, '" class="button_submit" />';
 
+      // Show the lower breadcrumbs.
+  theme_linktree();
       echo '
+
           </div>
         </form>
       </div>

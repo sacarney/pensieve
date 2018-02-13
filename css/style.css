@@ -32,6 +32,11 @@ widescreen above 1180px
   --danger: #ff3860;
 }
 
+.cat_bar .title {
+  padding: 0.5em 0.75em;
+  background: #f1f1f1;
+}
+
 /* ------------------------- */
 /* HEADER */
 /* ------------------------- */
@@ -55,6 +60,19 @@ widescreen above 1180px
 
 .breadcrumb a[title="Board Moderator"] {
   padding: 0 0.25rem;
+}
+
+.breadcrumb li .nav,
+.breadcrumb li em {
+  padding: 0.5em 0.75em;
+}
+
+.breadcrumb li > span ~ a {
+  padding: 0;
+}
+
+.pagination {
+  margin: 0;
 }
 
 /* ------------------------- */
@@ -184,9 +202,35 @@ widescreen above 1180px
 }
 
 /* ------------------------- */
-/* MISC */
+/* ADD/EDIT POST */
 /* ------------------------- */
 
+.type-your-post textarea {
+  position: relative;
+
+  display: block;
+  height: 2.25em;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  padding: 0.625em !important;
+
+  color: #363636;
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  border: 1px solid transparent;
+  border-radius: 3px;
+  box-shadow: none;
+
+  vertical-align: top;
+  background-color: white;
+  border-color: #dbdbdb;
+}
+
+.post_options {
+  column-count: 2;
+}
 
 /* ------------------------- */
 /* STATS GRAPH */

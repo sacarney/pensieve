@@ -107,8 +107,8 @@ function template_html_above()
     <head>';
 
   // The ?fin20 part of this link is just here to make sure browsers don't cache it wrongly.
-  echo '
-  <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/index', $context['theme_variant'], '.css?fin20" />';
+  /*echo '
+  <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/index', $context['theme_variant'], '.css?fin20" />';*/
 
   // Some browsers need an extra stylesheet due to bugs/compatibility issues.
   foreach (array('ie7', 'ie6', 'webkit') as $cssfix)
@@ -398,7 +398,7 @@ function theme_linktree($force_show = false)
   foreach ($context['linktree'] as $link_num => $tree)
   {
     echo '
-      <li', ($link_num == count($context['linktree']) - 1) ? ' class="is-active"' : '', '>';
+      <li', ($link_num == count($context['linktree']) - 1) ? ' class=" "' : '', '>';
 
     // Show something before the link?
     if (isset($tree['extra_before']))
