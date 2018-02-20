@@ -1,0 +1,66 @@
+/*
+ * Color changes for the default variant.
+ *
+ */
+
+/*
+ mobile up to 768px
+ tablet between 769px and 979px
+ desktop between 980px and 1179px
+ widescreen above 1180px
+*/
+
+:root {
+  --primary: #00d1b2;
+  --link: #3273dc;
+  --info: #209cee;
+  --success: #23d160;
+  --warning: #ffdd57;
+  --danger: #ff3860;
+
+  --white: #ffffff;
+  --black: #0a0a0a;
+  --light: #f5f5f5;
+  --dark: #363636;
+  --grey: #dbdbdb;
+
+  --light-overlay: rgba(255, 255, 255, 0.1);
+  --dark-overlay: rgba(0, 0, 0, 0.1);
+}
+
+.sticky-tab {
+  border-color: var(--primary) transparent transparent var(--primary);
+}
+
+.topic-is-locked {
+  box-shadow: inset 5px 0 var(--danger);
+}
+
+.previous-next-buttons a {
+  background-color: white;
+  border-color: var(--grey);
+  color: var(--dark);
+}
+
+.post-signature {
+  border-top: 1px solid var(--dark-overlay);
+}
+
+.the-post-footer {
+  border-bottom: 1px solid var(--dark-overlay);
+}
+
+.bar-wrapper {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.bar { background: var(--primary); }
+
+.type-your-post textarea {
+  color: var(--dark);
+  border-color: var(--grey);
+}
+
+.stats-graph_bar {
+  background: var(--primary);
+}

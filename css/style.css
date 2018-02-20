@@ -1,22 +1,8 @@
-/* ------------------------- */
-/* BULMA OVERRIDE */
-/* ------------------------- */
-
-.input.is-auto,
-.textarea.is-auto {
-  width: auto !important;
-  min-width: 0;
-}
-
-.card { margin-bottom: 0.5rem; }
-.card-content { padding: 0.75rem; }
-
-fieldset { padding: 1rem; border: 1px solid #ddd; }
-legend { padding: 0 1rem; }
-
-@media screen and (min-width: 769px), print {
-  .field-label { flex-grow: 2; }
-}
+/*
+ * Slight, structural CSS adjustments for bulma.io. 
+ * Any color or font changes should go in the variant CSS.
+ *
+ */
 
 /*
 mobile up to 768px
@@ -27,30 +13,64 @@ widescreen above 1180px
 
 :root {
   --primary: #00d1b2;
+  --link: #3273dc;
+  --info: #209cee;
   --success: #23d160;
   --warning: #ffdd57;
   --danger: #ff3860;
+
+  --white: #ffffff;
+  --black: #0a0a0a;
+  --light: #f5f5f5;
+  --dark: #363636;
+
+  --light-overlay: rgba(255, 255, 255, 0.1);
+  --dark-overlay: rgba(0, 0, 0, 0.1);
+}
+
+.fa { font-weight: normal !important; }
+
+/* ------------------------- */
+/* BULMA OVERRIDE */
+/* ------------------------- */
+
+.input.is-auto,
+.textarea.is-auto {
+  width: auto !important;
+  min-width: 0;
+}
+
+.card { margin-bottom: 1rem; }
+.card-content { padding: 0.75rem; }
+
+fieldset { padding: 1rem; border: 1px solid var(--light-overlay); }
+legend { padding: 0 1rem; }
+
+@media screen and (min-width: 769px), print {
+  .field-label { flex-grow: 2; }
 }
 
 .cat_bar .title {
   padding: 0.5em 0.75em;
-  background: #f1f1f1;
+  background: var(--light-overlay);
+}
+
+.section.is-small ~ .section.is-small {
+  padding-top: 0;
+}
+
+.button { transition: all 300ms ease; }
+
+.content a { text-decoration: underline; }
+
+#smfAnnouncements dl {
+  max-height: 300px;
+  overflow-x: scroll;
 }
 
 /* ------------------------- */
 /* HEADER */
 /* ------------------------- */
-
-.tag.you-have-unread-messages {
-  position: absolute;
-  top: -0.5rem;
-  left: 75%;
-  height: 1.25rem;
-  padding: 0.25rem;
-  min-width: 1.25rem;
-  z-index: 100;
-  background: var(--warning);
-}
 
 .breadcrumb ul {
   display: flex;
@@ -71,9 +91,15 @@ widescreen above 1180px
   padding: 0;
 }
 
+@media (max-width: 768px) {
+  .breadcrumb a { padding: 0 0.5rem; }
+}
+
 .pagination {
   margin: 0;
 }
+
+code, pre { display: block; }
 
 /* ------------------------- */
 /* TOPIC LIST */
@@ -84,7 +110,6 @@ widescreen above 1180px
   height: 1px;
   width: 1px;
   border: 1rem solid;
-  border-color: var(--primary) transparent transparent var(--primary);
 }
 
 .sticky-tab .fa {
@@ -93,10 +118,6 @@ widescreen above 1180px
   left: -0.65rem;
   font-size: 0.75rem;
   color: white;
-}
-
-.topic-is-locked {
-  box-shadow: inset 5px 0 var(--danger);
 }
 
 /* ------------------------- */
@@ -121,9 +142,6 @@ widescreen above 1180px
   position: relative;
   vertical-align: top;
   user-select: none;
-  background-color: white;
-  border-color: #dbdbdb;
-  color: #363636;
   cursor: pointer;
   justify-content: center;
   padding-left: 0.75em;
@@ -171,13 +189,10 @@ widescreen above 1180px
   flex-grow: 1;
 }
 
-.post-signature {
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
+@media (min-width: 769px) {
+  .post-signature { margin-left: 2rem !important; }
 }
 
-.the-post-footer {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-}
 
 /* ------------------------- */
 /* POLL */
@@ -193,12 +208,10 @@ widescreen above 1180px
 .bar-wrapper {
   width: 100%;
   height: 1rem;
-  background: rgba(0, 0, 0, 0.15);
 }
 
 .bar { 
   height: 1rem;
-  background: var(--primary);
 }
 
 /* ------------------------- */
@@ -215,7 +228,6 @@ widescreen above 1180px
   min-width: 100%;
   padding: 0.625em !important;
 
-  color: #363636;
   font-size: 0.9rem;
   line-height: 1.5;
 
@@ -225,7 +237,6 @@ widescreen above 1180px
 
   vertical-align: top;
   background-color: white;
-  border-color: #dbdbdb;
 }
 
 .post_options {
@@ -255,11 +266,6 @@ widescreen above 1180px
 .stats-graph_bar {
   width: 2rem;
   margin: 0 0.5rem;
-  background: tomato;
-}
-
-.stats-graph_hour {
-
 }
 
 /* ------------------------- */

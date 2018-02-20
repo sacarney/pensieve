@@ -136,7 +136,7 @@ function template_summary()
           
         if (!empty($context['member']['blurb']))
         echo '
-          <p class="tag is-light mt-2">', $context['member']['blurb'], '</p>
+          <p class="tag mt-2">', $context['member']['blurb'], '</p>
         ';
         
         // Show the users signature.

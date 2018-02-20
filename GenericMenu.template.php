@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Simple Machines Forum (SMF)
@@ -89,7 +90,7 @@ function template_generic_menu_sidebar_above()
   // This is where the actual "main content" area for the admin section starts.
   echo '
     </div>
-    <div id="main_admsection" class="column">';
+    <div id="main_admsection" class="column is-9">';
 
   // If there are any "tabs" setup, this is the place to shown them.
   if (!empty($context['tabs']) && empty($context['force_disable_tabs']))

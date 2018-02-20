@@ -121,7 +121,7 @@ function template_main()
         </div>
       </div>
       <div>
-        <div class="content p-3" id="preview_body">
+        <div id="preview_body">
           ', empty($context['preview_message']) ? '' : $context['preview_message'], '
         </div>
       </div>';
@@ -671,7 +671,7 @@ function template_main()
           bodyText += preview.getElementsByTagName(\'body\')[0].childNodes[i].nodeValue;
 
         setInnerHTML(document.getElementById(\'preview_body\'), bodyText);
-        document.getElementById(\'preview_body\').className = \'post\';
+        document.getElementById(\'preview_body\').className = \'post content p-3\';
 
         // Show a list of errors (if any).
         var errors = XMLDoc.getElementsByTagName(\'smf\')[0].getElementsByTagName(\'errors\')[0];
@@ -811,11 +811,12 @@ function template_main()
   if (isset($context['previous_posts']) && count($context['previous_posts']) > 0)
   {
     echo '
-    <div id="recent" class="flow_hidden main_section">
-      <div class="cat_bar">
-        <h2 class="title is-5 mt-4 mb-4">', $txt['topic_summary'], '</h2>
-      </div>
-      <span id="new_replies"></span>';
+    <div class="container">
+      <div id="recent" class="flow_hidden main_section">
+        <div class="cat_bar">
+          <h2 class="title is-5 mt-4 mb-4">', $txt['topic_summary'], '</h2>
+        </div>
+        <span id="new_replies"></span>';
 
     $ignored_posts = array();
     foreach ($context['previous_posts'] as $post)
@@ -864,6 +865,7 @@ function template_main()
     }
 
     echo '
+    </div>
     </div>
     <script type="text/javascript"><!-- // --><![CDATA[
       var aIgnoreToggles = new Array();';

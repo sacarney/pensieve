@@ -99,7 +99,7 @@ function template_main()
             // Board info column
             echo '
             <div class="column is-6-desktop is-10-narrow">
-              <h3 class="title is-5 mb-1">
+              <h3 class="title is-6 mb-1">
                 <a class="is-size-6-mobile" href="', $board['href'], '" name="b', $board['id'], '">', $board['name'], '</a>
               </h3>
               ';

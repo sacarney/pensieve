@@ -136,12 +136,8 @@ function template_html_above()
 
   // Here comes the JavaScript bits!
   echo '
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
   <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/script.js?fin20"></script>
   <script type="text/javascript" src="', $settings['theme_url'], '/scripts/theme.js?fin20"></script>
-  <script type="text/javascript" src="', $settings['theme_url'], '/scripts/menu.js?fin20"></script>
-  <script type="text/javascript" src="', $settings['theme_url'], '/scripts/keyboard.js?fin20"></script>
-
   <script type="text/javascript"><!-- // --><![CDATA[
     var smf_theme_url = "', $settings['theme_url'], '";
     var smf_default_theme_url = "', $settings['default_theme_url'], '";
@@ -501,11 +497,11 @@ function template_button_strip($button_strip, $direction = 'top', $strip_options
     if (!isset($value['test']) || !empty($context[$value['test']]))
 
       $buttons[] = '
-      <a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button is-small ' . $value['class'] .' button_' . $key . (isset($value['active']) ? ' ' : ' ') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . '>
-        <span class="icon is-small">
+      <a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button is-small ' . $value['class'] .' button_' . $key . (isset($value['active']) ? ' ' : ' ') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . ' title="' . $txt[$value['text']] . '">
+        <span class="icon is-small m-0">
           <i class="fa '. $value['icon'] .'"></i>
         </span>
-        <span class="' . $value['hidden'] . ' button-label">' . $txt[$value['text']] . '</span>
+        <span class="' . $value['hidden'] . ' is-hidden-touch ml-1">' . $txt[$value['text']] . '</span>
       </a>
       ';
   }

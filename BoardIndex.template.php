@@ -23,19 +23,56 @@ function template_main()
   if ($settings['show_newsfader'] && !empty($context['fader_news_lines']))
   {
     echo '
-    <div class="notification">
+    <div id="newsFader" class="notification">
       <h2 class="title is-5">', $txt['news'], '</h2>
-      <ul', empty($options['collapse_news_fader']) ? '' : ' style="display: none;"', '>
-      ';
 
-      foreach ($context['news_lines'] as $news)
-        echo '
-        <li class="mb-3">', $news, '</li>
-        ';
+      <ul id="smfFadeScroller"', empty($options['collapse_news_fader']) ? '' : ' style="display: none;"', '>';
+
+        foreach ($context['news_lines'] as $news)
+          echo ' <li class="mb-3">', $news, '</li>';
       echo '
       </ul>
     </div>
-    ';
+    <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/fader.js"></script>
+    <script type="text/javascript"><!-- // --><![CDATA[
+
+      // Create a news fader object.
+      var oNewsFader = new smf_NewsFader({
+        sSelf: \'oNewsFader\',
+        sFaderControlId: \'smfFadeScroller\',
+        sItemTemplate: ', JavaScriptEscape('<div>%1$s</div>'), ',
+        iFadeDelay: ', empty($settings['newsfader_time']) ? 5000 : $settings['newsfader_time'], '
+      });
+
+      // Create the news fader toggle.
+      var smfNewsFadeToggle = new smc_Toggle({
+        bToggleEnabled: true,
+        bCurrentlyCollapsed: ', empty($options['collapse_news_fader']) ? 'false' : 'true', ',
+        aSwappableContainers: [
+          \'smfFadeScroller\'
+        ],
+        aSwapImages: [
+          {
+            sId: \'newsupshrink\',
+            srcExpanded: smf_images_url + \'/collapse.gif\',
+            altExpanded: ', JavaScriptEscape($txt['upshrink_description']), ',
+            srcCollapsed: smf_images_url + \'/expand.gif\',
+            altCollapsed: ', JavaScriptEscape($txt['upshrink_description']), '
+          }
+        ],
+        oThemeOptions: {
+          bUseThemeSettings: ', $context['user']['is_guest'] ? 'false' : 'true', ',
+          sOptionName: \'collapse_news_fader\',
+          sSessionVar: ', JavaScriptEscape($context['session_var']), ',
+          sSessionId: ', JavaScriptEscape($context['session_id']), '
+        },
+        oCookieOptions: {
+          bUseCookie: ', $context['user']['is_guest'] ? 'true' : 'false', ',
+          sCookieName: \'newsupshrink\'
+        }
+      });
+    // ]]></script>';
+    
   } 
 
   foreach ($context['categories'] as $category)
@@ -54,8 +91,8 @@ function template_main()
     echo '
     <div id="category_', $category['id'], '" class="card mb-4">
       <div class="card-header">
-        <h2 class="card-header-title title is-4">
-          <span class="is-size-5-mobile href="">', $category['name'], '</span>
+        <h2 class="card-header-title title is-5">
+          <span class="is-size-5-mobile">', $category['name'], '</span>
         </h2>
       </div>
       ';
@@ -111,7 +148,7 @@ function template_main()
         // Board info column
         echo '
         <div class="column is-6-desktop is-10-narrow">
-          <h3 class="title is-5 mb-1">
+          <h3 class="title is-6 mb-1">
             <a class="is-size-6-mobile" href="', $board['href'], '" name="b', $board['id'], '">', $board['name'], '</a>
           </h3>
           ';
@@ -218,7 +255,7 @@ function template_main()
       'markread' => array(
         'text' => 'mark_as_read', 
         'image' => 'markread.gif', 
-        'class' => 'is-primary is-small',
+        'class' => 'is-small',
         'lang' => true, 
         'icon' => 'fa-check',
         'url' => $scripturl . '?action=markasread;sa=all;' . $context['session_var'] . '=' . $context['session_id']
