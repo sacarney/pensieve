@@ -292,7 +292,42 @@ function template_main()
   echo '
       <div class="cat_bar">
         <h1 class="title is-5 mb-1"><img class="mr-1" src="', $settings['images_url'], '/topic/', $context['class'], '.gif" alt="" />', $context['subject'], '</h1> 
-      </div>
+      </div>';
+
+          // Tagging System
+      echo '
+      <div class="container is-flex align-items-center mt-2 mb-2">
+
+        <h2 class="title is-6 mb-0 mr-2">', $txt['smftags_topic'], '</h2>';
+
+        echo'<ul class="tags mb-0">';
+
+        foreach ($context['topic_tags'] as $i => $tag)
+        {
+          echo '<li>
+                  <div class="tags has-addons mr-2">
+                    <a class="tag" href="' . $scripturl . '?action=tags;tagid=' . $tag['ID_TAG']  . '">' . $tag['tag'] . '</a>';
+
+                    if(!$context['user']['is_guest'] && allowedTo('smftags_del'))
+                    echo'
+                      <a class="tag is-delete" href="' . $scripturl . '?action=tags;sa=deletetag;tagid=' . $tag['ID']  . '"></a>
+                      ';
+             echo' </div>
+             </li>';
+        }
+
+        echo'</ul>';
+
+        global $topic;
+        if(!$context['user']['is_guest'] && allowedTo('smftags_add'))
+        echo '
+        <a class="button is-small" href="' . $scripturl . '?action=tags;sa=addtag;topic=',$topic, '">' . $txt['smftags_addtag'] . '</a>';
+
+      echo '
+        </div>';
+    
+    // End Tagging System
+        echo'
 
       <div class="mb-4">
         <span class="is-muted is-size-6-5">', $txt['read'], ' ', $context['num_views'], ' ', $txt['times'], '</span>';
@@ -1033,7 +1068,7 @@ function template_main()
 
             aJumpTo[aJumpTo.length] = new JumpTo({
               sContainerId: "display_jump_to",
-              sJumpToTemplate: "<label class=\"smalltext\" for=\"%select_id%\">', $context['jump_to']['label'], ':<" + "/label><div class=\"select is-small\"> %dropdown_list%</div>",
+              sJumpToTemplate: "<div class=\"is-flex align-items-center\"><label class=\"label is-small mr-2\" for=\"%select_id%\">', $context['jump_to']['label'], '</label><span class=\"select is-small is-flex\">%dropdown_list%</span></div></div></div>",
               iCurBoardId: ', $context['current_board'], ',
               iCurBoardChildLevel: ', $context['jump_to']['child_level'], ',
               sCurBoardName: "', $context['jump_to']['board_name'], '",
@@ -1103,7 +1138,46 @@ function template_main()
 
   echo'</div>';
 
-  // Show the lower breadcrumbs.
+  
+		
+		
+		// Tagging System
+			echo '
+			<div class="container is-flex align-items-center mt-2 mb-2">
+
+				<h2 class="title is-6 mb-0 mr-2">', $txt['smftags_topic'], '</h2>';
+
+        echo'<ul class="tags mb-0">';
+
+				foreach ($context['topic_tags'] as $i => $tag)
+				{
+          echo '<li>
+                  <div class="tags has-addons mr-2">
+                    <a class="tag" href="' . $scripturl . '?action=tags;tagid=' . $tag['ID_TAG']  . '">' . $tag['tag'] . '</a>';
+
+                    if(!$context['user']['is_guest'] && allowedTo('smftags_del'))
+                    echo'
+                      <a class="tag is-delete" href="' . $scripturl . '?action=tags;sa=deletetag;tagid=' . $tag['ID']  . '"></a>
+                      ';
+             echo' </div>
+             </li>';
+				}
+
+        echo'</ul>';
+
+				global $topic;
+				if(!$context['user']['is_guest'] && allowedTo('smftags_add'))
+				echo '
+				<a class="button is-small" href="' . $scripturl . '?action=tags;sa=addtag;topic=',$topic, '">' . $txt['smftags_addtag'] . '</a>';
+
+			echo '
+				</div>';
+		
+		// End Tagging System
+		
+		// Show the lower breadcrumbs.
+		
+		
   theme_linktree();
 }
 

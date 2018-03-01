@@ -220,8 +220,30 @@ function template_main()
           </div>
         </div>
       </div>
-    </div>
+    </div>';
 
+    // Tagging Mod
+    if(!isset($context['num_replies']) && allowedTo('smftags_add') )
+    {
+    echo '
+    <div class="field is-horizontal">
+      <div class="field-label has-text-left"> 
+        <label class="label" id="caption_subject">', $txt['smftags_topic'], '</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <input class="input" type="text" name="tags"', ' tabindex="', $context['tabindex']++, '" size="80" maxlength="80" />
+          </div>
+          <p class="help">', $txt['smftags_seperate'], '</p>
+        </div>
+        
+      </div>
+    </div>';
+    }
+    // End Tagging Mod
+
+    echo'
     <div class="field is-horizontal">
       <div class="field-label has-text-left">
         <label class="label">', $txt['message_icon'], ' </label>
