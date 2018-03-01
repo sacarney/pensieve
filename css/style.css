@@ -193,6 +193,8 @@ code, pre { display: block; }
   .post-signature { margin-left: 2rem !important; }
 }
 
+/* --- JUMPTO --- */
+#display_jump_to input[type="button"] { display: none; }
 
 /* ------------------------- */
 /* POLL */
