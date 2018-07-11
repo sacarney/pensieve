@@ -184,7 +184,7 @@ function template_main()
         <div class="field-body">
           <div class="field">
             <div class="control">
-              <input type="text" name="guestname" size="25" value="', $context['name'], '" tabindex="', $context['tabindex']++, '" class="input_text input" />
+              <input type="text" name="guestname" size="25" value="', $context['name'], '" class="input_text input" />
             </div>
           </div>
         </div>
@@ -200,7 +200,7 @@ function template_main()
           <div class="field-body">
             <div class="field">
               <div class="control">
-                <input type="text" name="email" size="25" value="', $context['email'], '" tabindex="', $context['tabindex']++, '" class="input_text input" />
+                <input type="text" name="email" size="25" value="', $context['email'], '" class="input_text input" />
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@ function template_main()
       <div class="field-body">
         <div class="field">
           <div class="control">
-            <input type="text" name="subject"', $context['subject'] == '' ? '' : ' value="' . $context['subject'] . '"', ' tabindex="', $context['tabindex']++, '" size="80" maxlength="80" class="input_text input ', isset($context['post_error']) ? 'is-danger' : '' ,'" />
+            <input type="text" name="subject"', $context['subject'] == '' ? '' : ' value="' . $context['subject'] . '"', ' size="80" maxlength="80" class="input_text input ', isset($context['post_error']) ? 'is-danger' : '' ,'" />
           </div>
         </div>
       </div>
@@ -233,7 +233,7 @@ function template_main()
       <div class="field-body">
         <div class="field">
           <div class="control">
-            <input class="input" type="text" name="tags"', ' tabindex="', $context['tabindex']++, '" size="80" maxlength="80" />
+            <input class="input" type="text" name="tags"', ' size="80" maxlength="80" />
           </div>
           <p class="help">', $txt['smftags_seperate'], '</p>
         </div>
@@ -276,10 +276,10 @@ function template_main()
           <div id="post_event">
             <fieldset id="event_main">
               <legend><span', isset($context['post_error']['no_event']) ? ' class="error"' : '', ' id="caption_evtitle">', $txt['calendar_event_title'], '</span></legend>
-              <input type="text" name="evtitle" maxlength="255" size="60" value="', $context['event']['title'], '" tabindex="', $context['tabindex']++, '" class="input_text" />
+              <input type="text" name="evtitle" maxlength="255" size="60" value="', $context['event']['title'], '"  class="input_text" />
               <div class="smalltext">
                 <input type="hidden" name="calendar" value="1" />', $txt['calendar_year'], '
-                <select name="year" id="year" tabindex="', $context['tabindex']++, '" onchange="generateDays();">';
+                <select name="year" id="year"  onchange="generateDays();">';
 
     // Show a list of all the years we allow...
     for ($year = $modSettings['cal_minyear']; $year <= $modSettings['cal_maxyear']; $year++)
@@ -375,7 +375,7 @@ function template_main()
           <div id="edit_poll">
             <fieldset id="poll_main">
               <legend><span ', (isset($context['poll_error']['no_question']) ? ' class="error"' : ''), '>', $txt['poll_question'], '</span></legend>
-              <input type="text" name="question" value="', isset($context['question']) ? $context['question'] : '', '" tabindex="', $context['tabindex']++, '" size="80" class="input_text" />
+              <input type="text" name="question" value="', isset($context['question']) ? $context['question'] : '', '" size="80" class="input_text" />
               <ul class="poll_main">';
 
     // Loop through all the choices and print them out.
@@ -384,7 +384,7 @@ function template_main()
       echo '
                 <li>
                   <label for="options-', $choice['id'], '">', $txt['option'], ' ', $choice['number'], '</label>:
-                  <input type="text" name="options[', $choice['id'], ']" id="options-', $choice['id'], '" value="', $choice['label'], '" tabindex="', $context['tabindex']++, '" size="80" maxlength="255" class="input_text" />
+                  <input type="text" name="options[', $choice['id'], ']" id="options-', $choice['id'], '" value="', $choice['label'], '" size="80" maxlength="255" class="input_text" />
                 </li>';
     }
 
@@ -440,19 +440,24 @@ function template_main()
   }
 
   // Show the actual posting area...
-  if ($context['show_bbc'])
-  {
-    echo '
-      <div id="bbcBox_message"></div>';
+  if ($context['show_bbc'] || !empty($context['smileys']['postform'])) {
+    echo '<div class="notification">';
+  
+    if ($context['show_bbc'])
+    {
+      echo '
+        <div id="bbcBox_message"></div>';
+    }
+
+    // @TODO What about smileys?
+    if (!empty($context['smileys']['postform']) || !empty($context['smileys']['popup']))
+      echo '
+        <div id="smileyBox_message"></div>';
+    echo '</div>';
   }
 
-  // @TODO What about smileys?
-  if (!empty($context['smileys']['postform']) || !empty($context['smileys']['popup']))
-    echo '
-      <div id="smileyBox_message"></div>';
-
-  echo '<div class="type-your-post">
-        ', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message') , '</div>';
+    echo '<div class="type-your-post">
+          ', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message') , '</div>';
 
   // @TODO If this message has been edited in the past - display when it was.
   if (isset($context['last_modified']))

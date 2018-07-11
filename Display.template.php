@@ -25,7 +25,17 @@ function template_main()
   // Show the page index... "Pages: [1]".
   echo '
     <div class="level mt-2">
-      <div class="level-left">
+      <div class="level-left">';
+
+        // Show the anchor for the top and for the first message. If the first message is new, say so.
+        echo '
+          <a id="top"></a>';
+
+        // Skip to first post
+        echo'
+        <a href="#msg', $context['first_message'], '" class="invisible button is-small is-dark mr-1">Skip to first post</a>';
+
+        echo'
         <span class="is-muted is-size-6-5 is-uppercase">', $txt['pages'], ':&nbsp;</span>
         <span class="is-size-6-5 mr-3"> ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . '</span> 
         
@@ -95,7 +105,7 @@ function template_main()
       );
 
       echo'
-      <div class="level-right">', template_button_strip($normal_buttons, 'right'), '</div>';
+      <div class="level-right" role="toolbar" aria-label="Topic Toolbar">', template_button_strip($normal_buttons, 'right'), '</div>';
 
       echo'
     </div>';
@@ -106,10 +116,7 @@ function template_main()
   */
 
   
-  // Show the anchor for the top and for the first message. If the first message is new, say so.
-  echo '
-      <a id="top"></a>
-      <a id="msg', $context['first_message'], '"></a>', $context['first_new_message'] ? '<a id="new"></a>' : '';
+  
 
   // Is this topic also a poll?
   if ($context['is_poll'])
@@ -117,7 +124,7 @@ function template_main()
     echo '
       <div id="poll" class="card card-poll mb-4">
         <div class="card-header">
-          <h2 class="card-header-title">
+          <h2 class="card-header-title" id="pollquestion">
             <span class="icon"><span class="fa fa-bar-chart"></span></span>
             <span>', $txt['poll'] ,': ', $context['poll']['question'] ,'</span>
           </h2>
@@ -130,14 +137,14 @@ function template_main()
 
             foreach ($context['poll']['options'] as $option) {
               echo '
-              <div class="columns is-mobile">
-                <div class="column is-one-quarter"><div class="', $option['voted_this'] ? ' voted' : '', '">' , $option['option'] , '</div></div>';
+              <div class="columns is-mobile pl-1 pr-1">
+                <div class="column is-one-quarter-tablet is-half-mobile"><div class="', $option['voted_this'] ? ' voted' : '', '">' , $option['option'] , '</div></div>';
 
                 if ($context['allow_poll_view'])
-                echo '
-                <div class="column"><div class="bar-wrapper">', $option['bar_ndt'], '</div></div>
-                <div class="column"><div class="tag is-small">', $option['votes'], ' (', $option['percent'], '%)</div></div>
-              </div>';  
+                  echo '
+                  <div class="column is-hidden-mobile"><div class="bar-wrapper">', $option['bar_ndt'], '</div></div>
+                  <div class="column is-one-quarter-tablet is-half-mobile"><div class="tag is-small">', $option['votes'], ' (', $option['percent'], '%)</div></div>
+              </div>';
             }
           }
 
@@ -156,6 +163,7 @@ function template_main()
               echo '
                 <ul class="mb-4">
               ';
+            }
 
               // Show each option with its button - a radio likely.
               foreach ($context['poll']['options'] as $option)
@@ -173,15 +181,13 @@ function template_main()
                 <input type="submit" value="', $txt['poll_vote'], '" class="button_submit button is-small is-primary" />
                 <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
             </form>';
-
-            }
           }
 
           // Total Voters
           if ($context['allow_poll_view'])
           echo '
             <p class="notification is-size-6-5 p-3 mt-2 mb-1">
-              <span class="is-uppercase is-muted">', $txt['poll_total_voters'], ':</span> ', $context['poll']['total_votes'], '
+              <span class="is-uppercase">', $txt['poll_total_voters'], ':</span> ', $context['poll']['total_votes'], '
             </p>';
 
           // Is the clock ticking?
@@ -282,19 +288,19 @@ function template_main()
       </div>';
   }
 
-  
   // Allow adding new buttons easily.
   call_integration_hook('integrate_display_buttons', array(&$normal_buttons));
 
-  echo '<div id="forumposts">';
+  echo '<article id="forumposts">';
 
   // Show the topic information - icon, subject, etc.
   echo '
+    <header>
       <div class="cat_bar">
         <h1 class="title is-5 mb-1"><img class="mr-1" src="', $settings['images_url'], '/topic/', $context['class'], '.gif" alt="" />', $context['subject'], '</h1> 
       </div>';
 
-          // Tagging System
+      // Tagging System
       echo '
       <div class="container is-flex align-items-center mt-2 mb-2">
 
@@ -327,8 +333,8 @@ function template_main()
         </div>';
     
     // End Tagging System
-        echo'
-
+    
+    echo'
       <div class="mb-4">
         <span class="is-muted is-size-6-5">', $txt['read'], ' ', $context['num_views'], ' ', $txt['times'], '</span>';
 
@@ -349,7 +355,8 @@ function template_main()
             </span>';
           }
           echo'
-        </div>';
+        </div>
+      </header>';
 
   echo '
     <form action="', $scripturl, '?action=quickmod2;topic=', $context['current_topic'], '.', $context['start'], '" method="post" accept-charset="', $context['character_set'], '" name="quickModForm" id="quickModForm" style="margin: 0;" onsubmit="return oQuickModify.bInEditMode ? oQuickModify.modifySave(\'' . $context['session_id'] . '\', \'' . $context['session_var'] . '\') : false">';
@@ -357,6 +364,8 @@ function template_main()
     $ignoredMsgs = array();
     $removableMessageIDs = array();
     $alternate = false;
+
+    $thispost = 0;   
 
     // Get all the messages...
     while ($message = $context['get_message']())
@@ -373,14 +382,12 @@ function template_main()
         $ignoredMsgs[] = $message['id'];
       }
 
-      // Show the message anchor and a "new" anchor if this message is new.
-      if ($message['id'] != $context['first_message'])
-      echo '
-        <a id="msg', $message['id'], '"></a>', $message['first_new'] ? '<a id="new"></a>' : '';
+      $thispost = $thispost + 1;
+      $nextpost = $thispost + 1;
 
       // The Post
       echo '
-        <div class="mb-4 the-post-wrapper">
+        <article class="mb-4 the-post-wrapper">
           <div class="columns m-0">
           ';
 
@@ -609,19 +616,19 @@ function template_main()
 
             // Show the post
             echo'
-            <article class="column is-three-quarters p-0 the-post">
+            <div class="column is-three-quarters p-0 the-post">
               
-              <div class="columns">
+              <header class="columns">
                 <div class="column pb-0">
                   <div>
-                    <h2 class="title is-6 mb-0" id="subject_', $message['id'], '">
+                    <h1 class="title is-6 mb-0" id="subject_', $message['id'], '">
                       <a href="', $message['href'], '" rel="nofollow">', $message['subject'], '</a>
-                    </h2>
+                    </h1>
                     <p class="is-muted is-size-6-5"><span class="is-uppercase">', !empty($message['counter']) ? $txt['reply_noun'] . ' #' . $message['counter'] : '', ' </span>', $txt['on'], '<span class="is-uppercase"> ', $message['time'], '</span></p>
                   </div>
                 </div>
 
-                <div class="column is-narrow">';
+                <div class="column is-narrow" role="toolbar" aria-label="Post Toolbar">';
 
                   // Post buttons
 
@@ -667,9 +674,17 @@ function template_main()
 
                   echo'
                 </div>
-              </div>
+              </header>
 
               <div id="msg_', $message['id'], '_quick_mod"></div>';
+
+              // Show the message anchor and a "new" anchor if this message is new.
+              if ($message['id'] /* != $context['first_message']*/)
+              echo '
+                <a id="msg', $message['id'], '"></a>', $message['first_new'] ? '<a id="new"></a>' : '';
+
+              // Skipping posts anchor
+                echo '<a id="postid_', $thispost ,'"></a>';
 
               // Ignoring this user? Hide the post.
               if ($ignoring)
@@ -742,10 +757,13 @@ function template_main()
                         </div>';
               }
 
+              // Skip to next post
+              echo '<div><a href="#postid_', $nextpost ,'" class="invisible button is-small is-dark mr-1">Skip to next post</a></div>';
+
               // Moderator Bar
 
               echo '
-                <div class="level">
+                <footer class="level">
                   <div class="level-left">
                     ';
 
@@ -790,16 +808,15 @@ function template_main()
 
                   echo'
                   </div>
-
-                </div>
-            </article>
+                </footer>
+            </div>
             ';
 
           echo'
           </div>';
 
           echo'
-          <div class="columns m-0 the-post-footer">
+          <aside class="columns m-0 the-post-footer">
             <div class="column is-one-quarter p-0"></div>
             <div class="column is-three-quarters pl-0">';
             // Are there any custom profile fields for above the signature?
@@ -832,16 +849,17 @@ function template_main()
                   <div class="is-hidden-mobile content post-signature pt-4 is-size-6-5" id="msg_', $message['id'], '_signature">', $message['member']['signature'], '</div>';
               echo'
             </div>
-          </div>';
+          </aside>';
+        
         echo'
-        </div>
+        </article>
       ';
 
   }
 
   echo '
         </form>
-      </div>
+      </article>
 
       <div class="container">
         <a id="lastPost"></a>';
@@ -915,12 +933,12 @@ function template_main()
       </div>';
 
       // Show to button strip again
-      echo '<div class="level-right">', template_button_strip($normal_buttons, 'right'), '</div>';
+      echo '<div class="level-right" role="toolbar" aria-label="Topic toolbar">', template_button_strip($normal_buttons, 'right'), '</div>';
     echo'
     </div>';
 
     echo '
-    <div id="moderationbuttons" class="mt-2 has-text-right-tablet">', template_button_strip($mod_buttons, 'bottom', array('id' => 'moderationbuttons_strip')), '</div>';
+    <div id="moderationbuttons" class="mt-2 has-text-right-tablet" role="toolbar" aria-label="Moderator Toolbar">', template_button_strip($mod_buttons, 'bottom', array('id' => 'moderationbuttons_strip')), '</div>';
 
   // Show the jumpto box, or actually...let Javascript do it.
   echo '
@@ -935,7 +953,9 @@ function template_main()
         <div class="cat_bar">
           <h2 class="title is-5">
             <a href="javascript:oQuickReply.swap();">
-              <img src="', $settings['images_url'], '/', $options['display_quick_reply'] == 2 ? 'collapse' : 'expand', '.gif" alt="+" id="quickReplyExpand" class="icon" />
+              <span class="icon">
+                <span class="fa ', $options['display_quick_reply'] == 2 ? 'fa-minus-square-o' : 'fa-plus-square-o' ,'"></span>
+              </span>
             </a>
             <a href="javascript:oQuickReply.swap();">', $txt['quick_reply'], '</a>
           </h2>

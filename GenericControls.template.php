@@ -21,7 +21,7 @@ function template_control_richedit($editor_id, $smileyContainer = null, $bbcCont
     <div>
       <div style="width: 98.8%;">
         <div>
-          <textarea class="editor" name="', $editor_id, '" id="', $editor_id, '" rows="', $editor_context['rows'], '" cols="600" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" tabindex="', $context['tabindex']++, '" style="height: ', $editor_context['height'], '; ', isset($context['post_error']['no_message']) || isset($context['post_error']['long_message']) ? 'border: 1px solid red;' : '', '">', $editor_context['value'], '</textarea>
+          <textarea class="editor" name="', $editor_id, '" id="', $editor_id, '" rows="', $editor_context['rows'], '" cols="600" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" style="height: 16rem; ', isset($context['post_error']['no_message']) || isset($context['post_error']['long_message']) ? 'border: 1px solid red;' : '', '">', $editor_context['value'], '</textarea>
         </div>
         <div id="', $editor_id, '_resizer" class="richedit_resize"></div>
       </div>
@@ -261,15 +261,15 @@ function template_control_richedit_buttons($editor_id)
   $editor_context = &$context['controls']['richedit'][$editor_id];
 
   echo '
-    <input type="submit" value="', isset($editor_context['labels']['post_button']) ? $editor_context['labels']['post_button'] : $txt['post'], '" tabindex="', $context['tabindex']++, '" onclick="return submitThisOnce(this);" accesskey="s" class="button_submit button is-primary" />';
+    <input type="submit" value="', isset($editor_context['labels']['post_button']) ? $editor_context['labels']['post_button'] : $txt['post'], '" onclick="return submitThisOnce(this);" accesskey="s" class="button_submit button is-primary" />';
 
   if ($editor_context['preview_type'])
     echo '
-    <input type="submit" name="preview" value="', isset($editor_context['labels']['preview_button']) ? $editor_context['labels']['preview_button'] : $txt['preview'], '" tabindex="', $context['tabindex']++, '" onclick="', $editor_context['preview_type'] == 2 ? 'return event.ctrlKey || previewPost();' : 'return submitThisOnce(this);', '" accesskey="p" class="button_submit button ml-2" />';
+    <input type="submit" name="preview" value="', isset($editor_context['labels']['preview_button']) ? $editor_context['labels']['preview_button'] : $txt['preview'], '" onclick="', $editor_context['preview_type'] == 2 ? 'return event.ctrlKey || previewPost();' : 'return submitThisOnce(this);', '" accesskey="p" class="button_submit button ml-2" />';
 
   if ($context['show_spellchecking'])
     echo '
-    <input type="button" value="', $txt['spell_check'], '" tabindex="', $context['tabindex']++, '" onclick="oEditorHandle_', $editor_id, '.spellCheckStart();" class="button_submit button ml-2" />';
+    <input type="button" value="', $txt['spell_check'], '"  onclick="oEditorHandle_', $editor_id, '.spellCheckStart();" class="button_submit button ml-2" />';
 }
 
 // What's this, verification?!
@@ -318,13 +318,13 @@ function template_control_verification($verify_id, $display_type = 'all', $reset
 
       if (WIRELESS)
         echo '<br />
-        <input type="text" name="', $verify_id, '_vv[code]" value="', !empty($verify_context['text_value']) ? $verify_context['text_value'] : '', '" size="30" tabindex="', $context['tabindex']++, '" class="input_text" />';
+        <input type="text" name="', $verify_id, '_vv[code]" value="', !empty($verify_context['text_value']) ? $verify_context['text_value'] : '', '" size="30"  class="input_text" />';
       else
         echo '
         <div class="smalltext" style="margin: 4px 0 8px 0;">
           <a href="', $verify_context['image_href'], ';sound" id="visual_verification_', $verify_id, '_sound" rel="nofollow">', $txt['visual_verification_sound'], '</a> / <a href="#" id="visual_verification_', $verify_id, '_refresh">', $txt['visual_verification_request_new'], '</a>', $display_type != 'quick_reply' ? '<br />' : '', '<br />
           ', $txt['visual_verification_description'], ':', $display_type != 'quick_reply' ? '<br />' : '', '
-          <input type="text" name="', $verify_id, '_vv[code]" value="', !empty($verify_context['text_value']) ? $verify_context['text_value'] : '', '" size="30" tabindex="', $context['tabindex']++, '" class="input_text" />
+          <input type="text" name="', $verify_id, '_vv[code]" value="', !empty($verify_context['text_value']) ? $verify_context['text_value'] : '', '" size="30"  class="input_text" />
         </div>';
     }
     else
