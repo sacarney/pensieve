@@ -1567,10 +1567,12 @@ function template_core_features()
       var itemValueHandle = document.getElementById("feature_" + itemID);
       itemValueHandle.value = itemValueHandle.value == 1 ? 0 : 1;
 
-      // Toggle the icon and text
-      $("#switch_" + itemID + " .sr-only").text(itemValueHandle.value == 1 ? \'', $txt['core_settings_switch_off'], '\' : \'', $txt['core_settings_switch_on'], '\');
+      
 
-      $("#switch_" + itemID + " .fa").addClass(itemValueHandle.value == 1 ? "fa-toggle-on has-text-success" : "fa-toggle-off has-text-grey-light").removeClass(itemValueHandle.value == 1 ? "fa-toggle-off has-text-grey-light" : "fa-toggle-on has-text-success");
+      // Change the image, alternative text and the title.
+      document.getElementById("switch_" + itemID).src = \'', $settings['images_url'], '/admin/switch_\' + (itemValueHandle.value == 1 ? \'on\' : \'off\') + \'.png\';
+      document.getElementById("switch_" + itemID).alt = itemValueHandle.value == 1 ? \'', $txt['core_settings_switch_off'], '\' : \'', $txt['core_settings_switch_on'], '\';
+      document.getElementById("switch_" + itemID).title = itemValueHandle.value == 1 ? \'', $txt['core_settings_switch_off'], '\' : \'', $txt['core_settings_switch_on'], '\';
 
 
       // Don\'t reload.
@@ -1626,13 +1628,14 @@ function template_core_features()
               
               <input type="hidden" name="feature_', $id, '" id="feature_', $id, '" value="', $feature['enabled'] ? 1 : 0, '" />
               
+              <!--
               <span class="icon is-large" id="switch_', $id, '">
                 <span class="is-size-4 fa fa-toggle-', $feature['enabled'] ? 'on' : 'off' ,' has-text-', $feature['enabled'] ? 'success' : 'grey-light' ,'"></span>
                 <span class="sr-only">', $txt['core_settings_switch_' . ($feature['enabled'] ? 'off' : 'on')], '</span>
-              </span>
+              </span> -->
 
-              <!-- 
-              <img src="', $settings['images_url'], '/admin/switch_', $feature['enabled'] ? 'on' : 'off', '.png" id="switch_', $id, '" style="margin-top: 1.3em;" alt="', $txt['core_settings_switch_' . ($feature['enabled'] ? 'off' : 'on')], '" title="', $txt['core_settings_switch_' . ($feature['enabled'] ? 'off' : 'on')], '" /> -->
+              
+              <img src="', $settings['images_url'], '/admin/switch_', $feature['enabled'] ? 'on' : 'off', '.png" id="switch_', $id, '" style="margin-top: 1.3em;" alt="', $txt['core_settings_switch_' . ($feature['enabled'] ? 'off' : 'on')], '" title="', $txt['core_settings_switch_' . ($feature['enabled'] ? 'off' : 'on')], '" /> 
             </a>
           </div>
 
@@ -2364,7 +2367,7 @@ function template_repair_boards()
   }
 }
 
-// @TODO
+// @TODO SUBACCOUNTS SEttings
 function template_callback_subaccount_group_settings()
 {
   global $txt, $context;
@@ -2372,8 +2375,17 @@ function template_callback_subaccount_group_settings()
   foreach ($context['membergroup_counts'] as $membergroup)
   {
     echo '
-      <dt', ($membergroup['disabled'] ? ' style="color: #777777;"' : ''), '><label>', $membergroup['name'], '</label></dt>
-      <dd><input type="text"', ($membergroup['disabled'] ? ' disabled="disabled"' : ''), ' name="membergroup_count[', $membergroup['id'], ']" value="', $membergroup['count'], '" size="6" /></dd>';
+
+    <div class="field is-horizontal">
+      <div class="field-label is-narrow">
+        <label>', $membergroup['name'], '</label>
+      </div>
+      <div class="field-body">
+        <div class="field is-narrow">
+          <input class="input" type="text"', ($membergroup['disabled'] ? ' disabled="disabled"' : ''), ' name="membergroup_count[', $membergroup['id'], ']" value="', $membergroup['count'], '" size="6" />
+        </div>
+      </div>
+      </div>';
   }
 }
 

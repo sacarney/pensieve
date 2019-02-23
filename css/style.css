@@ -68,6 +68,10 @@ legend { padding: 0 1rem; }
   overflow-x: scroll;
 }
 
+.field-label.is-narrow {
+  flex-grow: 1;
+}
+
 /* ------------------------- */
 /* HEADER */
 /* ------------------------- */
@@ -89,6 +93,11 @@ legend { padding: 0 1rem; }
 
 .breadcrumb li > span ~ a {
   padding: 0;
+}
+
+.breadcrumb li > span {
+  padding-right: 0.5em;
+  padding-left: 0.5em;
 }
 
 @media (max-width: 768px) {

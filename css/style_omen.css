@@ -2971,3 +2971,10 @@ label.panel-block:hover {
   }
 }
 
+/* --- STAT BAR --- */
+
+.bar-wrapper {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.bar { background: var(--primary); }

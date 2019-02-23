@@ -160,11 +160,12 @@ function template_main()
                 <p class="notification is-size-6-5 p-3">', $context['poll']['allowed_warning'] ,'</p>
               ';
 
-              echo '
-                <ul class="mb-4">
-              ';
+              
             }
 
+            echo '
+                <ul class="mb-4">
+              ';
               // Show each option with its button - a radio likely.
               foreach ($context['poll']['options'] as $option)
                 echo '
@@ -949,7 +950,7 @@ function template_main()
     echo '
       <a id="quickreply"></a>
 
-      <div class="tborder" id="quickreplybox">
+      <div class="mt-4" id="quickreplybox">
         <div class="cat_bar">
           <h2 class="title is-5">
             <a href="javascript:oQuickReply.swap();">

@@ -75,7 +75,7 @@ function template_main()
         }
         pollOptionNum++
 
-        setOuterHTML(document.getElementById(\'pollMoreOptions\'), ', JavaScriptEscape('<li><label for="options-'), ' + pollOptionNum + ', JavaScriptEscape('">' . $txt['option'] . ' '), ' + pollOptionNum + ', JavaScriptEscape('</label>: <input type="text" name="options['), ' + pollOptionNum + ', JavaScriptEscape(']" id="options-'), ' + pollOptionNum + ', JavaScriptEscape('" value="" size="80" maxlength="255" tabindex="'), ' + pollTabIndex + ', JavaScriptEscape('" class="input_text" /></li><li id="pollMoreOptions"></li>'), ');
+        setOuterHTML(document.getElementById("pollMoreOptions"), \'<li><div class="field is-horizontal mb-2"><div class="field-label is-narrow"><label for="options-\' + pollOptionNum + \'" ', (isset($context['poll_error']['no_question']) ? ' class="error label"' : 'class="label"'), '>', $txt['option'], ' \' + pollOptionNum + \'</label> </div><div class="field-body"><div class="field is-narrow"><input type="text" name="options[\' + (pollOptionNum - 1) + \']" id="options-\' + (pollOptionNum - 1) + \'" value="" size="80" maxlength="255" class="input" /></div></div></div></li><li id="pollMoreOptions"></li\');
       }';
 
   // If we are making a calendar event we want to ensure we show the current days in a month etc... this is done here.
@@ -178,7 +178,7 @@ function template_main()
   {
     echo '
       <div class="field is-horizontal">
-        <div class="field-label has-text-left">
+        <div class="field-label has-text-left is-narrow">
           <label class="label"><span', isset($context['post_error']['long_name']) || isset($context['post_error']['no_name']) || isset($context['post_error']['bad_name']) ? ' class="error"' : '', ' id="caption_guestname">', $txt['name'], '</span></label>
         </div>
         <div class="field-body">
@@ -194,7 +194,7 @@ function template_main()
     if (empty($modSettings['guest_post_no_email']))
       echo '
         <div class="field is-horizontal">
-          <div class="field-label has-text-left">
+          <div class="field-label has-text-left is-narrow">
             <label class="label"><span', isset($context['post_error']['no_email']) || isset($context['post_error']['bad_email']) ? ' class="error"' : '', ' id="caption_email">', $txt['email'], '</span></label>
           </div>
           <div class="field-body">
@@ -208,13 +208,36 @@ function template_main()
   }
 
   // Now show the subject box for this post.
+
+  // SUBACCOUNTS
+  if (!empty($context['subaccount_list']))
+  {
   echo '
     <div class="field is-horizontal">
-      <div class="field-label has-text-left"> 
+      <div class="field-label has-text-left is-narrow">
+        <label class="label">', $txt['use_subaccount'], '</label>
+      </div>
+      <div class="field-body">
+        <div class="field is-narrow">
+          <div class="select">
+            <select name="subaccount">';
+              foreach($context['subaccount_list'] as $subaccount)
+              echo '
+              <option value="', $subaccount['id'], '" ', !empty($subaccount['selected']) ? 'selected="selected"' : '', '>', $subaccount['name'], '</option>';
+              echo '
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>';
+  }
+  echo'
+    <div class="field is-horizontal">
+      <div class="field-label has-text-left is-narrow"> 
         <label class="label" id="caption_subject">', $txt['subject'], '</label>
       </div>
       <div class="field-body">
-        <div class="field">
+        <div class="field is-narrow">
           <div class="control">
             <input type="text" name="subject"', $context['subject'] == '' ? '' : ' value="' . $context['subject'] . '"', ' size="80" maxlength="80" class="input_text input ', isset($context['post_error']) ? 'is-danger' : '' ,'" />
           </div>
@@ -227,11 +250,11 @@ function template_main()
     {
     echo '
     <div class="field is-horizontal">
-      <div class="field-label has-text-left"> 
+      <div class="field-label has-text-left is-narrow"> 
         <label class="label" id="caption_subject">', $txt['smftags_topic'], '</label>
       </div>
       <div class="field-body">
-        <div class="field">
+        <div class="field is-narrow">
           <div class="control">
             <input class="input" type="text" name="tags"', ' size="80" maxlength="80" />
           </div>
@@ -245,7 +268,7 @@ function template_main()
 
     echo'
     <div class="field is-horizontal">
-      <div class="field-label has-text-left">
+      <div class="field-label has-text-left is-narrow">
         <label class="label">', $txt['message_icon'], ' </label>
       </div>
       <div class="field-body">
@@ -372,71 +395,126 @@ function template_main()
   if ($context['make_poll'])
   {
     echo '
-          <div id="edit_poll">
-            <fieldset id="poll_main">
-              <legend><span ', (isset($context['poll_error']['no_question']) ? ' class="error"' : ''), '>', $txt['poll_question'], '</span></legend>
-              <input type="text" name="question" value="', isset($context['question']) ? $context['question'] : '', '" size="80" class="input_text" />
-              <ul class="poll_main">';
+      <div id="edit_poll">
+        <fieldset id="poll_main" class="mb-4">
+          <legend><span ', (isset($context['poll_error']['no_question']) ? ' class="is-danger"' : ''), '>', $txt['poll_question'], '</span></legend>
+          
+          <div class="field is-horizontal">
+            <div class="field-label is-narrow">
+              <label class="label">', $txt['poll_question'], '</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <input type="text" name="question" value="', isset($context['question']) ? $context['question'] : '', '" size="80" class="input" />
+              </div>
+            </div>
+          </div>
 
-    // Loop through all the choices and print them out.
-    foreach ($context['choices'] as $choice)
-    {
-      echo '
-                <li>
-                  <label for="options-', $choice['id'], '">', $txt['option'], ' ', $choice['number'], '</label>:
-                  <input type="text" name="options[', $choice['id'], ']" id="options-', $choice['id'], '" value="', $choice['label'], '" size="80" maxlength="255" class="input_text" />
-                </li>';
-    }
+          <ul class="poll_main">';
 
-    echo '
-                <li id="pollMoreOptions"></li>
-              </ul>
-              <strong><a href="javascript:addPollOption(); void(0);">(', $txt['poll_add_option'], ')</a></strong>
-            </fieldset>
-            <fieldset id="poll_options">
-              <legend>', $txt['poll_options'], '</legend>
-              <dl class="settings poll_options">
-                <dt>
-                  <label for="poll_max_votes">', $txt['poll_max_votes'], ':</label>
-                </dt>
-                <dd>
-                  <input type="text" name="poll_max_votes" id="poll_max_votes" size="2" value="', $context['poll_options']['max_votes'], '" class="input_text" />
-                </dd>
-                <dt>
-                  <label for="poll_expire">', $txt['poll_run'], ':</label><br />
-                  <em class="smalltext">', $txt['poll_run_limit'], '</em>
-                </dt>
-                <dd>
-                  <input type="text" name="poll_expire" id="poll_expire" size="2" value="', $context['poll_options']['expire'], '" onchange="pollOptions();" maxlength="4" class="input_text" /> ', $txt['days_word'], '
-                </dd>
-                <dt>
-                  <label for="poll_change_vote">', $txt['poll_do_change_vote'], ':</label>
-                </dt>
-                <dd>
-                  <input type="checkbox" id="poll_change_vote" name="poll_change_vote"', !empty($context['poll']['change_vote']) ? ' checked="checked"' : '', ' class="input_check" />
-                </dd>';
+            // Loop through all the choices and print them out.
+            foreach ($context['choices'] as $choice)
+            {
+            echo '
+            <li>
+              <div class="field is-horizontal mb-2">
+                <div class="field-label is-narrow">
+                  <label class="label" for="options-', $choice['id'], '">', $txt['option'], ' ', $choice['number'], '</label>
+                </div>
+                <div class="field-body">
+                  <div class="field is-narrow">
+                    <input type="text" name="options[', $choice['id'], ']" id="options-', $choice['id'], '" value="', $choice['label'], '" size="80" maxlength="255" class="input" />
+                  </div>
+                </div>
+              </div>
+            </li>';
+            }
 
-    if ($context['poll_options']['guest_vote_enabled'])
-      echo '
-                <dt>
-                  <label for="poll_guest_vote">', $txt['poll_guest_vote'], ':</label>
-                </dt>
-                <dd>
-                  <input type="checkbox" id="poll_guest_vote" name="poll_guest_vote"', !empty($context['poll_options']['guest_vote']) ? ' checked="checked"' : '', ' class="input_check" />
-                </dd>';
+            echo '
+            <li id="pollMoreOptions"></li>
+          </ul>
 
-    echo '
-                <dt>
-                  ', $txt['poll_results_visibility'], ':
-                </dt>
-                <dd>
-                  <input type="radio" name="poll_hide" id="poll_results_anyone" value="0"', $context['poll_options']['hide'] == 0 ? ' checked="checked"' : '', ' class="input_radio" /> <label for="poll_results_anyone">', $txt['poll_results_anyone'], '</label><br />
-                  <input type="radio" name="poll_hide" id="poll_results_voted" value="1"', $context['poll_options']['hide'] == 1 ? ' checked="checked"' : '', ' class="input_radio" /> <label for="poll_results_voted">', $txt['poll_results_voted'], '</label><br />
-                  <input type="radio" name="poll_hide" id="poll_results_expire" value="2"', $context['poll_options']['hide'] == 2 ? ' checked="checked"' : '', empty($context['poll_options']['expire']) ? 'disabled="disabled"' : '', ' class="input_radio" /> <label for="poll_results_expire">', $txt['poll_results_after'], '</label>
-                </dd>
-              </dl>
-            </fieldset>
+          <strong><a class="button is-small" role="button" href="javascript:addPollOption(); void(0);">', $txt['poll_add_option'], '</a></strong>
+
+        </fieldset>
+
+        <fieldset id="poll_options" class="mb-4">
+          <legend>', $txt['poll_options'], '</legend>
+
+          <div class="field is-horizontal">
+            <div class="field-label is-narrow">
+              <label class="label" for="poll_max_votes">', $txt['poll_max_votes'], '</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <input type="text" name="poll_max_votes" id="poll_max_votes" size="2" value="', $context['poll_options']['max_votes'], '" class="input" />
+              </div>
+            </div>
+          </div>
+
+          <div class="field is-horizontal">
+            <div class="field-label is-narrow">
+              <label class="label" for="poll_expire">', $txt['poll_run'], '</label>
+              <span class="is-muted">', $txt['poll_run_limit'], '</span>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <input type="text" name="poll_max_votes" id="poll_max_votes" size="2" value="', $context['poll_options']['max_votes'], '" class="input" />
+              </div>
+              <div class="field">
+              ', $txt['days_word'], '
+              </div>
+            </div>
+          </div>
+
+          <div class="field is-horizontal">
+            <div class="field-label is-narrow">
+              <label class="label" for="poll_change_vote">', $txt['poll_do_change_vote'], '</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+               <input type="checkbox" id="poll_change_vote" name="poll_change_vote"', !empty($context['poll']['change_vote']) ? ' checked="checked"' : '', ' class="input_check" />
+              </div>
+            </div>
           </div>';
+
+          if ($context['poll_options']['guest_vote_enabled'])
+          echo '
+          <div class="field is-horizontal">
+            <div class="field-label is-narrow">
+              <label class="label" for="poll_guest_vote">', $txt['poll_guest_vote'], '</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+               <input type="checkbox" id="poll_guest_vote" name="poll_guest_vote"', !empty($context['poll_options']['guest_vote']) ? ' checked="checked"' : '', ' class="input_check" />
+              </div>
+            </div>
+          </div>';
+
+          echo '
+          <div class="field is-horizontal">
+            <div class="field-label is-narrow">
+              <div class="label">', $txt['poll_results_visibility'], '</div>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <label class=" is-block" for="poll_results_anyone">
+                  <input type="radio" name="poll_hide" id="poll_results_anyone" value="0"', $context['poll_options']['hide'] == 0 ? ' checked="checked"' : '', ' class="input_radio" />
+                  ', $txt['poll_results_anyone'], '
+                </label>
+                <label class=" is-block" for="poll_results_voted">
+                  <input type="radio" name="poll_hide" id="poll_results_voted" value="1"', $context['poll_options']['hide'] == 1 ? ' checked="checked"' : '', ' class="input_radio" />
+                  ', $txt['poll_results_voted'], '
+                </label>
+                <label class=" is-block" for="poll_results_expire">
+                  <input type="radio" name="poll_hide" id="poll_results_expire" value="2"', $context['poll_options']['hide'] == 2 ? ' checked="checked"' : '', empty($context['poll_options']['expire']) ? 'disabled="disabled"' : '', ' class="input_radio" />
+                  ', $txt['poll_results_after'], '
+                </label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>';
   }
 
   // Show the actual posting area...
@@ -468,11 +546,11 @@ function template_main()
       </div>';
 
   // @TODO If the admin has enabled the hiding of the additional options - show a link and image for it.
-  /*if (!empty($settings['additional_options_collapsable']))
+  if (!empty($settings['additional_options_collapsable']))
     echo '
       <div id="postAdditionalOptionsHeader">
         <img src="', $settings['images_url'], '/collapse.gif" alt="-" id="postMoreExpand" style="display: none;" /> <strong><a href="#" id="postMoreExpandLink">', $txt['post_additionalopt'], '</a></strong>
-      </div>';*/
+      </div>';
 
   // Display the check boxes for all the standard options - if they are available to the user!
   echo '
@@ -493,7 +571,7 @@ function template_main()
     </fieldset>';
 
   // @TODO If this post already has attachments on it - give information about them.
-  /*if (!empty($context['current_attachments']))
+  if (!empty($context['current_attachments']))
   {
     echo '
           <dl id="postAttachment">
@@ -511,10 +589,10 @@ function template_main()
             </dd>';
     echo '
           </dl>';
-  }*/
+  }
 
   // @TODO Is the user allowed to post any additional ones? If so give them the boxes to do it!
-  /* if ($context['can_post_attachment'])
+  if ($context['can_post_attachment'])
   {
     echo '
           <dl id="postAttachment2">
@@ -565,10 +643,10 @@ function template_main()
     echo '
             </dd>
           </dl>';
-  }*/
+  }
 
   // @TODO Is visual verification enabled?
-  /*if ($context['require_verification'])
+  if ($context['require_verification'])
   {
     echo '
           <div class="post_verification">
@@ -577,7 +655,7 @@ function template_main()
             </span>
             ', template_control_verification($context['visual_verification_id'], 'all'), '
           </div>';
-  }*/
+  }
 
   // @TODO Finally, the submit buttons.
   echo '

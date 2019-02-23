@@ -283,12 +283,7 @@ function template_body_above()
             // SUBACCOUNTS
             echo'
             <div class="navbar-item">
-              <div class="select is-small">
-                <select>
-                  <option>Switch Account</option>
-                  <option>Option 2</option>
-                </select>
-              </div>
+              
             ', $context['subaccount_dropdown'], '
             </div>
             '; // end subaccounts
