@@ -133,6 +133,9 @@ function template_html_above()
   echo '
   <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/style', $context['theme_variant'], '.css?fin20" />'; 
 
+  // SUBACCOUNTS - this theme as a custom CSS file to re-style SubAccounts mod
+  echo '
+  <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/subaccounts.css">';
 
   // Here comes the JavaScript bits!
   echo '

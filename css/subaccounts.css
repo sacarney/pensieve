@@ -1,0 +1,84 @@
+/*
+ * Special overrides for the SubAccounts Plug-In 
+ * Duplicates .card and .button
+ *
+ */
+
+.subaccount_icons {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#subaccount_list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.subaccount_icons li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--light-overlay);
+}
+
+.subaccount {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  color: var(--white);
+  background-color: var(--darker-overlay);
+  box-shadow: 0 2px 3px var(--darker-overlay);
+}
+
+.subaccount > .flow_hidden {
+  padding: 1rem;
+}
+
+#creator .button_submit {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: none;
+  display: inline-flex;
+  font-size: 1rem;
+  height: 2.25em;
+  justify-content: flex-start;
+  line-height: 1.5;
+  padding-bottom: calc(0.375em - 1px);
+  padding-left: calc(0.625em - 1px);
+  padding-right: calc(0.625em - 1px);
+  padding-top: calc(0.375em - 1px);
+  position: relative;
+  vertical-align: top;
+  background-color: white;
+  border-color: #dbdbdb;
+  border-width: 1px;
+  color: #363636;
+  cursor: pointer;
+  justify-content: center;
+  padding-bottom: calc(0.375em - 1px);
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+  padding-top: calc(0.375em - 1px);
+  text-align: center;
+  white-space: nowrap;
+  transition: all 300ms ease;
+
+  background-color: var(--primary);
+  border-color: transparent;
+  color: var(--black);
+}
+
+#creator .button_submit:hover {
+  background-color: var(--darkcyan);
+  border-color: transparent;
+  color: var(--white);
+}
+
+#creator .button_submit:focus {
+  box-shadow: 0 0 0 .125em rgba(42, 159, 214, .25);
+}
