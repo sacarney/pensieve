@@ -187,7 +187,7 @@ function template_main()
             }
             // Show the list of child boards
             echo '
-            <div id="board_', $board['id'], '_children">
+            <div id="board_', $board['id'], '_children" class="is-size-7">
               <span class="is-size-7 is-muted is-uppercase">', $txt['parent_boards'], ': </span>', implode(', ', $children), '</div>
             ';
           } 

@@ -1,7 +1,21 @@
 /*
- * Slight, structural CSS adjustments for bulma.io. 
+ * This file sets the baseline for getting bulma.io to work nicely with 
+ * SMF. Including directly styling default SMF HTML/CSS which mods use often.
+ * 
  * Any color or font changes should go in the variant CSS.
  *
+ * 1. Bulma Override
+ * 2. Header
+ * 3. Topic list
+ * 4. The topic
+ * 5. The post
+ * 6. Poll
+ * 7. Add/Edit
+ * 8. Messages
+ * 9. Stats Graph
+ * 10. Utility
+ * 11. Accessibility
+ * 12. SMF styles
  */
 
 /*
@@ -414,3 +428,28 @@ code, pre { display: block; }
     overflow: visible;
     height: auto;
   }
+
+/* ------------------------- */
+/* SMF */
+/* ------------------------- */
+
+h3.catbg {
+  /* .title .is-5 .mb-4 */
+  margin-bottom: 1rem !important;
+  padding: 0.5rem 0.75rem;
+  color: var(--white);
+  font-size: 1.25rem;
+  font-family: "Amaranth";
+  font-weight: 500;
+  line-height: 1.125;
+  background: var(--light-overlay);
+}
+
+.description {
+  /* .notification .is-size-7 */
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 2.5rem 1.25rem 1.5rem;
+  border-radius: 4px;
+  background-color: var(--light-overlay);
+}

@@ -263,7 +263,9 @@ function template_body_above()
       // Maintenance mode?
       if ($context['in_maintenance'] && $context['user']['is_admin'])
         echo '
-          <div class="notification is-warning mb-0 has-text-centered">', $txt['maintain_mode_on'], '</div>
+          <div class="container">
+            <div class="notification is-warning mt-3 mb-3 p-2 has-text-centered">', $txt['maintain_mode_on'], '</div>
+          </div>
         ';
 
       echo'

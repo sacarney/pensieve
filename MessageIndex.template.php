@@ -45,7 +45,7 @@ function template_main()
   {
 
     echo'
-      <div board_', $context['current_board'], '_childboards" class="card is-narrow mb-4">
+      <div id="board_', $context['current_board'], '_childboards" class="card is-narrow mb-4">
         <div class="card-header">
           <h2 class="card-header-title title is-6">
             <span class="is-size-5-mobile href="">', $txt['parent_boards'], '</span>
@@ -98,7 +98,7 @@ function template_main()
 
             // Board info column
             echo '
-            <div class="column is-6-desktop is-10-narrow">
+            <div class="column is-5-tablet is-10-narrow">
               <h3 class="title is-6 mb-1">
                 <a class="is-size-6-mobile" href="', $board['href'], '" name="b', $board['id'], '">', $board['name'], '</a>
               </h3>
@@ -145,6 +145,12 @@ function template_main()
               
             echo '
             </div>
+            ';
+
+            // Placeholder column
+
+            echo'
+            <div class="column is-1"></div>
             ';
 
             // Post count column
@@ -211,14 +217,14 @@ function template_main()
       'text' => 'new_poll', 
       'hidden' => 'is-hidden-mobile',
       'image' => 'new_poll.gif',
-      'class' => 'is-primary is-small', 
+      'class' => 'is-secondary is-small', 
       'icon' => 'fa-bar-chart',
       'lang' => true, 
       'url' => $scripturl . '?action=post;board=' . $context['current_board'] . '.0;poll'
       ),
     'notify' => array(
       'test' => 'can_mark_notify', 
-      'class' => 'is-primary is-small',
+      'class' => 'is-secondary is-small',
       'hidden' => 'is-hidden-mobile',
       'text' => $context['is_marked_notify'] ? 'unnotify' : 'notify', 
       'image' => ($context['is_marked_notify'] ? 'un' : ''). 'notify.gif', 
@@ -230,7 +236,7 @@ function template_main()
     'markread' => array(
       'text' => 'mark_read_short', 
       'image' => 'markread.gif', 
-      'class' => 'is-primary is-small',
+      'class' => 'is-secondary is-small',
       'hidden' => 'is-hidden-mobile',
       'icon' => 'fa-check',
       'lang' => true, 
@@ -275,17 +281,20 @@ function template_main()
             <div class="column', $options['display_quick_mod'] == 1 ? ' is-5' : ' is-6', '">
               <span class="board-header-title">Subject/Started By</span>
             </div>
+            <div class="column is-1">
+
+            </div>
             <div class="column is-2">
               <span class="board-header-title">Replies/Views</span>
             </div>
-            <div class="column is-3">
+            <div class="column">
               <span class="board-header-title">Last post</span>
             </div>
           ';
 
           if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] == 1)
           echo '
-            <div class="column is-1">
+            <div class="column is-narrow">
               <p class="control">
                 <label class="checkbox">
                   <input type="checkbox" onclick="invertAll(this, this.form, \'topics[]\');"/>
@@ -303,8 +312,7 @@ function template_main()
 
     else // There are no topics...
     echo '
-      <div class="notification is-danger">', $txt['msg_alert_none'], '</div>
-    
+    <div class="notification is-danger">', $txt['msg_alert_none'], '</div>
     ';
 
     echo'
@@ -322,14 +330,14 @@ function template_main()
         $topic_class = 'topic-is-locked';
       elseif ($topic['new'])
         $topic_class = 'topic-is-new';
+      elseif ($topic['is_sticky'])
+        $topic_class = 'topic-is-sticky';
       else
         $topic_class = 'topic-is-basic';
 
       // Icon
       if ($topic['is_poll'])
         $topic_icon = 'fa-bar-chart';
-      elseif ($topic['is_locked'])
-        $topic_icon = 'fa-lock';
       elseif ($topic['new'])
         $topic_icon = 'fa-star';
       else
@@ -345,25 +353,16 @@ function template_main()
       else
         $topic_tooltip ='No New Posts';
 
-      /*if ($topic['is_sticky'])
-        echo'
-        <div class="sticky-tab"><i class="fa fa-thumb-tack"></i></div>
-        ';*/
-
       echo'
         <div class="columns is-mobile ', $topic_class ,'">';
-          if ($topic['is_sticky'])
-          echo'
-          <div class="sticky-tab"><i class="fa fa-thumb-tack"></i></div>
-          ';
+
+          // Post Icon Column
           echo'
           <div class="column is-narrow">
-            <span class="icon">
-              <i class="fa ', $topic_icon, '" title="', $topic_tooltip ,'"></i>
-            </span>
+            <img src="', $topic['first_post']['icon_url'], '" alt="" />
           </div>
 
-          <div class="column is-10-mobile ', $options['display_quick_mod'] == 1 ? ' is-5-tablet' : ' is-6-tablet', '">
+          <div class="column is-9-mobile ', $options['display_quick_mod'] == 1 ? ' is-5-tablet' : ' is-6-tablet', '">
             <div>
               <h2 class="title is-6 mb-2">', $topic['first_post']['link'],'</h2>
             </div>
@@ -371,6 +370,20 @@ function template_main()
               <span class="is-size-7 is-muted is-uppercase">', $txt['started_by'], '</span> ', $topic['first_post']['member']['link'], '
               </p>
           </div>
+
+          <div class="column is-1">'; 
+            if ($topic['is_sticky'])
+            echo'
+            <span class="icon tag is-primary has-text-dark mb-1">
+              <i class="fa fa-thumb-tack" title="Sticky"></i>
+            </span>';
+            if ($topic['is_locked'])
+            echo'
+            <span class="icon tag is-primary has-text-dark">
+              <i class="fa fa-lock" title="Locked"></i>
+            </span>';
+            echo
+          '</div>
 
           <div class="column is-hidden-mobile is-2">
             <p class="is-uppercase is-size-7">', $topic['replies'], ' ', $txt['replies'], '</p>
@@ -386,7 +399,7 @@ function template_main()
               <span class="is-muted is-uppercase is-size-7">', $txt['on'], '</span> ', 
               $topic['last_post']['time'],'
               <a href="', $topic['last_post']['href'], '" class="view-last-post">
-                <span class="icon has-text-primary">
+                <span class="icon has-text-primary tag">
                   <i class="fa fa-angle-double-right"></i>
                 </span>
                 <span class="sr-only"> View last post</span>

@@ -37,17 +37,21 @@
 
 html { background-color: var(--dark); }
 
-body { color: var(--white); }
+body { 
+  color: var(--white);  
+  xbackground-image: url(../images/theme/aobg2.jpg); 
+  xbackground-attachment: fixed; 
+}
 
-xbody, button, input, select, textarea {
+body, button, input, select, textarea {
   font-family: "Roboto", sans-serif;
 }
 
-x.content {
-  font-family: "PT Serif";
+.content {
+  xfont-family: "PT Serif";
 }
 
-x.title {
+.title {
   font-family: "Amaranth";
   font-weight: 500;
 }
@@ -2664,6 +2668,13 @@ a.navbar-link:hover {
 
 }
 
+.navbar .navbar-burger {
+  color: var(--primary);
+}
+.navbar.is-light .navbar-burger {
+  color: var(--white);
+}
+
 @media screen and (min-width:1024px) {
 
   .navbar-dropdown a.navbar-item:hover,
@@ -2680,6 +2691,10 @@ a.navbar-link:hover {
 
   .navbar-burger {
     display:none
+  }
+
+  .navbar.is-light .navbar-burger {
+    color: var(--white);
   }
 
   .navbar-item.has-dropdown-up .navbar-link::after {
