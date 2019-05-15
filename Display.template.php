@@ -391,7 +391,7 @@ function template_main()
 
             // Show information about the poster of this message.
             echo '
-            <aside class="column is-one-quarter p-0">
+            <aside class="column is-one-fifth-tablet p-0">
               <div class="card ">
                 <div class="card-header ">
                   <div class="card-header-title">';
@@ -615,7 +615,7 @@ function template_main()
 
             // Show the post
             echo'
-            <div class="column is-three-quarters p-0 the-post">
+            <div class="column is-four-fifths-tablet p-0 the-post">
               
               <header class="columns">
                 <div class="column pb-0">
@@ -816,8 +816,8 @@ function template_main()
 
           echo'
           <aside class="columns m-0 the-post-footer">
-            <div class="column is-one-quarter p-0"></div>
-            <div class="column is-three-quarters pl-0">';
+            <div class="column is-one-fifth-tablet p-0"></div>
+            <div class="column is-four-fifths-tablet pl-0">';
             // Are there any custom profile fields for above the signature?
               if (!empty($message['member']['custom_fields']))
               {

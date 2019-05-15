@@ -110,6 +110,10 @@ fieldset {
   border-bottom: 1px solid var(--primary);
 }
 
+.the-post-content {
+  color: #afafaf;
+}
+
 
 /* --- TEXT COLORS -- */
 
