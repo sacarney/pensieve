@@ -31,7 +31,7 @@ function template_show_list($list_id = null)
   if (!empty($cur_list['title']))
     echo '
       <div class="title_bar clear_right">
-        <h3 class="titlebg">
+        <h3 class="title is-5 mb-4">
           ', $cur_list['title'], '
         </h3>
       </div>';
@@ -58,9 +58,11 @@ function template_show_list($list_id = null)
 
     // Show the page index (if this list doesn't intend to show all items).
     if (!empty($cur_list['items_per_page']))
+      // Pagination
       echo '
-        <div class="floatleft">
-          <div class="pagesection">', $txt['pages'], ': ', $cur_list['page_index'], '</div>
+        <div class="mb-3">
+          <span class="is-muted is-size-6-5 is-uppercase">', $txt['pages'],': &nbsp;</span>
+          <span class="is-size-6-5 mr-3">', $cur_list['page_index'], '</span>
         </div>';
 
     if (isset($cur_list['additional_rows']['above_column_headers']))
@@ -147,9 +149,11 @@ function template_show_list($list_id = null)
 
     // Show the page index (if this list doesn't intend to show all items).
     if (!empty($cur_list['items_per_page']))
+      // Pagination
       echo '
-        <div class="floatleft">
-          <div class="pagesection">', $txt['pages'], ': ', $cur_list['page_index'], '</div>
+        <div class="mb-3">
+          <span class="is-muted is-size-6-5 is-uppercase">', $txt['pages'],': &nbsp;</span>
+          <span class="is-size-6-5 mr-3">', $cur_list['page_index'], '</span>
         </div>';
 
     if (isset($cur_list['additional_rows']['below_table_data']))

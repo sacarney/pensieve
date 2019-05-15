@@ -115,9 +115,6 @@ function template_main()
   <div class="level-right mt-0 has-text-right previous-next-buttons">', $context['previous_next'], ' </div>
   */
 
-  
-  
-
   // Is this topic also a poll?
   if ($context['is_poll'])
   {
@@ -537,15 +534,16 @@ function template_main()
                       {
                         $shown = true;
                         echo '
-                          
-                              <ul>';
+                          <div class="card-content is-size-6-5 is-hidden-mobile">
+                            <ul>';
                       }
                       echo '
-                                <li>', $custom['value'], '</li>';
+                            <li>', $custom['value'], '</li>';
                     }
                     if ($shown)
                       echo '
-                              </ul>
+                            </ul>
+                          </div>
                       ';
                   }
 

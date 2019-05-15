@@ -734,7 +734,7 @@ function template_not_done()
 
   echo '
         <form action="', $scripturl, $context['continue_get_data'], '" method="post" accept-charset="', $context['character_set'], '" style="margin: 0;" name="autoSubmit" id="autoSubmit">
-          <div style="margin: 1ex; text-align: right;"><input type="submit" name="cont" value="', $txt['not_done_continue'], '" class="button_submit" /></div>
+          <div style="margin: 1ex; text-align: right;"><input type="submit" name="cont" value="', $txt['not_done_continue'], '" class="button_submit button is-primary" /></div>
           ', $context['continue_post_data'], '
         </form>
       </div>
@@ -914,6 +914,7 @@ function template_show_settings()
             <div class="field-body" ', (!empty($config_var['force_div_id']) ? ' id="' . $config_var['force_div_id'] . '_dd"' : ''), '>
                 <div class="field">',
                   $config_var['preinput'];
+                  
         // Show a check box.
         if ($config_var['type'] == 'check')
         {
@@ -924,11 +925,13 @@ function template_show_settings()
           echo '
               <input type="checkbox"', $javascript, $disabled, ' name="', $config_var['name'], '" id="', $config_var['name'], '"', ($config_var['value'] ? ' checked="checked"' : ''), ' value="1" class="mt-3" />';
         }
+
         // Escape (via htmlspecialchars.) the text box.
         elseif ($config_var['type'] == 'password')
           echo '
               <input type="password"', $disabled, $javascript, ' name="', $config_var['name'], '[0]"', ($config_var['size'] ? ' size="' . $config_var['size'] . '"' : ''), ' value="*#fakepass#*" onfocus="this.value = \'\'; this.form.', $config_var['name'], '.disabled = false;" class="input_password input is-auto mb-2" /><br />
               <input type="password" disabled="disabled" id="', $config_var['name'], '" name="', $config_var['name'], '[1]"', ($config_var['size'] ? ' size="' . $config_var['size'] . '"' : ''), ' class="input_password input is-auto" />';
+
         // Show a selection box.
         elseif ($config_var['type'] == 'select')
         {
@@ -944,15 +947,18 @@ function template_show_settings()
             </div>
           </div>';
         }
+
         // Text area?
         elseif ($config_var['type'] == 'large_text')
           echo '
         <div class="control">
           <textarea class="textarea is-auto" rows="', ($config_var['size'] ? $config_var['size'] : 4), '" cols="30" ', $javascript, $disabled, ' name="', $config_var['name'], '" id="', $config_var['name'], '">', $config_var['value'], '</textarea>
         </div>';
+        
         // Permission group?
         elseif ($config_var['type'] == 'permissions')
           theme_inline_permissions($config_var['name']);
+        
         // BBC selection?
         elseif ($config_var['type'] == 'bbc')
         {
@@ -987,14 +993,16 @@ function template_show_settings()
         elseif ($config_var['type'] == 'var_message')
           echo '
               <div', !empty($config_var['name']) ? ' id="' . $config_var['name'] . '"' : '', '>', $config_var['var_message'], '</div>';
+        
         // Assume it must be a text box.
         else
           echo '
             <div class="control">
-              <input class="input is-auto" type="text"', $javascript, $disabled, ' name="', $config_var['name'], '" id="', $config_var['name'], '" value="', $config_var['value'], '"', ($config_var['size'] ? ' size="' . $config_var['size'] . '"' : ''), ' /></div>';
+              <input class="input is-auto" type="text"', $javascript, $disabled, ' name="', $config_var['name'], '" id="', $config_var['name'], '" value="', $config_var['value'], '"', ($config_var['size'] ? ' size="' . $config_var['size'] . '"' : ''), ' />
+            </div>';
 
         echo isset($config_var['postinput']) ? '
-              ' . $config_var['postinput'] : '',
+        ' . $config_var['postinput'] : '',
             '</div>
             </div>
           </div>';
@@ -1152,10 +1160,14 @@ function template_edit_profile_field()
               </div>
             </div>
 
-            <div class="field">
-              <label class="label">', $txt['custom_edit_desc'], '</label>
-              <div class="control">
-                <textarea class="textarea is-auto" name="field_desc" rows="3" cols="40">', $context['field']['desc'], '</textarea>
+            <div class="field is-horizontal">
+              <div class="field-label has-text-left">
+                <label class="label">', $txt['custom_edit_desc'], '</label>
+              </div>
+              <div class="field-body">
+                <div class="control">
+                  <textarea class="textarea is-auto" name="field_desc" rows="3" cols="40">', $context['field']['desc'], '</textarea>
+                </div>
               </div>
             </div>
 
@@ -1231,16 +1243,21 @@ function template_edit_profile_field()
               </div>
             </div>
 
-            <div class="field">
-              <label class="label"><a id="field_show_enclosed" href="', $scripturl, '?action=helpadmin;help=field_show_enclosed" onclick="return reqWin(this.href);" class="xhelp">
-                <span class="icon is-medium">
-                  <span class="fa fa-question-circle"></span>
-                </span>
-              </a>', $txt['custom_edit_enclose'], '</label>
-
-              <div class="control">
-                <textarea class="textarea is-auto" name="field_desc" rows="3" cols="40">', $context['field']['desc'], '</textarea>
-                <p class="help">', $txt['custom_edit_enclose_desc'], '</p>
+            <div class="field is-horizontal">
+              <div class="field-label has-text-left">
+                <label class="label">
+                  <a id="field_show_enclosed" href="', $scripturl, '?action=helpadmin;help=field_show_enclosed" onclick="return reqWin(this.href);" class="xhelp">
+                    <span class="icon is-medium">
+                      <span class="fa fa-question-circle"></span>
+                    </span>
+                  </a>', $txt['custom_edit_enclose'], '
+                </label>
+              </div>
+              <div class="field-body">
+                <div class="control">
+                  <textarea class="textarea is-auto" name="enclose" rows="3" cols="40">', $context['field']['desc'], '</textarea>
+                  <p class="help">', $txt['custom_edit_enclose_desc'], '</p>
+                </div>
               </div>
             </div>
 
@@ -1446,7 +1463,7 @@ function template_edit_profile_field()
             </div>
           </fieldset>
 
-          <div class="">
+          <div class="mt-4">
             <input type="submit" name="save" value="', $txt['save'], '" class="button is-primary" />';
 
   if ($context['fid'])

@@ -137,6 +137,7 @@ function template_html_above()
   echo '
   <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/subaccounts.css">';
 
+
   // Here comes the JavaScript bits!
   echo '
   <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/script.js?fin20"></script>
@@ -158,6 +159,12 @@ function template_html_above()
     var ajax_notification_cancel_text = "', $txt['modify_cancel'], '";
   // ]]></script>';
 
+  // RESPONSIVE TABLES
+    /*
+  echo'
+    <script type="text/javascript" language="Javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="', $settings['theme_url'], '/scripts/responsive-tables.js"></script>';
+*/
   echo '
   <meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />
   <meta name="description" content="', $context['page_title_html_safe'], '" />', !empty($context['meta_keywords']) ? '

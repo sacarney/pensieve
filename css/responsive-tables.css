@@ -1,0 +1,181 @@
+/* -------------------- */
+/* ## RESPONSIVE TABLES
+/* -------------------- */
+
+/* Images in responsive tables */
+
+.responsive-table img {
+  height: auto !important;
+}
+
+@media (min-width: 801px) {
+  .responsive-table img {
+    /* Prevents images from shrinking to nothing 
+    before responsive table-breaking kicks in. */
+    max-width: none;
+  }
+}
+
+@media (min-width: 801px) {
+  .row-header {
+    display: none;
+  }
+  .both-row-header {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  /* -------------------- */
+  /* No headers (none) */
+
+  .responsive-table.table-none {
+    display: table;
+    min-width: 75%;
+  }
+  
+  .responsive-table.table-none td {
+    display: block;
+  }
+
+  .responsive-table.table-none td:last-of-type {
+    border-bottom: none;
+  }
+
+  /* -------------------- */
+  /* Headers in first row */
+
+  .responsive-table.table-row {
+    display: table;
+    min-width: 75%;
+  }
+
+  .responsive-table.table-row th {
+    display: none;
+  }
+
+  .responsive-table.table-row tr {
+    display: block;
+  }
+
+  .responsive-table.table-row tr:first-of-type {
+    border-bottom: 0;
+  }
+
+  .responsive-table.table-row td {
+    display: flex;
+    padding: 0;
+  }
+
+  .responsive-table.table-row td:last-of-type {
+    border-bottom: 1px solid var(--primary);
+  }
+
+  .cell-content {
+    display: block;
+    flex: 1 1 50%;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .row-header {
+    display: block;
+    flex: 0 1 45%;
+    padding: 0.5rem 0.75rem;
+    font-weight: 500;
+    background: var(--dark-overlay);
+  }
+
+  .table-row tr {
+    border-bottom: 3px solid #bbb;
+  }
+
+  /* -------------------- */
+  /* Headers in first column */
+
+  .responsive-table.table-col {
+    display: table;
+    min-width: 75%;
+  }
+
+  .responsive-table.table-col th, .responsive-table.table-col td {
+    display: block;
+  }
+
+  .responsive-table.table-col th {
+    border-bottom: 1px solid #bbb;
+  }
+
+  .responsive-table.table-col tr {
+    display: block;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .responsive-table.table-col td {
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    display: block;
+  }
+
+  .responsive-table.table-col td:last-of-type {
+    border-bottom: none;
+  }
+
+  /* -------------------- */
+  /* Headers in both first row and first column */
+
+  .responsive-table.table-both {
+    display: table;
+    min-width: 75%;
+  }
+
+  .responsive-table.table-both th, 
+  .responsive-table.table-both td {
+    display: block;
+  }
+
+  .responsive-table.table-both th {
+    border-bottom: 1px solid #bbb;
+  }
+
+  .responsive-table.table-both tr {
+    display: block;
+    border-bottom: 3px solid #bbb;
+  }
+
+  .responsive-table.table-both tr:first-of-type {
+    display: none;
+  }
+
+  .responsive-table.table-both tr:first-of-type th:first-of-type {
+    display: none;
+  }
+
+  .responsive-table.table-both tr:nth-of-type(2) {
+    border-top: 1px solid #ddd;
+  }
+
+  .responsive-table.table-both td {
+    display: flex;
+    padding: 0;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+  }
+
+  .responsive-table.table-both td:last-of-type {
+    border-bottom: none;
+  }
+
+  .both-cell-content {
+    display: block;
+    flex: 1 1 50%;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .both-row-header {
+    display: block;
+    flex: 0 1 45%;
+    padding: 0.5rem 0.75rem;
+    font-weight: 500;
+    background: #eee;
+  }
+}

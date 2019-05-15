@@ -105,6 +105,11 @@ fieldset {
   border-color: var(--primary);
 }
 
+.the-post-wrapper {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--primary);
+}
+
 
 /* --- TEXT COLORS -- */
 
@@ -1358,7 +1363,8 @@ a.box:active {
 
 /* --- FORM --- */
 .input,
-.textarea {
+.textarea,
+.input_text {
   background-color: var(--grey-2);
   border-color: var(--light-overlay);
   color: var(--white);

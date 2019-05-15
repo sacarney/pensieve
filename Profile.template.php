@@ -463,7 +463,7 @@ function template_summary()
 
   echo '
       </div><!-- end box -->
-';
+  ';
 }
 
 // Template for showing all the posts of the user, in chronological order.
@@ -992,7 +992,7 @@ function template_trackIP()
     echo '
       </tbody>
     </table>
-';
+  ';
   }
 
   template_show_list('track_message_list');
@@ -1229,7 +1229,7 @@ function template_statPanel()
   }
 
   echo '
-</div>';
+  </div>';
 
   // Two columns with the most popular boards by posts and activity (activity = users posts / total posts).
   echo '
@@ -1307,7 +1307,6 @@ function template_edit_options()
   // The main header!
   echo '
     <form action="', (!empty($context['profile_custom_submit_url']) ? $context['profile_custom_submit_url'] : $scripturl . '?action=profile;area=' . $context['menu_item_selected'] . ';u=' . $context['id_member'] . ';save'), '" method="post" accept-charset="', $context['character_set'], '" name="creator" id="creator" enctype="multipart/form-data" onsubmit="return checkProfileSubmit();">
-      
 
       <div class="cat_bar">
         <h3 class="title is-5 mb-4">';
@@ -1326,21 +1325,15 @@ function template_edit_options()
 
   // Have we some description?
   if ($context['page_desc'])
-    echo '
-      <p class="notification is-size-7">', $context['page_desc'], '</p>';
-
-  echo '
-      
-        <div class="">';
+    echo '<p class="notification is-size-7">', $context['page_desc'], '</p>';
 
   // Any bits at the start?
   if (!empty($context['profile_prehtml']))
-    echo '
-          <div>', $context['profile_prehtml'], '</div>';
+    echo '<div>', $context['profile_prehtml'], '</div>';
 
   if (!empty($context['profile_fields']))
     echo '
-          <div>';
+    <div>';
 
   // Start the big old loop 'of love.
   $lastItem = 'hr';
@@ -1373,7 +1366,6 @@ function template_edit_options()
           <div class="field">
             <div class="control">
               <label', !empty($field['is_error']) ? ' class="label checkbox has-text-danger"' : ' class="label"', '>
-
                 <input type="checkbox" name="', $key, '" id="', $key, '" ', !empty($field['value']) ? ' checked="checked"' : '', ' value="1" class="checkbox input_check" ', $field['input_attr'], ' /> ', $field['label'], '
               </label>
             </div>';
@@ -1381,73 +1373,84 @@ function template_edit_options()
             if (!empty($field['subtext']))
             echo '
               <p class="help">', $field['subtext'], '</p>';
-
-            echo'
-          </div>
-      ';
+          echo'
+          </div>';
       } else {
 
-      echo '
-            <div class="field">
-              <label', !empty($field['is_error']) ? ' class="label has-text-danger"' : ' class="label"', '>', $field['label'], '</label>';
-
-      // Want to put something infront of the box?
-      if (!empty($field['preinput']))
         echo '
-              ', $field['preinput'];
+          <div class="field is-horizontal">
+            <div class="field-label has-text-left">
+              <label', !empty($field['is_error']) ? ' class="label has-text-danger"' : ' class="label"', '>', $field['label'], '</label>
+            </div>';
 
-      // What type of data are we showing?
-      if ($field['type'] == 'label')
-        echo '
-              ', $field['value'];
+            // Want to put something infront of the box?
+            if (!empty($field['preinput']))
+              echo '
+                    ', $field['preinput'];
 
-      // Maybe it's a text box - very likely!
-      elseif (in_array($field['type'], array('int', 'float', 'text', 'password')))
-        echo '
-              <div class="control">
-                <input type="', $field['type'] == 'password' ? 'password' : 'text', '" name="', $key, '" id="', $key, '" size="', empty($field['size']) ? 30 : $field['size'], '" value="', $field['value'], '" ', $field['input_attr'], ' class="input is-auto input_', $field['type'] == 'password' ? 'password' : 'text', '" />
+            // What type of data are we showing?
+            if ($field['type'] == 'label')
+              echo '
+                    ', $field['value'];
+
+            // Maybe it's a text box - very likely!
+            elseif (in_array($field['type'], array('int', 'float', 'text', 'password'))) {
+              echo '
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input type="', $field['type'] == 'password' ? 'password' : 'text', '" name="', $key, '" id="', $key, '" size="', empty($field['size']) ? 30 : $field['size'], '" value="', $field['value'], '" ', $field['input_attr'], ' class="input is-auto input_', $field['type'] == 'password' ? 'password' : 'text', '" />
+                  </div>';
+                  // Does it have any subtext to show?
+                  if (!empty($field['subtext'])) echo '<p class="help">', $field['subtext'], '</p>';
+                  echo'
+                </div>
               </div>
               ';
+            }
 
-      // Always fun - select boxes!
-      elseif ($field['type'] == 'select')
-      {
-        echo '
-        <div class="control">
-          <div class="select">
-              <select name="', $key, '" id="', $key, '">';
-
-        if (isset($field['options']))
-        {
-          // Is this some code to generate the options?
-          if (!is_array($field['options']))
-            $field['options'] = eval($field['options']);
-          // Assuming we now have some!
-          if (is_array($field['options']))
-            foreach ($field['options'] as $value => $name)
+            // Always fun - select boxes!
+            elseif ($field['type'] == 'select')
+            {
               echo '
-                <option value="', $value, '" ', $value == $field['value'] ? 'selected="selected"' : '', '>', $name, '</option>';
-        }
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <div class="select">
+                      <select name="', $key, '" id="', $key, '">';
+                        if (isset($field['options']))
+                        {
+                          // Is this some code to generate the options?
+                          if (!is_array($field['options']))
+                            $field['options'] = eval($field['options']);
+                          // Assuming we now have some!
+                          if (is_array($field['options']))
+                            foreach ($field['options'] as $value => $name)
+                              echo '
+                                <option value="', $value, '" ', $value == $field['value'] ? 'selected="selected"' : '', '>', $name, '</option>';
+                        }
 
-        echo '
-              </select>
-            </div>
-          </div>';
-      }
+                        echo '
+                      </select>
+                    </div>
+                  </div>';
+                  // Does it have any subtext to show?
+                  if (!empty($field['subtext'])) echo '<p class="help">', $field['subtext'], '</p>';
+                  echo'
+                </div>
+              </div>';
+          }
 
       // Something to end with?
       if (!empty($field['postinput']))
-        echo '
-              ', $field['postinput'];
+        echo '', $field['postinput'];
 
-      
       // Does it have any subtext to show?
-      if (!empty($field['subtext']))
+      //if (!empty($field['subtext'])) echo '<p class="help">', $field['subtext'], '</p>';
+
         echo '
-              <p class="help">', $field['subtext'], '</p>';
-      echo '
-            </div>';
-          }
+          </div>';
+      }
     }
   }
 
@@ -1468,12 +1471,18 @@ function template_edit_options()
     foreach ($context['custom_fields'] as $field)
     {
       echo '
-            <div class="field">
-              <label class="label">', $field['name'], '</label>
-              <div class="control">
-                ', $field['input_html'], '
+            <div class="field is-horizontal">
+              <div class="field-label has-text-left">
+                <label class="label">', $field['name'], '</label>
               </div>
-              <p class="help">', $field['desc'], '</p>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    ', $field['input_html'], '
+                  </div>
+                  <p class="help">', $field['desc'], '</p>
+                </div>
+              </div>
             </div>';
     }
     echo '
@@ -1483,11 +1492,9 @@ function template_edit_options()
 
   // Any closing HTML?
   if (!empty($context['profile_posthtml']))
-    echo '
-          <div>', $context['profile_posthtml'], '</div>';
+    echo '<div>', $context['profile_posthtml'], '</div>';
   elseif ($lastItem != 'hr')
-    echo '
-          <hr>';
+    echo ' <hr>';
 
   // Only show the password box if it's actually needed.
   if ($context['require_password'])
@@ -1501,16 +1508,13 @@ function template_edit_options()
       </div>
       ';
 
-  echo '
-          <div>';
+  echo '<div>';
 
   // The button shouldn't say "Change profile" unless we're changing the profile...
   if (!empty($context['submit_button_text']))
-    echo '
-            <input type="submit" value="', $context['submit_button_text'], '" class="button is-primary button_submit" />';
+    echo '<input type="submit" value="', $context['submit_button_text'], '" class="button is-primary button_submit" />';
   else
-    echo '
-            <input type="submit" value="', $txt['change_profile'], '" class="button is-primary button_submit" />';
+    echo '<input type="submit" value="', $txt['change_profile'], '" class="button is-primary button_submit" />';
 
   echo '
             <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
@@ -1564,74 +1568,86 @@ function template_profile_pm_settings()
   global $context, $settings, $options, $scripturl, $modSettings, $txt;
 
   echo '
-  <div class="field">
 
-    <label class="label" for="pm_prefs">', $txt['pm_display_mode'], '</label>
-    <div class="control">
-      <div class="select">
-        <select name="pm_prefs" id="pm_prefs" onchange="if (this.value == 2 &amp;&amp; !document.getElementById(\'copy_to_outbox\').checked) alert(\'', $txt['pm_recommend_enable_outbox'], '\');">
-          <option value="0"', $context['display_mode'] == 0 ? ' selected="selected"' : '', '>', $txt['pm_display_mode_all'], '</option>
-          <option value="1"', $context['display_mode'] == 1 ? ' selected="selected"' : '', '>', $txt['pm_display_mode_one'], '</option>
-          <option value="2"', $context['display_mode'] == 2 ? ' selected="selected"' : '', '>', $txt['pm_display_mode_linked'], '</option>
-        </select>
-      </div>
+  <div class="field is-horizontal">
+    <div class="field-label has-text-left">
+      <label class="label" for="pm_prefs">', $txt['pm_display_mode'], '</label>
     </div>
-  </div>
-
-  <div class="field">
-    <div class="control">
-      <label class="checkbox for="view_newest_pm_first">
-        <input type="hidden" name="default_options[view_newest_pm_first]" value="0" />
-        <input type="checkbox" name="default_options[view_newest_pm_first]" id="view_newest_pm_first" value="1"', !empty($context['member']['options']['view_newest_pm_first']) ? ' checked="checked"' : '', ' class="input_check" /> ', $txt['recent_pms_at_top'], '
-      </label>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <div class="select">
+            <select name="pm_prefs" id="pm_prefs" onchange="if (this.value == 2 &amp;&amp; !document.getElementById(\'copy_to_outbox\').checked) alert(\'', $txt['pm_recommend_enable_outbox'], '\');">
+              <option value="0"', $context['display_mode'] == 0 ? ' selected="selected"' : '', '>', $txt['pm_display_mode_all'], '</option>
+              <option value="1"', $context['display_mode'] == 1 ? ' selected="selected"' : '', '>', $txt['pm_display_mode_one'], '</option>
+              <option value="2"', $context['display_mode'] == 2 ? ' selected="selected"' : '', '>', $txt['pm_display_mode_linked'], '</option>
+            </select>
+          </div>
+        </div>
+        <div class="control mt-3">
+          <label class="checkbox for="view_newest_pm_first">
+            <input type="hidden" name="default_options[view_newest_pm_first]" value="0" />
+            <input type="checkbox" name="default_options[view_newest_pm_first]" id="view_newest_pm_first" value="1"', !empty($context['member']['options']['view_newest_pm_first']) ? ' checked="checked"' : '', ' class="input_check" /> ', $txt['recent_pms_at_top'], '
+          </label>
+        </div>
+      </div>
     </div>
   </div>
   
   <hr>
 
-  <div class="field">
-    <label class="label" for="pm_receive_from">', $txt['pm_receive_from'], '</label>
-    <div class="control">
-      <div class="select">
-        <select name="pm_receive_from" id="pm_receive_from">
-          <option value="0"', empty($context['receive_from']) || (empty($modSettings['enable_buddylist']) && $context['receive_from'] < 3) ? ' selected="selected"' : '', '>', $txt['pm_receive_from_everyone'], '</option>';
+  <div class="field is-horizontal">
+    <div class="field-label has-text-left">
+      <label class="label" for="pm_receive_from">', $txt['pm_receive_from'], '</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <div class="select">
+            <select name="pm_receive_from" id="pm_receive_from">
+              <option value="0"', empty($context['receive_from']) || (empty($modSettings['enable_buddylist']) && $context['receive_from'] < 3) ? ' selected="selected"' : '', '>', $txt['pm_receive_from_everyone'], '</option>';
 
-          if (!empty($modSettings['enable_buddylist']))
-          echo '
-          <option value="1"', !empty($context['receive_from']) && $context['receive_from'] == 1 ? ' selected="selected"' : '', '>', $txt['pm_receive_from_ignore'], '</option>
-          <option value="2"', !empty($context['receive_from']) && $context['receive_from'] == 2 ? ' selected="selected"' : '', '>', $txt['pm_receive_from_buddies'], '</option>';
+              if (!empty($modSettings['enable_buddylist']))
+              echo '
+              <option value="1"', !empty($context['receive_from']) && $context['receive_from'] == 1 ? ' selected="selected"' : '', '>', $txt['pm_receive_from_ignore'], '</option>
+              <option value="2"', !empty($context['receive_from']) && $context['receive_from'] == 2 ? ' selected="selected"' : '', '>', $txt['pm_receive_from_buddies'], '</option>';
 
-          echo '
-          <option value="3"', !empty($context['receive_from']) && $context['receive_from'] > 2 ? ' selected="selected"' : '', '>', $txt['pm_receive_from_admins'], '</option>
-        </select>
+              echo '
+              <option value="3"', !empty($context['receive_from']) && $context['receive_from'] > 2 ? ' selected="selected"' : '', '>', $txt['pm_receive_from_admins'], '</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="field">
-    <label class="label" for="pm_email_notify">', $txt['email_notify'], '</label>
-    <div class="control">
-      <div class="select">
-        <select name="pm_email_notify" id="pm_email_notify">
-          <option value="0"', empty($context['send_email']) ? ' selected="selected"' : '', '>', $txt['email_notify_never'], '</option>
-          <option value="1"', !empty($context['send_email']) && ($context['send_email'] == 1 || (empty($modSettings['enable_buddylist']) && $context['send_email'] > 1)) ? ' selected="selected"' : '', '>', $txt['email_notify_always'], '</option>';
-
-          if (!empty($modSettings['enable_buddylist']))
-          echo '
-          <option value="2"', !empty($context['send_email']) && $context['send_email'] > 1 ? ' selected="selected"' : '', '>', $txt['email_notify_buddies'], '</option>';
-
-          echo '
-        </select>
-      </div>
+  <div class="field is-horizontal">
+    <div class="field-label has-text-left">
+      <label class="label" for="pm_email_notify">', $txt['email_notify'], '</label>
     </div>
-  </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <div class="select">
+            <select name="pm_email_notify" id="pm_email_notify">
+              <option value="0"', empty($context['send_email']) ? ' selected="selected"' : '', '>', $txt['email_notify_never'], '</option>
+              <option value="1"', !empty($context['send_email']) && ($context['send_email'] == 1 || (empty($modSettings['enable_buddylist']) && $context['send_email'] > 1)) ? ' selected="selected"' : '', '>', $txt['email_notify_always'], '</option>';
 
-  <div class="field">
-    <div class="control">
-      <label class="checkbox" for="popup_messages">
-      <input type="hidden" name="default_options[popup_messages]" value="0" />
-      <input type="checkbox" name="default_options[popup_messages]" id="popup_messages" value="1"', !empty($context['member']['options']['popup_messages']) ? ' checked="checked"' : '', ' class="input_check" /> ', $txt['popup_messages'], '
-      </label>
+              if (!empty($modSettings['enable_buddylist']))
+              echo '
+              <option value="2"', !empty($context['send_email']) && $context['send_email'] > 1 ? ' selected="selected"' : '', '>', $txt['email_notify_buddies'], '</option>';
+
+              echo '
+            </select>
+          </div>
+        </div>
+        <div class="control mt-3">
+          <label class="checkbox" for="popup_messages">
+          <input type="hidden" name="default_options[popup_messages]" value="0" />
+          <input type="checkbox" name="default_options[popup_messages]" id="popup_messages" value="1"', !empty($context['member']['options']['popup_messages']) ? ' checked="checked"' : '', ' class="input_check" /> ', $txt['popup_messages'], '
+          </label>
+    </div>
+      </div>
     </div>
   </div>
 
@@ -1655,8 +1671,7 @@ function template_profile_pm_settings()
       </label>
     </div>
   </div>
-';
-
+  ';
 }
 
 // Template for showing theme settings. Note: template_options() actually adds the theme specific options.
@@ -1665,7 +1680,6 @@ function template_profile_theme_settings()
   global $context, $settings, $options, $scripturl, $modSettings, $txt;
 
   echo '
-
   <div class="mt-3 mb-3">
 
     <div class="field">
@@ -1758,32 +1772,44 @@ function template_profile_theme_settings()
   if (empty($modSettings['disableCustomPerPage']))
   {
     echo '
-    <div class="field">
-      <label class="label" for="topics_per_page">', $txt['topics_per_page'], '</label>
-      <div class="control">
-        <div class="select">
-          <select name="default_options[topics_per_page]" id="topics_per_page">
-            <option value="0"', empty($context['member']['options']['topics_per_page']) ? ' selected="selected"' : '', '>', $txt['per_page_default'], ' (', $modSettings['defaultMaxTopics'], ')</option>
-            <option value="5"', !empty($context['member']['options']['topics_per_page']) && $context['member']['options']['topics_per_page'] == 5 ? ' selected="selected"' : '', '>5</option>
-            <option value="10"', !empty($context['member']['options']['topics_per_page']) && $context['member']['options']['topics_per_page'] == 10 ? ' selected="selected"' : '', '>10</option>
-            <option value="25"', !empty($context['member']['options']['topics_per_page']) && $context['member']['options']['topics_per_page'] == 25 ? ' selected="selected"' : '', '>25</option>
-            <option value="50"', !empty($context['member']['options']['topics_per_page']) && $context['member']['options']['topics_per_page'] == 50 ? ' selected="selected"' : '', '>50</option>
-          </select>
+    <div class="field is-horizontal">
+      <div class="field-label has-text-left">
+        <label class="label" for="topics_per_page">', $txt['topics_per_page'], '</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <div class="select">
+              <select name="default_options[topics_per_page]" id="topics_per_page">
+                <option value="0"', empty($context['member']['options']['topics_per_page']) ? ' selected="selected"' : '', '>', $txt['per_page_default'], ' (', $modSettings['defaultMaxTopics'], ')</option>
+                <option value="5"', !empty($context['member']['options']['topics_per_page']) && $context['member']['options']['topics_per_page'] == 5 ? ' selected="selected"' : '', '>5</option>
+                <option value="10"', !empty($context['member']['options']['topics_per_page']) && $context['member']['options']['topics_per_page'] == 10 ? ' selected="selected"' : '', '>10</option>
+                <option value="25"', !empty($context['member']['options']['topics_per_page']) && $context['member']['options']['topics_per_page'] == 25 ? ' selected="selected"' : '', '>25</option>
+                <option value="50"', !empty($context['member']['options']['topics_per_page']) && $context['member']['options']['topics_per_page'] == 50 ? ' selected="selected"' : '', '>50</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="field">
-      <label class="label" for="messages_per_page">', $txt['messages_per_page'], '</label>
-      <div class="control">
-        <div class="select">
-          <select name="default_options[messages_per_page]" id="messages_per_page">
-            <option value="0"', empty($context['member']['options']['messages_per_page']) ? ' selected="selected"' : '', '>', $txt['per_page_default'], ' (', $modSettings['defaultMaxMessages'], ')</option>
-            <option value="5"', !empty($context['member']['options']['messages_per_page']) && $context['member']['options']['messages_per_page'] == 5 ? ' selected="selected"' : '', '>5</option>
-            <option value="10"', !empty($context['member']['options']['messages_per_page']) && $context['member']['options']['messages_per_page'] == 10 ? ' selected="selected"' : '', '>10</option>
-            <option value="25"', !empty($context['member']['options']['messages_per_page']) && $context['member']['options']['messages_per_page'] == 25 ? ' selected="selected"' : '', '>25</option>
-            <option value="50"', !empty($context['member']['options']['messages_per_page']) && $context['member']['options']['messages_per_page'] == 50 ? ' selected="selected"' : '', '>50</option>
-          </select>
+    <div class="field is-horizontal">
+      <div class="field-label has-text-left">
+        <label class="label" for="messages_per_page">', $txt['messages_per_page'], '</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <div class="select">
+              <select name="default_options[messages_per_page]" id="messages_per_page">
+                <option value="0"', empty($context['member']['options']['messages_per_page']) ? ' selected="selected"' : '', '>', $txt['per_page_default'], ' (', $modSettings['defaultMaxMessages'], ')</option>
+                <option value="5"', !empty($context['member']['options']['messages_per_page']) && $context['member']['options']['messages_per_page'] == 5 ? ' selected="selected"' : '', '>5</option>
+                <option value="10"', !empty($context['member']['options']['messages_per_page']) && $context['member']['options']['messages_per_page'] == 10 ? ' selected="selected"' : '', '>10</option>
+                <option value="25"', !empty($context['member']['options']['messages_per_page']) && $context['member']['options']['messages_per_page'] == 25 ? ' selected="selected"' : '', '>25</option>
+                <option value="50"', !empty($context['member']['options']['messages_per_page']) && $context['member']['options']['messages_per_page'] == 50 ? ' selected="selected"' : '', '>50</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
     </div>';
@@ -1791,46 +1817,63 @@ function template_profile_theme_settings()
 
   if (!empty($modSettings['cal_enabled']))
     echo '
-    <div class="field">
-      <label class="label" for="calendar_start_day">', $txt['calendar_start_day'], ':</label>
-      <div class="control">
-        <div class="select">
-          <select name="default_options[calendar_start_day]" id="calendar_start_day">
-            <option value="0"', empty($context['member']['options']['calendar_start_day']) ? ' selected="selected"' : '', '>', $txt['days'][0], '</option>
-            <option value="1"', !empty($context['member']['options']['calendar_start_day']) && $context['member']['options']['calendar_start_day'] == 1 ? ' selected="selected"' : '', '>', $txt['days'][1], '</option>
-            <option value="6"', !empty($context['member']['options']['calendar_start_day']) && $context['member']['options']['calendar_start_day'] == 6 ? ' selected="selected"' : '', '>', $txt['days'][6], '</option>
-          </select>
+    <div class="field is-horizontal">
+      <div class="field-label has-text-left">
+        <label class="label" for="calendar_start_day">', $txt['calendar_start_day'], ':</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <div class="select">
+              <select name="default_options[calendar_start_day]" id="calendar_start_day">
+                <option value="0"', empty($context['member']['options']['calendar_start_day']) ? ' selected="selected"' : '', '>', $txt['days'][0], '</option>
+                <option value="1"', !empty($context['member']['options']['calendar_start_day']) && $context['member']['options']['calendar_start_day'] == 1 ? ' selected="selected"' : '', '>', $txt['days'][1], '</option>
+                <option value="6"', !empty($context['member']['options']['calendar_start_day']) && $context['member']['options']['calendar_start_day'] == 6 ? ' selected="selected"' : '', '>', $txt['days'][6], '</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
     </div>';
 
   echo '
-    <div class="field">
-      <label class="label" for="display_quick_reply">', $txt['display_quick_reply'], '</label>
-      <div class="control">
-        <div class="select">
-          <select name="default_options[display_quick_reply]" id="display_quick_reply">
-            <option value="0"', empty($context['member']['options']['display_quick_reply']) ? ' selected="selected"' : '', '>', $txt['display_quick_reply1'], '</option>
-            <option value="1"', !empty($context['member']['options']['display_quick_reply']) && $context['member']['options']['display_quick_reply'] == 1 ? ' selected="selected"' : '', '>', $txt['display_quick_reply2'], '</option>
-            <option value="2"', !empty($context['member']['options']['display_quick_reply']) && $context['member']['options']['display_quick_reply'] == 2 ? ' selected="selected"' : '', '>', $txt['display_quick_reply3'], '</option>
-          </select>
+    <div class="field is-horizontal">
+      <div class="field-label has-text-left">
+        <label class="label" for="display_quick_reply">', $txt['display_quick_reply'], '</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <div class="select">
+              <select name="default_options[display_quick_reply]" id="display_quick_reply">
+                <option value="0"', empty($context['member']['options']['display_quick_reply']) ? ' selected="selected"' : '', '>', $txt['display_quick_reply1'], '</option>
+                <option value="1"', !empty($context['member']['options']['display_quick_reply']) && $context['member']['options']['display_quick_reply'] == 1 ? ' selected="selected"' : '', '>', $txt['display_quick_reply2'], '</option>
+                <option value="2"', !empty($context['member']['options']['display_quick_reply']) && $context['member']['options']['display_quick_reply'] == 2 ? ' selected="selected"' : '', '>', $txt['display_quick_reply3'], '</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="field">
-      <label class="label" for="display_quick_mod">', $txt['display_quick_mod'], '</label>
-      <div class="control">
-        <div class="select">
-          <select name="default_options[display_quick_mod]" id="display_quick_mod">
-            <option value="0"', empty($context['member']['options']['display_quick_mod']) ? ' selected="selected"' : '', '>', $txt['display_quick_mod_none'], '</option>
-            <option value="1"', !empty($context['member']['options']['display_quick_mod']) && $context['member']['options']['display_quick_mod'] == 1 ? ' selected="selected"' : '', '>', $txt['display_quick_mod_check'], '</option>
-            <option value="2"', !empty($context['member']['options']['display_quick_mod']) && $context['member']['options']['display_quick_mod'] != 1 ? ' selected="selected"' : '', '>', $txt['display_quick_mod_image'], '</option>
-          </select>
+    <div class="field is-horizontal">
+      <div class="field-label has-text-left">
+        <label class="label" for="display_quick_mod">', $txt['display_quick_mod'], '</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <div class="select">
+              <select name="default_options[display_quick_mod]" id="display_quick_mod">
+                <option value="0"', empty($context['member']['options']['display_quick_mod']) ? ' selected="selected"' : '', '>', $txt['display_quick_mod_none'], '</option>
+                <option value="1"', !empty($context['member']['options']['display_quick_mod']) && $context['member']['options']['display_quick_mod'] == 1 ? ' selected="selected"' : '', '>', $txt['display_quick_mod_check'], '</option>
+                <option value="2"', !empty($context['member']['options']['display_quick_mod']) && $context['member']['options']['display_quick_mod'] != 1 ? ' selected="selected"' : '', '>', $txt['display_quick_mod_image'], '</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>';
+    </div>';
 }
 
 function template_notification()
@@ -1839,67 +1882,77 @@ function template_notification()
 
   // The main containing header.
   echo '
-      <div class="cat_bar">
-        <h3 class="catbg">
-          <span class="ie6_header floatleft"><img src="', $settings['images_url'], '/icons/profile_sm.gif" alt="" class="icon" />', $txt['profile'], '</span>
-        </h3>
-      </div>
-      <p class="windowbg description">', $txt['notification_info'], '</p>
-      <div class="windowbg2">
-        <span class="topslice"><span></span></span>
-        <div class="content">
-          <form action="', $scripturl, '?action=profile;area=notification;save" method="post" accept-charset="', $context['character_set'], '" id="notify_options" class="flow_hidden">';
+    <div class="cat_bar">
+      <h3 class="title is-5 mb-4">', $txt['profile'], '</h3>
+    </div>
+ 
+    <p class="notification is-size-7">', $txt['notification_info'], '</p>
 
-  // Allow notification on announcements to be disabled?
-  if (!empty($modSettings['allow_disableAnnounce']))
-    echo '
-            <input type="hidden" name="notify_announcements" value="0" />
-            <label for="notify_announcements"><input type="checkbox" id="notify_announcements" name="notify_announcements"', !empty($context['member']['notify_announcements']) ? ' checked="checked"' : '', ' class="input_check" /> ', $txt['notify_important_email'], '</label><br />';
+    <form action="', $scripturl, '?action=profile;area=notification;save" method="post" accept-charset="', $context['character_set'], '" id="notify_options" class="flow_hidden">';
 
-  // More notification options.
-  echo '
-            <input type="hidden" name="default_options[auto_notify]" value="0" />
-            <label for="auto_notify"><input type="checkbox" id="auto_notify" name="default_options[auto_notify]" value="1"', !empty($context['member']['options']['auto_notify']) ? ' checked="checked"' : '', ' class="input_check" /> ', $txt['auto_notify'], '</label><br />';
+      // Allow notification on announcements to be disabled?
+      if (!empty($modSettings['allow_disableAnnounce']))
+        echo '
+        <div class="field">
+          <label for="notify_announcements"><input type="checkbox" id="notify_announcements" name="notify_announcements"', !empty($context['member']['notify_announcements']) ? ' checked="checked"' : '', ' class="checkbox" />
+            <input type="hidden" name="notify_announcements" value="0" class="checkbox"/>
+               ', $txt['notify_important_email'], '
+          </label>
+        </div>';
 
-  if (empty($modSettings['disallow_sendBody']))
-    echo '
-            <input type="hidden" name="notify_send_body" value="0" />
-            <label for="notify_send_body"><input type="checkbox" id="notify_send_body" name="notify_send_body"', !empty($context['member']['notify_send_body']) ? ' checked="checked"' : '', ' class="input_check" /> ', $txt['notify_send_body'], '</label><br />';
+      // More notification options.
+      echo '
+      <div class="field">
+        <label for="auto_notify"><input type="checkbox" id="auto_notify" name="default_options[auto_notify]" value="1"', !empty($context['member']['options']['auto_notify']) ? ' checked="checked"' : '', ' class="checkbox" />
+          <input type="hidden" name="default_options[auto_notify]" value="0" class="checkbox"/>
+            ', $txt['auto_notify'], '
+        </label>
+      </div>';
 
-  echo '
-            <br />
-            <label for="notify_regularity">', $txt['notify_regularity'], ':</label>
+      if (empty($modSettings['disallow_sendBody']))
+        echo '
+        <div class="field">
+          <label for="notify_send_body">
+            <input type="checkbox" id="notify_send_body" name="notify_send_body"', !empty($context['member']['notify_send_body']) ? ' checked="checked"' : '', ' class="checkbox" /> <input type="hidden" name="notify_send_body" value="0" class="checkbox"/>
+               ', $txt['notify_send_body'], '
+          </label>
+        </div>';
+
+      echo '
+        <div class="field">
+          <label for="notify_regularity">', $txt['notify_regularity'], ':</label>
+          <div class="select">
             <select name="notify_regularity" id="notify_regularity">
               <option value="0"', $context['member']['notify_regularity'] == 0 ? ' selected="selected"' : '', '>', $txt['notify_regularity_instant'], '</option>
               <option value="1"', $context['member']['notify_regularity'] == 1 ? ' selected="selected"' : '', '>', $txt['notify_regularity_first_only'], '</option>
               <option value="2"', $context['member']['notify_regularity'] == 2 ? ' selected="selected"' : '', '>', $txt['notify_regularity_daily'], '</option>
               <option value="3"', $context['member']['notify_regularity'] == 3 ? ' selected="selected"' : '', '>', $txt['notify_regularity_weekly'], '</option>
             </select>
-            <br /><br />
-            <label for="notify_types">', $txt['notify_send_types'], ':</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="notify_types">', $txt['notify_send_types'], ':</label>
+          <div class="select">
             <select name="notify_types" id="notify_types">
               <option value="1"', $context['member']['notify_types'] == 1 ? ' selected="selected"' : '', '>', $txt['notify_send_type_everything'], '</option>
               <option value="2"', $context['member']['notify_types'] == 2 ? ' selected="selected"' : '', '>', $txt['notify_send_type_everything_own'], '</option>
               <option value="3"', $context['member']['notify_types'] == 3 ? ' selected="selected"' : '', '>', $txt['notify_send_type_only_replies'], '</option>
               <option value="4"', $context['member']['notify_types'] == 4 ? ' selected="selected"' : '', '>', $txt['notify_send_type_nothing'], '</option>
-            </select><br class="clear" />
-
-            <div>
-              <input id="notify_submit" type="submit" value="', $txt['notify_save'], '" class="button_submit floatright" />
-              <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-              <input type="hidden" name="u" value="', $context['id_member'], '" />
-              <input type="hidden" name="sa" value="', $context['menu_item_selected'], '" />
-            </div><br class="clear" />
-          </form>
+            </select>
+          </div>
         </div>
-        <span class="botslice"><span></span></span>
-      </div>
-      <br />';
+
+        <div>
+          <input id="notify_submit" type="submit" value="', $txt['notify_save'], '" class="button_submit button is-primary" />
+          <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+          <input type="hidden" name="u" value="', $context['id_member'], '" />
+          <input type="hidden" name="sa" value="', $context['menu_item_selected'], '" />
+        </div><br class="clear" />
+    </form>
+  ';
 
   template_show_list('topic_notification_list');
-
-  echo '
-    <br />';
 
   template_show_list('board_notification_list');
 }
@@ -2696,42 +2749,56 @@ function template_profile_group_manage()
   global $context, $txt, $scripturl;
 
   echo '
-              <dt>
-                <strong>', $txt['primary_membergroup'], ': </strong><br />
-                <span class="smalltext">(<a href="', $scripturl, '?action=helpadmin;help=moderator_why_missing" onclick="return reqWin(this.href);">', $txt['moderator_why_missing'], '</a>)</span>
-              </dt>
-              <dd>
-                <select name="id_group" ', ($context['user']['is_owner'] && $context['member']['group_id'] == 1 ? 'onchange="if (this.value != 1 &amp;&amp; !confirm(\'' . $txt['deadmin_confirm'] . '\')) this.value = 1;"' : ''), '>';
-    // Fill the select box with all primary member groups that can be assigned to a member.
-    foreach ($context['member_groups'] as $member_group)
-      if (!empty($member_group['can_be_primary']))
-        echo '
+    <div class="field is-horizontal">
+      <div class="field-label has-text-left">
+        <label class="label">', $txt['primary_membergroup'], '</label>
+        <p class="help">(<a href="', $scripturl, '?action=helpadmin;help=moderator_why_missing" onclick="return reqWin(this.href);">', $txt['moderator_why_missing'], '</a>)</p>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <div class="select">
+            <select name="id_group" ', ($context['user']['is_owner'] && $context['member']['group_id'] == 1 ? 'onchange="if (this.value != 1 &amp;&amp; !confirm(\'' . $txt['deadmin_confirm'] . '\')) this.value = 1;"' : ''), '>';
+                  // Fill the select box with all primary member groups that can be assigned to a member.
+                  foreach ($context['member_groups'] as $member_group)
+                    if (!empty($member_group['can_be_primary']))
+                      echo '
                   <option value="', $member_group['id'], '"', $member_group['is_primary'] ? ' selected="selected"' : '', '>
                     ', $member_group['name'], '
                   </option>';
-    echo '
+                echo '
                 </select>
-              </dd>
-              <dt>
-                <strong>', $txt['additional_membergroups'], ':</strong>
-              </dt>
-              <dd>
-                <span id="additional_groupsList">
-                  <input type="hidden" name="additional_groups[]" value="0" />';
-    // For each membergroup show a checkbox so members can be assigned to more than one group.
-    foreach ($context['member_groups'] as $member_group)
-      if ($member_group['can_be_additional'])
-        echo '
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label has-text-left">
+        <label class="label">', $txt['additional_membergroups'], '</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <span id="additional_groupsList">
+              <input type="hidden" name="additional_groups[]" value="0" />';
+              // For each membergroup show a checkbox so members can be assigned to more than one group.
+              foreach ($context['member_groups'] as $member_group)
+                if ($member_group['can_be_additional'])
+                  echo '
                   <label for="additional_groups-', $member_group['id'], '"><input type="checkbox" name="additional_groups[]" value="', $member_group['id'], '" id="additional_groups-', $member_group['id'], '"', $member_group['is_additional'] ? ' checked="checked"' : '', ' class="input_check" /> ', $member_group['name'], '</label><br />';
-    echo '
+                echo '
                 </span>
                 <a href="javascript:void(0);" onclick="document.getElementById(\'additional_groupsList\').style.display = \'block\'; document.getElementById(\'additional_groupsLink\').style.display = \'none\'; return false;" id="additional_groupsLink" style="display: none;">', $txt['additional_membergroups_show'], '</a>
                 <script type="text/javascript"><!-- // --><![CDATA[
                   document.getElementById("additional_groupsList").style.display = "none";
                   document.getElementById("additional_groupsLink").style.display = "";
                 // ]]></script>
-              </dd>';
-
+          </div>
+        </div>
+      </div>
+    </div>';
 }
 
 // Callback function for entering a birthdate!
@@ -2741,15 +2808,21 @@ function template_profile_birthdate()
 
   // Just show the pretty box!
   echo '
-              <dt>
-                <strong>', $txt['dob'], ':</strong><br />
-                <span class="smalltext">', $txt['dob_year'], ' - ', $txt['dob_month'], ' - ', $txt['dob_day'], '</span>
-              </dt>
-              <dd>
-                <input type="text" name="bday3" size="4" maxlength="4" value="', $context['member']['birth_date']['year'], '" class="input_text" /> -
-                <input type="text" name="bday1" size="2" maxlength="2" value="', $context['member']['birth_date']['month'], '" class="input_text" /> -
-                <input type="text" name="bday2" size="2" maxlength="2" value="', $context['member']['birth_date']['day'], '" class="input_text" />
-              </dd>';
+  <div class="field is-horizontal">
+    <div class="field-label has-text-left">
+      <label class="label">', $txt['dob'], '</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="help mb-1">', $txt['dob_year'], ' - ', $txt['dob_month'], ' - ', $txt['dob_day'], '</p>
+        <div class="control">
+          <input type="text" name="bday3" size="4" maxlength="4" value="', $context['member']['birth_date']['year'], '" class="input is-auto" /> -
+          <input type="text" name="bday1" size="2" maxlength="2" value="', $context['member']['birth_date']['month'], '" class="input is-auto" /> -
+          <input type="text" name="bday2" size="2" maxlength="2" value="', $context['member']['birth_date']['day'], '" class="input is-auto" />
+        </div>
+      </div>
+    </div>
+  </div>';
 }
 
 // Show the signature editing box?
@@ -2758,71 +2831,78 @@ function template_profile_signature_modify()
   global $txt, $context, $settings;
 
   echo '
-              <dt>
-                <strong>', $txt['signature'], ':</strong><br />
-                <span class="smalltext">', $txt['sig_info'], '</span><br />
-                <br />';
+  <div class="field is-horizontal">
+    <div class="field-label has-text-left">
+      <label class="label">', $txt['signature'], '</label>';
+      // Spell check button
+      if ($context['show_spellchecking'])
+      echo '
+        <input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'creator\', \'signature\');" class="button_submit button" />';
+    echo'
+    </div>
 
-  if ($context['show_spellchecking'])
-    echo '
-                <input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'creator\', \'signature\');" class="button_submit" />';
+    <div class="field-body">
+      <div class="field">
+        <p class="help mb-2">', $txt['sig_info'], '</p>
+        <div class="control">
+          <textarea class="textarea" onkeyup="calcCharLeft();" name="signature" rows="5" cols="50">', $context['member']['signature'], '</textarea>
+        </div>';
 
-    echo '
-              </dt>
-              <dd>
-                <textarea class="editor" onkeyup="calcCharLeft();" name="signature" rows="5" cols="50">', $context['member']['signature'], '</textarea><br />';
+        // If there is a limit at all!
+        if (!empty($context['signature_limits']['max_length']))
+        echo '
+        <p class="help">', sprintf($txt['max_sig_characters'], $context['signature_limits']['max_length']), ' <span id="signatureLeft">', $context['signature_limits']['max_length'], '</span></p>';
 
-  // If there is a limit at all!
-  if (!empty($context['signature_limits']['max_length']))
-    echo '
-                <span class="smalltext">', sprintf($txt['max_sig_characters'], $context['signature_limits']['max_length']), ' <span id="signatureLeft">', $context['signature_limits']['max_length'], '</span></span><br />';
+        // Signature warning
+        if ($context['signature_warning'])
+        echo '
+         <p class="help">', $context['signature_warning'], '</p>';
 
-  if ($context['signature_warning'])
-    echo '
-                <span class="smalltext">', $context['signature_warning'], '</span>';
+        echo'
+      </div>
+    </div>
+  </div>';
 
   // Load the spell checker?
   if ($context['show_spellchecking'])
-    echo '
-                <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/spellcheck.js"></script>';
+    echo '<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/spellcheck.js"></script>';
 
   // Some javascript used to count how many characters have been used so far in the signature.
   echo '
-                <script type="text/javascript"><!-- // --><![CDATA[
-                  function tick()
-                  {
-                    if (typeof(document.forms.creator) != "undefined")
-                    {
-                      calcCharLeft();
-                      setTimeout("tick()", 1000);
-                    }
-                    else
-                      setTimeout("tick()", 800);
-                  }
+    <script type="text/javascript"><!-- // --><![CDATA[
+      function tick()
+      {
+        if (typeof(document.forms.creator) != "undefined")
+        {
+          calcCharLeft();
+          setTimeout("tick()", 1000);
+        }
+        else
+          setTimeout("tick()", 800);
+      }
 
-                  function calcCharLeft()
-                  {
-                    var maxLength = ', $context['signature_limits']['max_length'], ';
-                    var oldSignature = "", currentSignature = document.forms.creator.signature.value;
+      function calcCharLeft()
+      {
+        var maxLength = ', $context['signature_limits']['max_length'], ';
+        var oldSignature = "", currentSignature = document.forms.creator.signature.value;
 
-                    if (!document.getElementById("signatureLeft"))
-                      return;
+        if (!document.getElementById("signatureLeft"))
+          return;
 
-                    if (oldSignature != currentSignature)
-                    {
-                      oldSignature = currentSignature;
+        if (oldSignature != currentSignature)
+        {
+          oldSignature = currentSignature;
 
-                      if (currentSignature.replace(/\r/, "").length > maxLength)
-                        document.forms.creator.signature.value = currentSignature.replace(/\r/, "").substring(0, maxLength);
-                      currentSignature = document.forms.creator.signature.value.replace(/\r/, "");
-                    }
+          if (currentSignature.replace(/\r/, "").length > maxLength)
+            document.forms.creator.signature.value = currentSignature.replace(/\r/, "").substring(0, maxLength);
+          currentSignature = document.forms.creator.signature.value.replace(/\r/, "");
+        }
 
-                    setInnerHTML(document.getElementById("signatureLeft"), maxLength - currentSignature.length);
-                  }
+        setInnerHTML(document.getElementById("signatureLeft"), maxLength - currentSignature.length);
+      }
 
-                  addLoadEvent(tick);
-                // ]]></script>
-              </dd>';
+      addLoadEvent(tick);
+    // ]]></script>';
 }
 
 function template_profile_avatar_select()
@@ -2831,33 +2911,51 @@ function template_profile_avatar_select()
 
   // Start with the upper menu
   echo '
-              <dt>
-                <strong id="personal_picture">', $txt['personal_picture'], '</strong>
-                <input type="radio" onclick="swap_avatar(this); return true;" name="avatar_choice" id="avatar_choice_none" value="none"' . ($context['member']['avatar']['choice'] == 'none' ? ' checked="checked"' : '') . ' class="input_radio" /><label for="avatar_choice_none"' . (isset($context['modify_error']['bad_avatar']) ? ' class="error"' : '') . '>' . $txt['no_avatar'] . '</label><br />
-                ', !empty($context['member']['avatar']['allow_server_stored']) ? '<input type="radio" onclick="swap_avatar(this); return true;" name="avatar_choice" id="avatar_choice_server_stored" value="server_stored"' . ($context['member']['avatar']['choice'] == 'server_stored' ? ' checked="checked"' : '') . ' class="input_radio" /><label for="avatar_choice_server_stored"' . (isset($context['modify_error']['bad_avatar']) ? ' class="error"' : '') . '>' . $txt['choose_avatar_gallery'] . '</label><br />' : '', '
-                ', !empty($context['member']['avatar']['allow_external']) ? '<input type="radio" onclick="swap_avatar(this); return true;" name="avatar_choice" id="avatar_choice_external" value="external"' . ($context['member']['avatar']['choice'] == 'external' ? ' checked="checked"' : '') . ' class="input_radio" /><label for="avatar_choice_external"' . (isset($context['modify_error']['bad_avatar']) ? ' class="error"' : '') . '>' . $txt['my_own_pic'] . '</label><br />' : '', '
-                ', !empty($context['member']['avatar']['allow_upload']) ? '<input type="radio" onclick="swap_avatar(this); return true;" name="avatar_choice" id="avatar_choice_upload" value="upload"' . ($context['member']['avatar']['choice'] == 'upload' ? ' checked="checked"' : '') . ' class="input_radio" /><label for="avatar_choice_upload"' . (isset($context['modify_error']['bad_avatar']) ? ' class="error"' : '') . '>' . $txt['avatar_will_upload'] . '</label>' : '', '
-              </dt>
-              <dd>';
+    <fieldset class="p-4">
+      <legend class="is-uppercase is-muted is-size-6-5"><span id="personal_picture">', $txt['personal_picture'], '</span></legend>
+      
+      <div class="field is-horizontal">
+        <div class="field-label has-text-left">
+          <div class="control">
 
-  // If users are allowed to choose avatars stored on the server show selection boxes to choice them from.
-  if (!empty($context['member']['avatar']['allow_server_stored']))
-  {
-    echo '
-                <div id="avatar_server_stored">
-                  <div>
-                    <select name="cat" id="cat" size="10" onchange="changeSel(\'\');" onfocus="selectRadioByName(document.forms.creator.avatar_choice, \'server_stored\');">';
-    // This lists all the file catergories.
-    foreach ($context['avatars'] as $avatar)
-      echo '
+            <label for="avatar_choice_none"' . (isset($context['modify_error']['bad_avatar']) ? ' class="error is-block"' : 'class="is-block"') . '>
+              <input type="radio" onclick="swap_avatar(this); return true;" name="avatar_choice" id="avatar_choice_none" value="none"' . ($context['member']['avatar']['choice'] == 'none' ? ' checked="checked"' : '') . ' class="input_radio" /> ' . $txt['no_avatar'] . '
+            </label>',
+
+            !empty($context['member']['avatar']['allow_server_stored']) ? '<label for="avatar_choice_server_stored"' . (isset($context['modify_error']['bad_avatar']) ? ' class="error is-block"' : 'class="is-block"') . '><input type="radio" onclick="swap_avatar(this); return true;" name="avatar_choice" id="avatar_choice_server_stored" value="server_stored"' . ($context['member']['avatar']['choice'] == 'server_stored' ? ' checked="checked"' : '') . ' class="input_radio" /> ' . $txt['choose_avatar_gallery'] . '</label>' : '',
+
+            !empty($context['member']['avatar']['allow_external']) ? '<label for="avatar_choice_external"' . (isset($context['modify_error']['bad_avatar']) ? ' class="error is-block"' : 'class="is-block"') . '><input type="radio" onclick="swap_avatar(this); return true;" name="avatar_choice" id="avatar_choice_external" value="external"' . ($context['member']['avatar']['choice'] == 'external' ? ' checked="checked"' : '') . ' class="input_radio" /> ' . $txt['my_own_pic'] . '</label>' : '', '
+              ',
+
+            !empty($context['member']['avatar']['allow_upload']) ? '<label for="avatar_choice_upload"' . (isset($context['modify_error']['bad_avatar']) ? ' class="error is-block"' : 'class="is-block"') . '><input type="radio" onclick="swap_avatar(this); return true;" name="avatar_choice" id="avatar_choice_upload" value="upload"' . ($context['member']['avatar']['choice'] == 'upload' ? ' checked="checked"' : '') . ' class="input_radio" /> ' . $txt['avatar_will_upload'] . '</label>' : '', '
+          </div>
+        </div>
+        <div class="field-body">';
+
+        // If users are allowed to choose avatars stored on the server show selection boxes to choice them from.
+        if (!empty($context['member']['avatar']['allow_server_stored']))
+        {
+          echo '
+            <div id="avatar_server_stored">
+              <div class="columns">
+                <div class="column">
+                  <div class="select is-multiple">
+                  <select style="height: 5rem;" name="cat" id="cat" size="10" onchange="changeSel(\'\');" onfocus="selectRadioByName(document.forms.creator.avatar_choice, \'server_stored\');">';
+                  // This lists all the file catergories.
+                  foreach ($context['avatars'] as $avatar)
+                    echo '
                       <option value="', $avatar['filename'] . ($avatar['is_dir'] ? '/' : ''), '"', ($avatar['checked'] ? ' selected="selected"' : ''), '>', $avatar['name'], '</option>';
-    echo '
-                    </select>
+                    echo '
+                  </select>
                   </div>
-                  <div>
-                    <select name="file" id="file" size="10" style="display: none;" onchange="showAvatar()" onfocus="selectRadioByName(document.forms.creator.avatar_choice, \'server_stored\');" disabled="disabled"><option></option></select>
+                </div>
+                <div class="column">
+                  <div class="select is-multiple">
+                    <select style="height: 5rem;" name="file" id="file" size="10" style="display: none;" onchange="showAvatar()" onfocus="selectRadioByName(document.forms.creator.avatar_choice, \'server_stored\');" disabled="disabled"><option></option></select>
                   </div>
-                  <div><img name="avatar" id="avatar" src="', !empty($context['member']['avatar']['allow_external']) && $context['member']['avatar']['choice'] == 'external' ? $context['member']['avatar']['external'] : $modSettings['avatar_url'] . '/blank.gif', '" alt="Do Nothing" /></div>
+                </div>
+                <div class="column">
+                  <img name="avatar" id="avatar" src="', !empty($context['member']['avatar']['allow_external']) && $context['member']['avatar']['choice'] == 'external' ? $context['member']['avatar']['external'] : $modSettings['avatar_url'] . '/blank.gif', '" alt="Do Nothing" /></div>
                   <script type="text/javascript"><!-- // --><![CDATA[
                     var files = ["' . implode('", "', $context['avatar_list']) . '"];
                     var avatar = document.getElementById("avatar");
@@ -2958,63 +3056,82 @@ function template_profile_avatar_select()
                       document.getElementById("avatar").src = src;
                     }
                   // ]]></script>
-                </div>';
-  }
+                </div>
+              </div>
+            ';
+        }
 
-  // If the user can link to an off server avatar, show them a box to input the address.
-  if (!empty($context['member']['avatar']['allow_external']))
-  {
-    echo '
-                <div id="avatar_external">
-                  <div class="smalltext">', $txt['avatar_by_url'], '</div>
-                  <input type="text" name="userpicpersonal" size="45" value="', $context['member']['avatar']['external_original'], '" onfocus="selectRadioByName(document.forms.creator.avatar_choice, \'external\');" onchange="if (typeof(previewExternalAvatar) != \'undefined\') previewExternalAvatar(this.value);" class="input_text" />
-                </div>';
-  }
+        // If the user can link to an off server avatar, show them a box to input the address.
+        if (!empty($context['member']['avatar']['allow_external']))
+        {
+          echo '
+            <div id="avatar_external">
+              <div class="smalltext">', $txt['avatar_by_url'], '</div>
+              <input type="text" name="userpicpersonal" size="45" value="', $context['member']['avatar']['external_original'], '" onfocus="selectRadioByName(document.forms.creator.avatar_choice, \'external\');" onchange="if (typeof(previewExternalAvatar) != \'undefined\') previewExternalAvatar(this.value);" class="input_text input" />
+            </div>';
+        }
 
-  // If the user is able to upload avatars to the server show them an upload box.
-  if (!empty($context['member']['avatar']['allow_upload']))
-  {
-    echo '
-                <div id="avatar_upload">
-                  <input type="file" size="44" name="attachment" value="" onfocus="selectRadioByName(document.forms.creator.avatar_choice, \'upload\');" class="input_file" />
-                  ', ($context['member']['avatar']['id_attach'] > 0 ? '<br /><br /><img src="' . $context['member']['avatar']['href'] . (strpos($context['member']['avatar']['href'], '?') === false ? '?' : '&amp;') . 'time=' . time() . '" alt="" /><input type="hidden" name="id_attach" value="' . $context['member']['avatar']['id_attach'] . '" />' : ''), '
-                </div>';
-  }
+        // If the user is able to upload avatars to the server show them an upload box.
+        if (!empty($context['member']['avatar']['allow_upload']))
+        {
+          echo '
+              <div id="avatar_upload" class="file">
+                <div class="columns">
+                  <div class="column">
+                    <label class="file-label">
+                      <input type="file" name="attachment" value="" onfocus="selectRadioByName(document.forms.creator.avatar_choice, \'upload\');" class="input_file file-input" />
+                      <span class="file-cta">
+                        <span class="file-icon">
+                          <span class="fa fa-upload"></span>
+                        </span>
+                        <span class="filed-label">Choose an image</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="column">
+                    ', ($context['member']['avatar']['id_attach'] > 0 ? '<img src="' . $context['member']['avatar']['href'] . (strpos($context['member']['avatar']['href'], '?') === false ? '?' : '&amp;') . 'time=' . time() . '" alt="" /><input type="hidden" name="id_attach" value="' . $context['member']['avatar']['id_attach'] . '" />' : ''), '
+                  </div>
+                </div>
+              </div>';
+        }
 
-  echo '
-                <script type="text/javascript"><!-- // --><![CDATA[
-                  ', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "' . ($context['member']['avatar']['choice'] == 'server_stored' ? '' : 'none') . '";' : '', '
-                  ', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "' . ($context['member']['avatar']['choice'] == 'external' ? '' : 'none') . '";' : '', '
-                  ', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "' . ($context['member']['avatar']['choice'] == 'upload' ? '' : 'none') . '";' : '', '
+        echo '
+              <script type="text/javascript"><!-- // --><![CDATA[
+                ', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "' . ($context['member']['avatar']['choice'] == 'server_stored' ? '' : 'none') . '";' : '', '
+                ', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "' . ($context['member']['avatar']['choice'] == 'external' ? '' : 'none') . '";' : '', '
+                ', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "' . ($context['member']['avatar']['choice'] == 'upload' ? '' : 'none') . '";' : '', '
 
-                  function swap_avatar(type)
+                function swap_avatar(type)
+                {
+                  switch(type.id)
                   {
-                    switch(type.id)
-                    {
-                      case "avatar_choice_server_stored":
-                        ', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "";' : '', '
-                        ', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "none";' : '', '
-                        ', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "none";' : '', '
-                        break;
-                      case "avatar_choice_external":
-                        ', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "none";' : '', '
-                        ', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "";' : '', '
-                        ', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "none";' : '', '
-                        break;
-                      case "avatar_choice_upload":
-                        ', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "none";' : '', '
-                        ', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "none";' : '', '
-                        ', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "";' : '', '
-                        break;
-                      case "avatar_choice_none":
-                        ', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "none";' : '', '
-                        ', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "none";' : '', '
-                        ', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "none";' : '', '
-                        break;
-                    }
+                    case "avatar_choice_server_stored":
+                      ', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "";' : '', '
+                      ', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "none";' : '', '
+                      ', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "none";' : '', '
+                      break;
+                    case "avatar_choice_external":
+                      ', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "none";' : '', '
+                      ', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "";' : '', '
+                      ', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "none";' : '', '
+                      break;
+                    case "avatar_choice_upload":
+                      ', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "none";' : '', '
+                      ', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "none";' : '', '
+                      ', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "";' : '', '
+                      break;
+                    case "avatar_choice_none":
+                      ', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "none";' : '', '
+                      ', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "none";' : '', '
+                      ', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "none";' : '', '
+                      break;
                   }
-                // ]]></script>
-              </dd>';
+                }
+              // ]]></script>
+
+        </div>
+    </fieldset>
+    ';
 }
 
 // Callback for modifying karam.
@@ -3038,21 +3155,36 @@ function template_profile_timeformat_modify()
   global $context, $modSettings, $txt, $scripturl, $settings;
 
   echo '
-              <dt>
-                <strong>', $txt['time_format'], ':</strong><br />
-                <a href="', $scripturl, '?action=helpadmin;help=time_format" onclick="return reqWin(this.href);" class="help"><img src="', $settings['images_url'], '/helptopics.gif" alt="', $txt['help'], '" class="floatleft" /></a>
-                <span class="smalltext">&nbsp;', $txt['date_format'], '</span>
-              </dt>
-              <dd>
-                <select name="easyformat" onchange="document.forms.creator.time_format.value = this.options[this.selectedIndex].value;" style="margin-bottom: 4px;">';
-  // Help the user by showing a list of common time formats.
-  foreach ($context['easy_timeformats'] as $time_format)
-    echo '
+    <div class="field is-horizontal">
+      <div class="field-label has-text-left">
+        <a href="', $scripturl, '?action=helpadmin;help=time_format" onclick="return reqWin(this.href);">
+          <span class="icon is-small">
+            <span class="fa fa-question-circle"></span>
+          </span>
+        </a>
+        <span>
+          <label>', $txt['time_format'], '</label>
+        </span>
+        
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="help mb-1">' , $txt['date_format'], '</p>
+          <div class="control">
+            <div class="select">
+              <select name="easyformat" onchange="document.forms.creator.time_format.value = this.options[this.selectedIndex].value;" style="margin-bottom: 4px;">';
+                // Help the user by showing a list of common time formats.
+                foreach ($context['easy_timeformats'] as $time_format)
+                  echo '
                   <option value="', $time_format['format'], '"', $time_format['format'] == $context['member']['time_format'] ? ' selected="selected"' : '', '>', $time_format['title'], '</option>';
-  echo '
-                </select><br />
-                <input type="text" name="time_format" value="', $context['member']['time_format'], '" size="30" class="input_text" />
-              </dd>';
+                echo '
+              </select>
+            </div>
+          </div>
+          <input type="text" name="time_format" value="', $context['member']['time_format'], '" size="30" class="input mt-2 is-auto" />
+        </div>
+      </div>
+    </div>';
 }
 
 // Time offset?
@@ -3061,13 +3193,21 @@ function template_profile_timeoffset_modify()
   global $txt, $context;
 
   echo '
-              <dt>
-                <strong', (isset($context['modify_error']['bad_offset']) ? ' class="error"' : ''), '>', $txt['time_offset'], ':</strong><br />
-                <span class="smalltext">', $txt['personal_time_offset'], '</span>
-              </dt>
-              <dd>
-                <input type="text" name="time_offset" id="time_offset" size="5" maxlength="5" value="', $context['member']['time_offset'], '" class="input_text" /> <a href="javascript:void(0);" onclick="currentDate = new Date(', $context['current_forum_time_js'], '); document.getElementById(\'time_offset\').value = autoDetectTimeOffset(currentDate); return false;">', $txt['timeoffset_autodetect'], '</a><br />', $txt['current_time'], ': <em>', $context['current_forum_time'], '</em>
-              </dd>';
+    <div class="field is-horizontal">
+      <div class="field-label has-text-left">
+        <label class="label">', $txt['time_offset'], '</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="help mb-1">' , $txt['date_format'], '</p>
+          <p class="help mb-1">', $txt['current_time'], ': <em>', $context['current_forum_time'], '</em></p>
+          <div class="control">
+            <input type="text" name="time_offset" id="time_offset" size="5" maxlength="5" value="', $context['member']['time_offset'], '" class="input_text" /> <a href="javascript:void(0);" onclick="currentDate = new Date(', $context['current_forum_time_js'], '); document.getElementById(\'time_offset\').value = autoDetectTimeOffset(currentDate); return false;">', $txt['timeoffset_autodetect'], '</a>
+          </div>
+          
+        </div>
+      </div>
+    </div>';
 }
 
 // Theme?
@@ -3076,12 +3216,16 @@ function template_profile_theme_pick()
   global $txt, $context, $scripturl;
 
   echo '
-              <dt>
-                <strong>', $txt['current_theme'], ':</strong>
-              </dt>
-              <dd>
-                ', $context['member']['theme']['name'], ' <a href="', $scripturl, '?action=theme;sa=pick;u=', $context['id_member'], ';', $context['session_var'], '=', $context['session_id'], '">', $txt['change'], '</a>
-              </dd>';
+    <div class="field is-horizontal">
+      <div class="field-label has-text-left">
+        <label class="label">', $txt['current_theme'], '</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+         ', $context['member']['theme']['name'], ' <a href="', $scripturl, '?action=theme;sa=pick;u=', $context['id_member'], ';', $context['session_var'], '=', $context['session_id'], '">', $txt['change'], '</a>
+        </div>
+      </div>
+    </div>';
 }
 
 // Smiley set picker.

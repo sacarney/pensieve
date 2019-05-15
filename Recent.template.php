@@ -173,7 +173,7 @@ function template_unread()
     // Topics Table
     echo '
       <div id="unread">
-        <table class="table is-fullwidth mb-4" cellspacing="0">
+        <table class="table is-fullwidth mb-4 mt-4 responsive-table" cellspacing="0">
           <thead>
             <tr>
               <th scope="col" class="is-hidden-mobile"><span class="sr-only">Message icon</span></th>
@@ -375,7 +375,7 @@ function template_replies()
 
     echo '
       <div class="tborder topic_table container" id="unreadreplies">
-        <table class="table is-fullwidth mb-4" cellspacing="0">
+        <table class="table is-fullwidth mb-4 mt-4 responsive-table" cellspacing="0">
           <thead>
             <tr class="catbg">
               <th scope="col" class="first_th"><span class="sr-only">Topic icon</span></th>
