@@ -64,3 +64,16 @@
 .stats-graph_bar {
   background: var(--primary);
 }
+
+
+/* ------------------------- */
+/* FORM ELEMENTS */
+/* ------------------------- */
+/* Sometimes we don't have access to get the 
+ * right classes on form elements
+ * so we are duplicating bulma.io styles here. 
+ */
+
+.input_text {
+  border-color: var(--grey);
+}

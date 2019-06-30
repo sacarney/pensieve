@@ -44,7 +44,7 @@ function template_main()
               </select>
             </div>
             <noscript>
-              <input type="submit" name="submit_top" value="', $txt['go'], '" class="button_submit" />
+              <input type="submit" name="submit_top" value="', $txt['go'], '" class="button is-primary" />
             </noscript>
 
         </div>
@@ -136,7 +136,7 @@ function template_main()
               </select>
             </div>
             <noscript>
-              <input type="submit" name="submit_top" value="', $txt['go'], '" class="button_submit" />
+              <input type="submit" name="submit_top" value="', $txt['go'], '" class="button is-primary" />
             </noscript>
 
         </div>

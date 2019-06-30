@@ -734,7 +734,7 @@ function template_not_done()
 
   echo '
         <form action="', $scripturl, $context['continue_get_data'], '" method="post" accept-charset="', $context['character_set'], '" style="margin: 0;" name="autoSubmit" id="autoSubmit">
-          <div style="margin: 1ex; text-align: right;"><input type="submit" name="cont" value="', $txt['not_done_continue'], '" class="button_submit button is-primary" /></div>
+          <div style="margin: 1ex; text-align: right;"><input type="submit" name="cont" value="', $txt['not_done_continue'], '" class="button is-primary" /></div>
           ', $context['continue_post_data'], '
         </form>
       </div>
@@ -1246,16 +1246,12 @@ function template_edit_profile_field()
             <div class="field is-horizontal">
               <div class="field-label has-text-left">
                 <label class="label">
-                  <a id="field_show_enclosed" href="', $scripturl, '?action=helpadmin;help=field_show_enclosed" onclick="return reqWin(this.href);" class="xhelp">
-                    <span class="icon is-medium">
-                      <span class="fa fa-question-circle"></span>
-                    </span>
-                  </a>', $txt['custom_edit_enclose'], '
+                  <a id="field_show_enclosed" href="', $scripturl, '?action=helpadmin;help=field_show_enclosed" onclick="return reqWin(this.href);"><span class="icon is-medium"><span class="fa fa-question-circle"></span></span></a>', $txt['custom_edit_enclose'], '
                 </label>
               </div>
               <div class="field-body">
                 <div class="control">
-                  <textarea class="textarea is-auto" name="enclose" rows="3" cols="40">', $context['field']['desc'], '</textarea>
+                  <textarea class="textarea is-auto" name="enclose" rows="3" cols="40">', @$context['field']['enclose'], '</textarea>
                   <p class="help">', $txt['custom_edit_enclose_desc'], '</p>
                 </div>
               </div>
@@ -1337,12 +1333,7 @@ function template_edit_profile_field()
             <div id="options_dt" class="field is-horizontal">
               <div class="field-label has-text-left">
                 <label class="label">
-                  <a href="', $scripturl, '?action=helpadmin;help=customoptions" onclick="return reqWin(this.href);" class="xhelp">
-                    <span class="icon">
-                      <span class="fa fa-question-circle"></span>
-                    </span>
-                  </a>
-                  ', $txt['custom_edit_options'], '
+                  <a href="', $scripturl, '?action=helpadmin;help=customoptions" onclick="return reqWin(this.href);"><span class="icon"><span class="fa fa-question-circle"></span></span></a>', $txt['custom_edit_options'], '
                 </label>
               </div>
 
@@ -1382,11 +1373,7 @@ function template_edit_profile_field()
 
             <div id="mask_dt" class="field is-horizontal">
               <div class="field-label has-text-left">
-                <label class="label"><a id="field_show_enclosed" href="', $scripturl, '?action=helpadmin;help=field_show_enclosed" onclick="return reqWin(this.href);" class="xhelp">
-                <span class="icon is-medium">
-                  <span class="fa fa-question-circle"></span>
-                </span>
-              </a>', $txt['custom_edit_mask'], '</label>
+                <label class="label"><a id="field_show_enclosed" href="', $scripturl, '?action=helpadmin;help=field_show_enclosed" onclick="return reqWin(this.href);"><span class="icon is-medium"><span class="fa fa-question-circle"></span></span></a>', $txt['custom_edit_mask'], '</label>
               </div>
 
               <div class="field-body">
@@ -1466,11 +1453,11 @@ function template_edit_profile_field()
           <div class="mt-4">
             <input type="submit" name="save" value="', $txt['save'], '" class="button is-primary" />';
 
-  if ($context['fid'])
-    echo '
+          if ($context['fid'])
+          echo '
             <input type="submit" name="delete" value="', $txt['delete'], '" onclick="return confirm(\'', $txt['custom_edit_delete_sure'], '\');" class="button is-primary" />';
 
-  echo '
+          echo '
           </div>
         </div>
         
@@ -1522,7 +1509,9 @@ function template_admin_search_results()
   if (empty($context['search_results']))
   {
     echo '
-      <p class="notification is-warning">', $txt['admin_search_results_none'], '</p>';
+      <div class="message is-warning">
+        <p class="message-body">', $txt['admin_search_results_none'], '</p>
+      </div>';
   }
   else
   {

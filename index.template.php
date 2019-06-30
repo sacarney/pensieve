@@ -307,19 +307,17 @@ function template_body_above()
                 <p class="control">
                   <a href="', $scripturl, '?action=pm" class="buttons is-inline-flex">
                   <span class="button is-small is-primary">
-                    <span class="icon">
-                      <span class="fa fa-envelope"></span>
-                    </span>
-                    <span>', $context['user']['messages'],'<span class="sr-only">messages</span></span>
-                  </span>
-                  ';
+                    <span class="fa fa-envelope"></span>
+                    <span>';
                     // Unread messages?
                     if($context['user']['unread_messages'])
                       echo'
-                      <span class="tag is-small is-rounded you-have-unread-messages">', $context['user']['unread_messages'],'</span>
+                      <span class="ml-2">', $context['user']['unread_messages'],'</span>
+                      <span class="sr-only">unread messages</span></span>
                       '; // endif unread messages
-
-                  echo'
+                    echo'                   
+                  </span>
+                  
                   </a>
                 </p>
 
@@ -438,7 +436,7 @@ function template_menu()
   global $context, $settings, $options, $scripturl, $txt;
 
   echo'
-  <nav class="navbar is-pensieve">
+  <nav class="navbar pensieve-main-navbar">
     <div class="container">
       <div class="navbar-brand">
         <a href="', $scripturl, '" class="navbar-item is-hidden-desktop">

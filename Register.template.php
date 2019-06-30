@@ -114,17 +114,19 @@ function template_registration_form()
   if (!empty($context['registration_errors']))
   {
     echo '
-    <div class="notification is-danger">
-      <span>', $txt['registration_errors_occurred'], '</span>
-      <ul class="reset">';
+    <div class="message is-danger">
+      <div class="message-body">
+        <span>', $txt['registration_errors_occurred'], '</span>
+        <ul class="reset">';
 
-    // Cycle through each error and display an error message.
-    foreach ($context['registration_errors'] as $error)
+        // Cycle through each error and display an error message.
+        foreach ($context['registration_errors'] as $error)
         echo '
         <li>', $error, '</li>';
 
-    echo '
-      </ul>
+      echo '
+        </ul>
+      </div>
     </div>';
   }
 
@@ -145,7 +147,7 @@ function template_registration_form()
           <div class="field">
             <label class="label" for="smf_autov_username">', $txt['username'], '</label>
             <div class="control">
-              <input type="text" name="user" id="smf_autov_username" size="30" tabindex="', $context['tabindex']++, '" maxlength="25" value="', isset($context['username']) ? $context['username'] : '', '" class="input_text input" />
+              <input type="text" name="user" id="smf_autov_username" size="30" tabindex="', $context['tabindex']++, '" maxlength="25" value="', isset($context['username']) ? $context['username'] : '', '" class="input input" />
                 <span id="smf_autov_username_div" style="display: none;">
                   <a id="smf_autov_username_link" href="#">
                     <img id="smf_autov_username_img" src="', $settings['images_url'], '/icons/field_check.gif" alt="*" />
@@ -157,7 +159,7 @@ function template_registration_form()
           <div class="field">
             <label class="label" for="smf_autov_reserve1">', $txt['email'], '</label>
             <div class="control">
-              <input type="text" name="email" id="smf_autov_reserve1" size="30" tabindex="', $context['tabindex']++, '" value="', isset($context['email']) ? $context['email'] : '', '" class="input_text input" />
+              <input type="text" name="email" id="smf_autov_reserve1" size="30" tabindex="', $context['tabindex']++, '" value="', isset($context['email']) ? $context['email'] : '', '" class="input input" />
             </div>
           </div>
 
@@ -221,7 +223,7 @@ function template_registration_form()
             <div class="field">
               <label class="label" for="openid_identifier">', $txt['authenticate_openid_url'], '</label>
               <div class="control">
-                <input type="text" name="openid_identifier" id="openid_url" size="30" tabindex="', $context['tabindex']++, '" value="', isset($context['openid']) ? $context['openid'] : '', '" class="input_text openid_login input" />
+                <input type="text" name="openid_identifier" id="openid_url" size="30" tabindex="', $context['tabindex']++, '" value="', isset($context['openid']) ? $context['openid'] : '', '" class="input openid_login input" />
               </div>
             </div>
           ';
@@ -367,7 +369,7 @@ function template_registration_form()
     <div class="card-content">
       <div class="field is-grouped">
         <p class="control">
-          <input type="submit" name="regSubmit" value="', $txt['register'], '" tabindex="', $context['tabindex']++, '" class="button_submit button is-primary" />
+          <input type="submit" name="regSubmit" value="', $txt['register'], '" tabindex="', $context['tabindex']++, '" class="button is-primary" />
         </p>
       </div>
     </div>
@@ -576,14 +578,14 @@ function template_admin_register()
             <span class="smalltext">', $txt['admin_register_username_desc'], '</span>
           </dt>
           <dd>
-            <input type="text" name="user" id="user_input" tabindex="', $context['tabindex']++, '" size="30" maxlength="25" class="input_text" />
+            <input type="text" name="user" id="user_input" tabindex="', $context['tabindex']++, '" size="30" maxlength="25" class="input" />
           </dd>
           <dt>
             <strong><label for="email_input">', $txt['admin_register_email'], ':</label></strong>
             <span class="smalltext">', $txt['admin_register_email_desc'], '</span>
           </dt>
           <dd>
-            <input type="text" name="email" id="email_input" tabindex="', $context['tabindex']++, '" size="30" class="input_text" />
+            <input type="text" name="email" id="email_input" tabindex="', $context['tabindex']++, '" size="30" class="input" />
           </dd>
           <dt>
             <strong><label for="password_input">', $txt['admin_register_password'], ':</label></strong>
@@ -628,7 +630,7 @@ function template_admin_register()
           </dd>
         </dl>
         <div class="righttext">
-          <input type="submit" name="regSubmit" value="', $txt['register'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />
+          <input type="submit" name="regSubmit" value="', $txt['register'], '" tabindex="', $context['tabindex']++, '" class="button is-primary" />
           <input type="hidden" name="sa" value="register" />
         </div>
       </div>
@@ -678,7 +680,7 @@ function template_edit_agreement()
             <div class="righttext">
               <input type="hidden" name="sa" value="agreement" />
               <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-              <input type="submit" name="change" value="', $txt['admin_agreement_select_language_change'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />
+              <input type="submit" name="change" value="', $txt['admin_agreement_select_language_change'], '" tabindex="', $context['tabindex']++, '" class="button is-primary" />
             </div>
           </form>
         </div>';
@@ -696,7 +698,7 @@ function template_edit_agreement()
             <label for="requireAgreement"><input type="checkbox" name="requireAgreement" id="requireAgreement"', $context['require_agreement'] ? ' checked="checked"' : '', ' tabindex="', $context['tabindex']++, '" value="1" class="input_check" /> ', $txt['admin_agreement'], '.</label>
           </p>
           <div class="righttext">
-            <input type="submit" value="', $txt['save'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />
+            <input type="submit" value="', $txt['save'], '" tabindex="', $context['tabindex']++, '" class="button is-primary" />
             <input type="hidden" name="agree_lang" value="', $context['current_agreement'], '" />
             <input type="hidden" name="sa" value="agreement" />
             <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
@@ -730,7 +732,7 @@ function template_edit_reserved_words()
           <li><label for="matchname"><input type="checkbox" name="matchname" id="matchname" tabindex="', $context['tabindex']++, '" ', $context['reserved_word_options']['match_name'] ? 'checked="checked"' : '', ' class="input_check" /> ', $txt['admin_check_display'], '</label></li>
         </ul>
         <div class="righttext">
-          <input type="submit" value="', $txt['save'], '" name="save_reserved_names" tabindex="', $context['tabindex']++, '" style="margin: 1ex;" class="button_submit" />
+          <input type="submit" value="', $txt['save'], '" name="save_reserved_names" tabindex="', $context['tabindex']++, '" style="margin: 1ex;" class="button is-primary" />
         </div>
       </div>
       <span class="botslice"><span></span></span>

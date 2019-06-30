@@ -122,7 +122,7 @@ function template_unread()
   /* ?action=unread */
 
   echo '
-  <div id="recent" class="main_content">';
+  <div id="recent" class="container">';
 
   $showCheckboxes = !empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1 && $settings['show_mark_read'];
 
@@ -158,7 +158,7 @@ function template_unread()
   if (!empty($context['topics']))
   {
     echo '
-      <div class=" container">';
+      <div>';
 
     if (!empty($mark_read) && !empty($settings['use_tabs']))
       template_button_strip($mark_read, 'right');
@@ -173,7 +173,7 @@ function template_unread()
     // Topics Table
     echo '
       <div id="unread">
-        <table class="table is-fullwidth mb-4 mt-4 responsive-table" cellspacing="0">
+        <table class="table is-fullwidth is-narrow mb-4 mt-4 responsive-table" cellspacing="0">
           <thead>
             <tr>
               <th scope="col" class="is-hidden-mobile"><span class="sr-only">Message icon</span></th>
@@ -195,7 +195,7 @@ function template_unread()
               </th>';
             else
               echo '
-              <th scope="col"width="22%">
+              <th scope="col"width="22%" class="is-hidden-mobile">
                 <a href="', $scripturl, '?action=unread', $context['showing_all_topics'] ? ';all' : '', $context['querystring_board_limits'], ';sort=last_post', $context['sort_by'] == 'last_post' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['last_post'], $context['sort_by'] == 'last_post' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
               </th>';
             echo '
@@ -215,12 +215,12 @@ function template_unread()
       $color_class2 = !empty($color_class) ? $color_class . '2' : '';
 
             echo '
-            <tr>
+            <tr class="is-block-mobile">
               <td class="', $color_class, ' icon2 windowbg is-hidden-mobile">
                 <img src="', $topic['first_post']['icon_url'], '" alt="" />
               </td>
 
-              <td class="subject ', $color_class2, ' windowbg2">
+              <td class="subject ', $color_class2, ' windowbg2 is-block-mobile">
                 <div>
                   ', $topic['is_sticky'] ? '<strong>' : '', '<span id="msg_' . $topic['first_post']['id'] . '">', $topic['first_post']['link'], '</span>', $topic['is_sticky'] ? '</strong>' : '', '
                   <a href="', $topic['new_href'], '" id="newicon', $topic['first_post']['id'], '"><img src="', $settings['lang_images_url'], '/new.gif" alt="', $txt['new'], '" /></a>
@@ -241,7 +241,7 @@ function template_unread()
                   <span class="is-muted is-uppercase is-size-7">', $txt['by'], '</span> ', $topic['last_post']['member']['link'], '<br>
                   <span class="is-muted is-uppercase is-size-7">', $txt['on'], '</span> ', $topic['last_post']['time'], '
                   <a href="', $topic['last_post']['href'], '" class="view-last-post">
-                    <span class="icon has-text-primary">
+                    <span class="icon has-text-primary tag">
                       <i class="fa fa-angle-double-right"></i>
                     </span>
                     <span class="sr-only"> View last post</span>
@@ -325,7 +325,7 @@ function template_replies()
 
   /* ?action=unreadreplies */
   echo '
-  <div id="recent">';
+  <div id="recent" class="container">';
 
   $showCheckboxes = !empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1 && $settings['show_mark_read'];
 
@@ -361,7 +361,7 @@ function template_replies()
   if (!empty($context['topics']))
   {
     echo '
-      <div class="pagesection container">';
+      <div class="pagesection">';
 
     if (!empty($mark_read) && !empty($settings['use_tabs']))
       template_button_strip($mark_read, 'right');
@@ -374,22 +374,22 @@ function template_replies()
       </div>';
 
     echo '
-      <div class="tborder topic_table container" id="unreadreplies">
-        <table class="table is-fullwidth mb-4 mt-4 responsive-table" cellspacing="0">
+      <div id="unreadreplies">
+        <table class="table is-fullwidth is-narrow mb-4 mt-4 responsive-table" cellspacing="0">
           <thead>
             <tr class="catbg">
-              <th scope="col" class="first_th"><span class="sr-only">Topic icon</span></th>
+              <th scope="col" class="is-hidden-mobile"><span class="sr-only">Topic icon</span></th>
               <th scope="col">
                 <a href="', $scripturl, '?action=unreadreplies', $context['querystring_board_limits'], ';sort=subject', $context['sort_by'] === 'subject' && $context['sort_direction'] === 'up' ? ';desc' : '', '">', $txt['subject'], $context['sort_by'] === 'subject' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
               </th>
-              <th scope="col" width="14%" align="center">
+              <th scope="col" width="14%" align="center" class="is-hidden-mobile">
                 <a href="', $scripturl, '?action=unreadreplies', $context['querystring_board_limits'], ';sort=replies', $context['sort_by'] === 'replies' && $context['sort_direction'] === 'up' ? ';desc' : '', '">', $txt['replies'], $context['sort_by'] === 'replies' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
               </th>';
 
             // Show a "select all" box for quick moderation?
             if ($showCheckboxes)
               echo '
-              <th scope="col" width="22%">
+              <th scope="col" width="22%" class="is-hidden-mobile">
                 <a href="', $scripturl, '?action=unreadreplies', $context['querystring_board_limits'], ';sort=last_post', $context['sort_by'] === 'last_post' && $context['sort_direction'] === 'up' ? ';desc' : '', '">', $txt['last_post'], $context['sort_by'] === 'last_post' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
               </th>
               <th class="last_th">
@@ -398,7 +398,7 @@ function template_replies()
 
             else
               echo '
-              <th scope="col" class="last_th" width="22%">
+              <th scope="col" class="last_th is-hidden-mobile" width="22%" >
                 <a href="', $scripturl, '?action=unreadreplies', $context['querystring_board_limits'], ';sort=last_post', $context['sort_by'] === 'last_post' && $context['sort_direction'] === 'up' ? ';desc' : '', '">', $txt['last_post'], $context['sort_by'] === 'last_post' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
               </th>';
             echo '
@@ -418,11 +418,11 @@ function template_replies()
       $color_class2 = !empty($color_class) ? $color_class . '2' : '';
 
             echo '
-            <tr>
-              <td class="', $color_class, ' icon2 windowbg">
+            <tr class="is-block-mobile">
+              <td class="', $color_class, ' icon2 windowbg is-hidden-mobile">
                 <img src="', $topic['first_post']['icon_url'], '" alt="" />
               </td>
-              <td class="subject ', $color_class2, ' windowbg2">
+              <td class="subject ', $color_class2, ' windowbg2 is-block-mobile">
                 <div>
                   ', $topic['is_sticky'] ? '<strong>' : '', '<span id="msg_' . $topic['first_post']['id'] . '">', $topic['first_post']['link'], '</span>', $topic['is_sticky'] ? '</strong>' : '', '
                   <a href="', $topic['new_href'], '" id="newicon', $topic['first_post']['id'], '"><img src="', $settings['lang_images_url'], '/new.gif" alt="', $txt['new'], '" /></a>
@@ -432,7 +432,7 @@ function template_replies()
                   </p>
                 </div>
               </td>
-              <td class="', $color_class, ' stats windowbg">
+              <td class="', $color_class, ' stats windowbg is-hidden-mobile">
                 <p class="is-uppercase is-size-7"><span>', $topic['replies'], ' ', $txt['replies'], '</span></p>
                 <p class="is-uppercase is-size-7"><span>', $topic['views'], ' ', $txt['views'], '</span></p>
               </td>

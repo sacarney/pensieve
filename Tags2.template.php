@@ -105,10 +105,10 @@ function template_addtag()
 {
   global $scripturl, $txt, $context;
 
-  echo '
+  echo '<div class="container">
   <form method="post" action="', $scripturl, '?action=tags;sa=addtag2">
 
-  <div class="container">
+  
     <div class="cat_bar mb-4">
       <h2 class="title is-5 mb-1">', $txt['smftags_addtag2'], '</h2>
     </div>
@@ -129,9 +129,9 @@ function template_addtag()
         </div>
       </div>
     </div>
-  </div>
+  
 
-  </form>
+  </form></div>
   ';
   
   TagsCopyright();

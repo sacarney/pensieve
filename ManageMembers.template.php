@@ -375,7 +375,7 @@ function template_admin_browse()
               ', $txt['admin_browse_outstanding_days_1'], ':
             </dt>
             <dd>
-              <input type="text" name="time_passed" value="14" maxlength="4" size="3" class="input_text" /> ', $txt['admin_browse_outstanding_days_2'], '.
+              <input type="text" name="time_passed" value="14" maxlength="4" size="3" class="input" /> ', $txt['admin_browse_outstanding_days_2'], '.
             </dd>
             <dt>
               ', $txt['admin_browse_outstanding_perform'], ':
@@ -394,7 +394,7 @@ function template_admin_browse()
               </select>
             </dd>
           </dl>
-          <input type="submit" value="', $txt['admin_browse_outstanding_go'], '" class="button_submit" />
+          <input type="submit" value="', $txt['admin_browse_outstanding_go'], '" class="button is-primary" />
           <input type="hidden" name="type" value="', $context['browse_type'], '" />
           <input type="hidden" name="sort" value="', $context['approve_list']['sort']['id'], '" />
           <input type="hidden" name="start" value="', $context['approve_list']['start'], '" />

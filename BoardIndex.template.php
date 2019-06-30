@@ -307,7 +307,8 @@ function template_info_center()
 
   // Here's where the "Info Center" starts...
   echo '
-    <div class="container mt-3">
+  <!-- Info Center --> 
+    <div class="mt-3">
       <div class="columns">
   ';
 

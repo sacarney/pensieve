@@ -38,10 +38,12 @@ function template_view_package() // @TODO
   if ($context['has_failure'])
   {
     echo '
-    <p class="notification is-warning">
-      <strong>', $txt['package_will_fail_title'], '</strong><br />
+    <div class="message is-warning">
+      <div class="message-body">
+        <strong>', $txt['package_will_fail_title'], '</strong><br />
       ', $txt['package_will_fail_warning'], '
-    </p>';
+      </div>
+    </div>';
   }
 
   if (isset($context['package_readme']))
@@ -186,6 +188,7 @@ function template_view_package() // @TODO
     if (!empty($context['theme_actions']))
     {
       echo '
+      <div class="container">
       <h3 class="title is-5 mb-4">', $context['uninstalling'] ? $txt['package_other_themes_uninstall'] : $txt['package_other_themes'], '
         </h3>
       </div>
@@ -272,6 +275,7 @@ function template_view_package() // @TODO
 
       echo '
         </table>
+      </div>
       </div>';
     }
   }
@@ -280,7 +284,7 @@ function template_view_package() // @TODO
   if (!$context['ftp_needed'] && (!empty($context['actions']) || !empty($context['database_changes'])))
   {
     echo '
-      <div>
+      <div class="container">
         <input type="submit" value="', $context['uninstalling'] ? $txt['package_uninstall_now'] : $txt['package_install_now'], '" onclick="return ', !empty($context['has_failure']) ? '(submitThisOnce(this) &amp;&amp; confirm(\'' . ($context['uninstalling'] ? $txt['package_will_fail_popup_uninstall'] : $txt['package_will_fail_popup']) . '\'))' : 'submitThisOnce(this)', ';" class="button is-primary" />
       </div>';
   }
@@ -1019,7 +1023,9 @@ function template_package_confirm()
   echo '
   <h3 class="title is-5 mb-4">', $context['page_title'], '</h3>
   
-  <p class="notification is-warning">', $context['confirm_message'], '</p>
+  <div class="message is-warning">
+    <div class="message-body">', $context['confirm_message'], '</div>
+  </div>
   
   <div class="field is-grouped">
     <div class="control">
@@ -1210,7 +1216,9 @@ function template_downloaded()
   echo '
   <h3 class="title is-5 mb-4">', $context['page_title'], '</h3>
   
-  <p class="notification is-success">', (empty($context['package_server']) ? $txt['package_uploaded_successfully'] : $txt['package_downloaded_successfully']), '</p>
+  <div class="message is-success">
+    <div class="message-body">', (empty($context['package_server']) ? $txt['package_uploaded_successfully'] : $txt['package_downloaded_successfully']), '</div>
+  </div>
     
   <ul class="reset">
     <li class="reset"><span class="floatleft"><strong>', $context['package']['name'], '</strong></span>
@@ -1334,14 +1342,14 @@ function template_control_chmod() // @TODO
               <label for="ftp_server">', $txt['package_ftp_server'], ':</label>
             </dt>
             <dd>
-              <input type="text" size="30" name="ftp_server" id="ftp_server" value="', $context['package_ftp']['server'], '" class="input_text" />
-              <label for="ftp_port">', $txt['package_ftp_port'], ':&nbsp;</label> <input type="text" size="3" name="ftp_port" id="ftp_port" value="', $context['package_ftp']['port'], '" class="input_text" />
+              <input type="text" size="30" name="ftp_server" id="ftp_server" value="', $context['package_ftp']['server'], '" class="input" />
+              <label for="ftp_port">', $txt['package_ftp_port'], ':&nbsp;</label> <input type="text" size="3" name="ftp_port" id="ftp_port" value="', $context['package_ftp']['port'], '" class="input" />
             </dd>
             <dt>
               <label for="ftp_username">', $txt['package_ftp_username'], ':</label>
             </dt>
             <dd>
-              <input type="text" size="50" name="ftp_username" id="ftp_username" value="', $context['package_ftp']['username'], '" style="width: 98%;" class="input_text" />
+              <input type="text" size="50" name="ftp_username" id="ftp_username" value="', $context['package_ftp']['username'], '" style="width: 98%;" class="input" />
             </dd>
             <dt>
               <label for="ftp_password">', $txt['package_ftp_password'], ':</label>
@@ -1353,7 +1361,7 @@ function template_control_chmod() // @TODO
               <label for="ftp_path">', $txt['package_ftp_path'], ':</label>
             </dt>
             <dd>
-              <input type="text" size="50" name="ftp_path" id="ftp_path" value="', $context['package_ftp']['path'], '" style="width: 98%;" class="input_text" />
+              <input type="text" size="50" name="ftp_path" id="ftp_path" value="', $context['package_ftp']['path'], '" style="width: 98%;" class="input" />
             </dd>
           </dl>
           </fieldset>';
@@ -1363,7 +1371,7 @@ function template_control_chmod() // @TODO
 
           <div class="righttext" style="margin: 1ex;">
             <span id="test_ftp_placeholder_full"></span>
-            <input type="submit" value="', $txt['package_proceed'], '" class="button_submit" />
+            <input type="submit" value="', $txt['package_proceed'], '" class="button is-primary" />
           </div>';
 
   if (!empty($context['package_ftp']['destination']))
@@ -1988,8 +1996,10 @@ function template_action_permissions() // @TODO
 
   if (!empty($context['skip_ftp']))
     echo '
-      <div class="notification is-danger">
-        ', $txt['package_file_perms_skipping_ftp'], '
+      <div class="message is-danger">
+        <div class="message-body">
+          ', $txt['package_file_perms_skipping_ftp'], '
+        </div>
       </div>';
 
   // How many have we done?

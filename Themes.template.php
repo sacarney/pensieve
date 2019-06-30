@@ -162,7 +162,9 @@ function template_main()
   // Warn them if theme creation isn't possible!
   if (!$context['can_create_new'])
     echo '
-    <div class="notification is-danger">', $txt['theme_install_writable'], '</div>';
+    <div class="message is-danger">
+      <div class="message-body">', $txt['theme_install_writable'], '</div>
+    </div>';
 
   echo '
     <form action="', $scripturl, '?action=admin;area=theme;sa=install" method="post" accept-charset="', $context['character_set'], '" enctype="multipart/form-data" onsubmit="return confirm(\'', $txt['theme_install_new_confirm'], '\');">
@@ -337,16 +339,16 @@ function template_list_themes()
               <label for="reset_dir">', $txt['themeadmin_list_reset_dir'], '</label>:
             </dt>
             <dd>
-              <input type="text" name="reset_dir" id="reset_dir" value="', $context['reset_dir'], '" size="40" style="width: 80%;" class="input_text" />
+              <input type="text" name="reset_dir" id="reset_dir" value="', $context['reset_dir'], '" size="40" style="width: 80%;" class="input" />
             </dd>
             <dt>
               <label for="reset_url">', $txt['themeadmin_list_reset_url'], '</label>:
             </dt>
             <dd>
-              <input type="text" name="reset_url" id="reset_url" value="', $context['reset_url'], '" size="40" style="width: 80%;" class="input_text" />
+              <input type="text" name="reset_url" id="reset_url" value="', $context['reset_url'], '" size="40" style="width: 80%;" class="input" />
             </dd>
           </dl>
-          <input type="submit" name="submit" value="', $txt['themeadmin_list_reset_go'], '" class="button_submit" />
+          <input type="submit" name="submit" value="', $txt['themeadmin_list_reset_go'], '" class="button is-primary" />
           <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
         </div>
         <span class="botslice"><span></span></span>
@@ -461,7 +463,7 @@ function template_set_options()
     else
       echo '
               &nbsp;<label for="options_', $setting['id'], '">', $setting['label'], '</label>
-              <input type="text" name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" id="options_', $setting['id'], '" value="', $setting['value'], '"', $setting['type'] == 'number' ? ' size="5"' : '', $context['theme_options_reset'] ? ' disabled="disabled"' : '', ' class="input_text" />';
+              <input type="text" name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" id="options_', $setting['id'], '" value="', $setting['value'], '"', $setting['type'] == 'number' ? ' size="5"' : '', $context['theme_options_reset'] ? ' disabled="disabled"' : '', ' class="input" />';
 
     if (isset($setting['description']))
       echo '
@@ -474,7 +476,7 @@ function template_set_options()
   echo '
           </ul>
           <div class="righttext">
-            <input type="submit" name="submit" value="', $txt['save'], '" class="button_submit" />
+            <input type="submit" name="submit" value="', $txt['save'], '" class="button is-primary" />
             <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
           </div>
         </div>
@@ -535,25 +537,25 @@ function template_set_settings()
               <label for="theme_name">', $txt['actual_theme_name'], '</label>
             </dt>
             <dd>
-              <input type="text" id="theme_name" name="options[name]" value="', $context['theme_settings']['name'], '" size="32" class="input_text" />
+              <input type="text" id="theme_name" name="options[name]" value="', $context['theme_settings']['name'], '" size="32" class="input" />
             </dd>
             <dt>
               <label for="theme_url">', $txt['actual_theme_url'], '</label>
             </dt>
             <dd>
-              <input type="text" id="theme_url" name="options[theme_url]" value="', $context['theme_settings']['actual_theme_url'], '" size="50" style="max-width: 100%; width: 50ex;" class="input_text" />
+              <input type="text" id="theme_url" name="options[theme_url]" value="', $context['theme_settings']['actual_theme_url'], '" size="50" style="max-width: 100%; width: 50ex;" class="input" />
             </dd>
             <dt>
               <label for="images_url">', $txt['actual_images_url'], '</label>
             </dt>
             <dd>
-              <input type="text" id="images_url" name="options[images_url]" value="', $context['theme_settings']['actual_images_url'], '" size="50" style="max-width: 100%; width: 50ex;" class="input_text" />
+              <input type="text" id="images_url" name="options[images_url]" value="', $context['theme_settings']['actual_images_url'], '" size="50" style="max-width: 100%; width: 50ex;" class="input" />
             </dd>
             <dt>
               <label for="theme_dir">', $txt['actual_theme_dir'], '</label>
             </dt>
             <dd>
-              <input type="text" id="theme_dir" name="options[theme_dir]" value="', $context['theme_settings']['actual_theme_dir'], '" size="50" style="max-width: 100%; width: 50ex;" class="input_text" />
+              <input type="text" id="theme_dir" name="options[theme_dir]" value="', $context['theme_settings']['actual_theme_dir'], '" size="50" style="max-width: 100%; width: 50ex;" class="input" />
             </dd>
           </dl>
         </div>
@@ -677,7 +679,7 @@ function template_set_settings()
       echo '
             </dt>
             <dd>
-              <input type="text" name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" id="', $setting['id'], '" value="', $setting['value'], '"', $setting['type'] == 'number' ? ' size="5"' : (empty($setting['size']) ? ' size="40"' : ' size="' . $setting['size'] . '"'), ' class="input_text" />
+              <input type="text" name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" id="', $setting['id'], '" value="', $setting['value'], '"', $setting['type'] == 'number' ? ' size="5"' : (empty($setting['size']) ? ' size="40"' : ' size="' . $setting['size'] . '"'), ' class="input" />
             </dd>';
     }
   }
@@ -685,7 +687,7 @@ function template_set_settings()
   echo '
           </dl>
           <div class="righttext">
-            <input type="submit" name="submit" value="', $txt['save'], '" class="button_submit" />
+            <input type="submit" name="submit" value="', $txt['save'], '" class="button is-primary" />
           </div>
         </div>
         <span class="botslice"><span></span></span>
@@ -759,7 +761,7 @@ function template_pick()
       echo '
           </select>
           <noscript>
-            <input type="submit" name="save[', $theme['id'], ']" value="', $txt['save'], '" class="button_submit" />
+            <input type="submit" name="save[', $theme['id'], ']" value="', $txt['save'], '" class="button is-primary" />
           </noscript>';
     }
 
@@ -1136,8 +1138,8 @@ function template_edit_style()
   echo '
           <textarea name="entire_file" cols="80" rows="20" style="' . ($context['browser']['is_ie8'] ? 'width: 635px; max-width: 96%; min-width: 96%' : 'width: 96%') . '; font-family: monospace; margin-top: 1ex; white-space: pre;" onkeyup="setPreviewTimeout();" onchange="refreshPreview(true);">', $context['entire_file'], '</textarea><br />
           <div class="padding righttext">
-            <input type="submit" name="submit" value="', $txt['theme_edit_save'], '"', $context['allow_save'] ? '' : ' disabled="disabled"', ' style="margin-top: 1ex;" class="button_submit" />
-            <input type="button" value="', $txt['themeadmin_edit_preview'], '" onclick="refreshPreview(false);" class="button_submit" />
+            <input type="submit" name="submit" value="', $txt['theme_edit_save'], '"', $context['allow_save'] ? '' : ' disabled="disabled"', ' style="margin-top: 1ex;" class="button is-primary" />
+            <input type="button" value="', $txt['themeadmin_edit_preview'], '" onclick="refreshPreview(false);" class="button is-primary" />
           </div>
         </div>
         <span class="botslice"><span></span></span>
@@ -1191,7 +1193,7 @@ function template_edit_template()
 
   echo '
           <div class="padding righttext">
-            <input type="submit" name="submit" value="', $txt['theme_edit_save'], '"', $context['allow_save'] ? '' : ' disabled="disabled"', ' class="button_submit" />
+            <input type="submit" name="submit" value="', $txt['theme_edit_save'], '"', $context['allow_save'] ? '' : ' disabled="disabled"', ' class="button is-primary" />
             <input type="hidden" name="filename" value="', $context['edit_filename'], '" />
             <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
           </div>
@@ -1230,7 +1232,7 @@ function template_edit_file()
         <span class="topslice"><span></span></span>
         <div class="content">
           <textarea name="entire_file" id="entire_file" cols="80" rows="20" class="edit_file">', $context['entire_file'], '</textarea><br />
-          <input type="submit" name="submit" value="', $txt['theme_edit_save'], '"', $context['allow_save'] ? '' : ' disabled="disabled"', ' class="button_submit" />
+          <input type="submit" name="submit" value="', $txt['theme_edit_save'], '"', $context['allow_save'] ? '' : ' disabled="disabled"', ' class="button is-primary" />
           <input type="hidden" name="filename" value="', $context['edit_filename'], '" />
           <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
         </div>

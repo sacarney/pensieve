@@ -47,7 +47,7 @@ function template_login()
                   <div class="field">
                     <label for="user" class="label">', $txt['username'], '</label>
                     <div class="control">
-                      <input type="text" name="user" size="20" value="', $context['default_username'], '" class="input_text input" />
+                      <input type="text" name="user" size="20" value="', $context['default_username'], '" class="input" />
                     </div>
                   </div>
                   <div class="field">
@@ -68,7 +68,7 @@ function template_login()
                       <a href="', $scripturl, '?action=helpadmin;help=register_openid" onclick="return reqWin(this.href);" class="help">(?)</a>
                       </label>
                       <div class="control">
-                        <input type="text" name="openid_identifier" class="input_text openid_login input" size="17" />
+                        <input type="text" name="openid_identifier" class="input openid_login input" size="17" />
                       </div>
                     </div>
                   ';
@@ -77,7 +77,7 @@ function template_login()
                     <div class="field">
                       <label for="cookielength" class="label">', $txt['mins_logged_in'], '</label>
                       <div class="control">
-                        <input type="text" name="cookielength" size="4" maxlength="4" value="', $modSettings['cookieTime'], '"', $context['never_expire'] ? ' disabled="disabled"' : '', ' class="input input_text" />
+                        <input type="text" name="cookielength" size="4" maxlength="4" value="', $modSettings['cookieTime'], '"', $context['never_expire'] ? ' disabled="disabled"' : '', ' class="input input" />
                       </div>
                     </div>
                     <div class="field">
@@ -104,7 +104,7 @@ function template_login()
                   echo '
                     <div class="field is-grouped">
                       <p class="control">
-                        <input type="submit" value="', $txt['login'], '" class="button is-primary button_submit" />
+                        <input type="submit" value="', $txt['login'], '" class="button is-primary" />
                       </p>
                       <p class="help"><a href="', $scripturl, '?action=reminder">', $txt['forgot_your_password'], '</a></p>
                       
@@ -158,7 +158,7 @@ function template_kick_guest()
     <div class="field">
       <label for="user" class="label">', $txt['username'], '</label>
       <div class="control">
-        <input type="text" name="user" size="20" class="input_text input" />
+        <input type="text" name="user" size="20" class="input" />
       </div>
     </div>
     <div class="field">
@@ -179,7 +179,7 @@ function template_kick_guest()
         <a href="', $scripturl, '?action=helpadmin;help=register_openid" onclick="return reqWin(this.href);" class="help">(?)</a>
         </label>
         <div class="control">
-          <input type="text" name="openid_identifier" class="input_text openid_login input" size="17" />
+          <input type="text" name="openid_identifier" class="openid_login input" size="17" />
         </div>
       </div>
     ';
@@ -188,7 +188,7 @@ function template_kick_guest()
     <div class="field">
       <label for="cookielength" class="label">', $txt['mins_logged_in'], '</label>
       <div class="control">
-        <input type="text" name="cookielength" size="4" maxlength="4" value="', $modSettings['cookieTime'], '"', $context['never_expire'] ? ' disabled="disabled"' : '', ' class="input input_text" />
+        <input type="text" name="cookielength" size="4" maxlength="4" value="', $modSettings['cookieTime'], '"', $context['never_expire'] ? ' disabled="disabled"' : '', ' class="input input" />
       </div>
     </div>
     <div class="field">
@@ -202,7 +202,7 @@ function template_kick_guest()
 
     <div class="field is-grouped">
       <p class="control">
-        <input type="submit" value="', $txt['login'], '" class="button is-primary button_submit" />
+        <input type="submit" value="', $txt['login'], '" class="button is-primary" />
       </p>
       <p class="help"><a href="', $scripturl, '?action=reminder">', $txt['forgot_your_password'], '</a></p>
       
@@ -247,7 +247,7 @@ function template_maintenance()
             <div class="field">
               <label for="user" class="label">', $txt['username'], '</label>
               <div class="control">
-                <input type="text" name="user" size="20" class="input_text input" />
+                <input type="text" name="user" size="20" class="input" />
               </div>
             </div>
             <div class="field">
@@ -260,7 +260,7 @@ function template_maintenance()
             <div class="field">
               <label for="cookielength" class="label">', $txt['mins_logged_in'], '</label>
               <div class="control">
-                <input type="text" name="cookielength" size="4" maxlength="4" value="', $modSettings['cookieTime'], '"', $context['never_expire'] ? ' disabled="disabled"' : '', ' class="input input_text" />
+                <input type="text" name="cookielength" size="4" maxlength="4" value="', $modSettings['cookieTime'], '"', $context['never_expire'] ? ' disabled="disabled"' : '', ' class="input" />
               </div>
             </div>
             <div class="field">
@@ -274,7 +274,7 @@ function template_maintenance()
 
             <div class="field is-grouped">
               <p class="control">
-                <input type="submit" value="', $txt['login'], '" class="button is-primary button_submit" />
+                <input type="submit" value="', $txt['login'], '" class="button is-primary" />
               </p>
               <p class="help"><a href="', $scripturl, '?action=reminder">', $txt['forgot_your_password'], '</a></p>
               
@@ -327,7 +327,7 @@ function template_admin_login()
         </div>
         <div class="field is-grouped">
           <p class="control">
-            <input type="submit" value="', $txt['login'], '" class="button is-primary button_submit" />
+            <input type="submit" value="', $txt['login'], '" class="button is-primary" />
           </p>
         </div>
       ';
@@ -375,7 +375,7 @@ function template_retry_activate()
       <div class="field">
         <label for="user" class="label">', $txt['invalid_activation_username'], '</label>
         <div class="control">
-          <input type="text" name="user" size="30" class="input_text input" />
+          <input type="text" name="user" size="30" class="7 input" />
         </div>
       </div>
     ';
@@ -384,13 +384,13 @@ function template_retry_activate()
     <div class="field">
       <label for="code" class="label">', $txt['invalid_activation_retry'], '</label>
       <div class="control">
-        <input type="text" name="code" size="30" class="input_text" />
+        <input type="text" name="code" size="30" class="input" />
       </div>
     </div>
 
     <div class="field is-grouped">
       <p class="control">
-        <input type="submit" value="', $txt['invalid_activation_submit'], '" class="button is-primary button_submit" />
+        <input type="submit" value="', $txt['invalid_activation_submit'], '" class="button is-primary" />
       </p>
     </div>
 
@@ -423,7 +423,7 @@ function template_resend()
       <div class="field">
         <label class="label" for="user">', $txt['invalid_activation_username'], '</label>
         <div class="control">
-          <input type="text" name="user" size="40" value="', $context['default_username'], '" class="input_text" />
+          <input type="text" name="user" size="40" value="', $context['default_username'], '" class="input" />
         </div>
       </div>
 
@@ -432,14 +432,14 @@ function template_resend()
       <div class="field">
         <label class="label" for="new_email">', $txt['invalid_activation_new_email'], '</label>
         <div class="control">
-          <input type="text" name="new_email" size="40" class="input input_text" />
+          <input type="text" name="new_email" size="40" class="input" />
         </div>
       </div>
 
       <div class="field">
         <label class="label" for="passwd">', $txt['invalid_activation_password'], '</label>
         <div class="control">
-          <input type="password" name="passwd" size="30" class="input_password" />
+          <input type="password" name="passwd" size="30" class="input" />
         </div>
       </div>
   ';
@@ -451,7 +451,7 @@ function template_resend()
         <div class="field">
           <label class="label" for="code">', $txt['invalid_activation_retry'], '</label>
           <div class="control">
-            <input type="text" name="code" size="30" class="input_text input" />
+            <input type="text" name="code" size="30" class="input" />
           </div>
         </div>
       ';
@@ -459,7 +459,7 @@ function template_resend()
   echo '
     <div class="field is-grouped">
       <p class="control">
-        <input type="submit" value="', $txt['invalid_activation_submit'], '" class="button is-primary button_submit" />
+        <input type="submit" value="', $txt['invalid_activation_submit'], '" class="button is-primary" />
       </p>
     </div>
     

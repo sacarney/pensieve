@@ -3,6 +3,13 @@
  *
  */
 
+ /*
+ mobile up to 768px
+ tablet between 769px and 979px
+ desktop between 980px and 1179px
+ widescreen above 1180px
+*/
+
 @import url('https://fonts.googleapis.com/css?family=Amaranth:400,700|PT+Serif:400,700|Roboto:400,500');
 
 :root  {
@@ -39,8 +46,8 @@ html { background-color: var(--dark); }
 
 body { 
   color: var(--white);  
-  xbackground-image: url(../images/theme/aobg2.jpg); 
-  xbackground-attachment: fixed; 
+  background-image: url(../images/theme/aobg2.jpg); 
+  background-attachment: fixed; 
 }
 
 body, button, input, select, textarea {
@@ -48,12 +55,22 @@ body, button, input, select, textarea {
 }
 
 .content {
-  xfont-family: "PT Serif";
+ xfont-family: "PT Serif";
 }
 
 .title {
   font-family: "Amaranth";
   font-weight: 500;
+}
+
+#maincontent > .container {
+  padding: 1rem;
+  background-color: var(--dark);
+}
+
+.highlight {
+  color: var(--black);
+  background: var(--primary);
 }
 
 a { color: var(--primary); }
@@ -68,7 +85,7 @@ code, pre {
 
 code { color: var(--white); }
 
-hr { background-color: var(--grey-3); }
+hr { background-color: var(--darkcyan); }
 
 strong, table th { color: var(--light); }
 
@@ -1332,9 +1349,9 @@ a.box:active {
 .content table th,
 .table td,
 .table th {
-  border:1px solid var(--grey-2);
-  border-width:0 0 1px;
-  padding:.5em .75em;
+  border: 1px solid transparent;
+  border-width: 0 0 1px;
+  padding: 0.5em 0.75em;
   vertical-align:top
 }
 
@@ -1424,10 +1441,10 @@ a.box:active {
 .input[disabled],
 .select select[disabled],
 .textarea[disabled] {
-  background-color: var(--dark);
-  border-color: var(--dark);
+  background-color: var(--grey-2);
+  border-color: var(--darker-overlay);
   box-shadow:none;
-  color: var(--white)
+  color: var(--light-overlay)
 }
 
 .input[disabled]:-moz-placeholder,
@@ -2465,11 +2482,6 @@ a.dropdown-item.is-active {
 
 .message-header {
   color: rgba(0, 0, 0, .7);
-}
-
-
-.message-body {
-  border: 1px solid var(--grey-2);
 }
 
 

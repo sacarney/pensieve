@@ -143,8 +143,27 @@ function template_summary()
         if ($context['signature_enabled'] && !empty($context['member']['signature']))
         echo '
           <hr>
-          <div class="content">', $context['member']['signature'], '</div>';
+          <div class="content has-text-left">', $context['member']['signature'], '</div>';
   
+
+      // Are there any custom profile fields for the summary?
+    if (!empty($context['custom_fields']))
+    { 
+      echo'
+      <hr>
+        <ul class="is-flex justity-content-center">';
+      foreach ($context['custom_fields'] as $field)
+        if (($field['placement'] == 1 || empty($field['output_html'])) && !empty($field['value']))
+        echo '
+        <li class="custom_field mr-2">', $field['output_html'], '</li>';
+    }
+
+    echo '
+      ', !isset($context['disabled_fields']['icq']) && !empty($context['member']['icq']['link']) ? '<li>' . $context['member']['icq']['link'] . '</li>' : '', '
+      ', !isset($context['disabled_fields']['msn']) && !empty($context['member']['msn']['link']) ? '<li>' . $context['member']['msn']['link'] . '</li>' : '', '
+      ', !isset($context['disabled_fields']['aim']) && !empty($context['member']['aim']['link']) ? '<li>' . $context['member']['aim']['link'] . '</li>' : '', '
+      ', !isset($context['disabled_fields']['yim']) && !empty($context['member']['yim']['link']) ? '<li>' . $context['member']['yim']['link'] . '</li>' : '', '
+    </ul>';
         echo'
         </div>
         <div class="card-footer">
@@ -392,23 +411,8 @@ function template_summary()
 
   echo'
   <div class="box">
-  <ul>
   ';
-    // Are there any custom profile fields for the summary?
-    if (!empty($context['custom_fields']))
-    { 
-      foreach ($context['custom_fields'] as $field)
-        if (($field['placement'] == 1 || empty($field['output_html'])) && !empty($field['value']))
-        echo '
-        <li class="custom_field">', $field['output_html'], '</li>';
-    }
 
-    echo '
-      ', !isset($context['disabled_fields']['icq']) && !empty($context['member']['icq']['link']) ? '<li>' . $context['member']['icq']['link'] . '</li>' : '', '
-      ', !isset($context['disabled_fields']['msn']) && !empty($context['member']['msn']['link']) ? '<li>' . $context['member']['msn']['link'] . '</li>' : '', '
-      ', !isset($context['disabled_fields']['aim']) && !empty($context['member']['aim']['link']) ? '<li>' . $context['member']['aim']['link'] . '</li>' : '', '
-      ', !isset($context['disabled_fields']['yim']) && !empty($context['member']['yim']['link']) ? '<li>' . $context['member']['yim']['link'] . '</li>' : '', '
-    </ul>';
 
     // Any custom fields for standard placement?
     if (!empty($context['custom_fields']))
@@ -1366,7 +1370,7 @@ function template_edit_options()
           <div class="field">
             <div class="control">
               <label', !empty($field['is_error']) ? ' class="label checkbox has-text-danger"' : ' class="label"', '>
-                <input type="checkbox" name="', $key, '" id="', $key, '" ', !empty($field['value']) ? ' checked="checked"' : '', ' value="1" class="checkbox input_check" ', $field['input_attr'], ' /> ', $field['label'], '
+                <input type="checkbox" name="', $key, '" id="', $key, '" ', !empty($field['value']) ? ' checked="checked"' : '', ' value="1" class="checkbox" ', $field['input_attr'], ' /> ', $field['label'], '
               </label>
             </div>';
             // Does it have any subtext to show?
@@ -1390,8 +1394,8 @@ function template_edit_options()
 
             // What type of data are we showing?
             if ($field['type'] == 'label')
-              echo '
-                    ', $field['value'];
+              echo '<div class="field-body">
+                    ', $field['value'],'</div>';
 
             // Maybe it's a text box - very likely!
             elseif (in_array($field['type'], array('int', 'float', 'text', 'password'))) {
@@ -1399,7 +1403,7 @@ function template_edit_options()
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <input type="', $field['type'] == 'password' ? 'password' : 'text', '" name="', $key, '" id="', $key, '" size="', empty($field['size']) ? 30 : $field['size'], '" value="', $field['value'], '" ', $field['input_attr'], ' class="input is-auto input_', $field['type'] == 'password' ? 'password' : 'text', '" />
+                    <input type="', $field['type'] == 'password' ? 'password' : 'text', '" name="', $key, '" id="', $key, '" size="', empty($field['size']) ? 30 : $field['size'], '" value="', $field['value'], '" ', $field['input_attr'], ' class="input is-auto" />
                   </div>';
                   // Does it have any subtext to show?
                   if (!empty($field['subtext'])) echo '<p class="help">', $field['subtext'], '</p>';
@@ -1502,7 +1506,7 @@ function template_edit_options()
       <div class="field">
         <label ', isset($context['modify_error']['bad_password']) || isset($context['modify_error']['no_password']) ? ' class="is-danger label"' : ' class="label"', '>', $txt['current_password'], '</label>
         <div class="control">
-          <input type="password" name="oldpasswrd" size="20" style="margin-right: 4ex;" class="input is-auto is-primary input_password" />
+          <input type="password" name="oldpasswrd" size="20" style="margin-right: 4ex;" class="input is-auto is-primary" />
         </div>
         <p class="help">', $txt['required_security_reasons'], '</p>
       </div>
@@ -1512,9 +1516,9 @@ function template_edit_options()
 
   // The button shouldn't say "Change profile" unless we're changing the profile...
   if (!empty($context['submit_button_text']))
-    echo '<input type="submit" value="', $context['submit_button_text'], '" class="button is-primary button_submit" />';
+    echo '<input type="submit" value="', $context['submit_button_text'], '" class="button is-primary" />';
   else
-    echo '<input type="submit" value="', $txt['change_profile'], '" class="button is-primary button_submit" />';
+    echo '<input type="submit" value="', $txt['change_profile'], '" class="button is-primary" />';
 
   echo '
             <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
@@ -1944,7 +1948,7 @@ function template_notification()
         </div>
 
         <div>
-          <input id="notify_submit" type="submit" value="', $txt['notify_save'], '" class="button_submit button is-primary" />
+          <input id="notify_submit" type="submit" value="', $txt['notify_save'], '" class="button is-primary" />
           <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
           <input type="hidden" name="u" value="', $context['id_member'], '" />
           <input type="hidden" name="sa" value="', $context['menu_item_selected'], '" />
@@ -1993,7 +1997,7 @@ function template_groupMembership()
           <textarea name="reason" rows="4" style="' . ($context['browser']['is_ie8'] ? 'width: 635px; max-width: 99%; min-width: 99%' : 'width: 99%') . ';"></textarea>
           <div class="righttext" style="margin: 0.5em 0.5% 0 0.5%;">
             <input type="hidden" name="gid" value="', $context['group_request']['id'], '" />
-            <input type="submit" name="req" value="', $txt['submit_request'], '" class="button_submit" />
+            <input type="submit" name="req" value="', $txt['submit_request'], '" class="button is-primary" />
           </div>
         </div></div>
         <span class="lowerframe"><span></span></span>
@@ -2046,7 +2050,7 @@ function template_groupMembership()
     if ($context['can_edit_primary'])
       echo '
       <div class="padding righttext">
-        <input type="submit" value="', $txt['make_primary'], '" class="button_submit" />
+        <input type="submit" value="', $txt['make_primary'], '" class="button is-primary" />
       </div>';
 
     // Any groups they can join?
@@ -2478,7 +2482,7 @@ function template_issueWarning()
               <input type="hidden" name="warning_level" id="warning_level" value="SAME" />
             </div>
             <div id="warndiv2">
-              <input type="text" name="warning_level_nojs" size="6" maxlength="4" value="', $context['member']['warning'], '" class="input_text" />&nbsp;', $txt['profile_warning_max'], '
+              <input type="text" name="warning_level_nojs" size="6" maxlength="4" value="', $context['member']['warning'], '" class="input" />&nbsp;', $txt['profile_warning_max'], '
               <div class="smalltext">', $txt['profile_warning_impact'], ':<br />';
   // For non-javascript give a better list.
   foreach ($context['level_effects'] as $limit => $effect)
@@ -2498,7 +2502,7 @@ function template_issueWarning()
             <span class="smalltext">', $txt['profile_warning_reason_desc'], '</span>
           </dt>
           <dd>
-            <input type="text" name="warn_reason" id="warn_reason" value="', $context['warning_data']['reason'], '" size="50" style="width: 80%;" class="input_text" />
+            <input type="text" name="warn_reason" id="warn_reason" value="', $context['warning_data']['reason'], '" size="50" style="width: 80%;" class="input" />
           </dd>
         </dl>
         <hr />
@@ -2513,7 +2517,7 @@ function template_issueWarning()
             <strong>', $txt['profile_warning_notify_subject'], ':</strong>
           </dt>
           <dd>
-            <input type="text" name="warn_sub" id="warn_sub" value="', empty($context['warning_data']['notify_subject']) ? $txt['profile_warning_notify_template_subject'] : $context['warning_data']['notify_subject'], '" size="50" style="width: 80%;" class="input_text" />
+            <input type="text" name="warn_sub" id="warn_sub" value="', empty($context['warning_data']['notify_subject']) ? $txt['profile_warning_notify_template_subject'] : $context['warning_data']['notify_subject'], '" size="50" style="width: 80%;" class="input" />
           </dd>
           <dt>
             <strong>', $txt['profile_warning_notify_body'], ':</strong>
@@ -2537,7 +2541,7 @@ function template_issueWarning()
         </dl>
         <div class="righttext">
           <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-          <input type="submit" name="save" value="', $context['user']['is_owner'] ? $txt['change_profile'] : $txt['profile_warning_issue'], '" class="button_submit" />
+          <input type="submit" name="save" value="', $context['user']['is_owner'] ? $txt['change_profile'] : $txt['profile_warning_issue'], '" class="button is-primary" />
         </div>
       </div>
       <span class="botslice"><span></span></span>
@@ -2649,7 +2653,7 @@ function template_deleteAccount()
           <div>
             <strong', (isset($context['modify_error']['bad_password']) || isset($context['modify_error']['no_password']) ? ' class="error"' : ''), '>', $txt['current_password'], ': </strong>
             <input type="password" name="oldpasswrd" size="20" class="input_password" />&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="submit" value="', $txt['yes'], '" class="button_submit" />
+            <input type="submit" value="', $txt['yes'], '" class="button is-primary" />
             <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
             <input type="hidden" name="u" value="', $context['id_member'], '" />
             <input type="hidden" name="sa" value="', $context['menu_item_selected'], '" />
@@ -2678,7 +2682,7 @@ function template_deleteAccount()
             <label for="deleteAccount"><input type="checkbox" name="deleteAccount" id="deleteAccount" value="1" class="input_check" onclick="if (this.checked) return confirm(\'', $txt['deleteAccount_confirm'], '\');" /> ', $txt['deleteAccount_member'], '.</label>
           </div>
           <div>
-            <input type="submit" value="', $txt['delete'], '" class="button_submit" />
+            <input type="submit" value="', $txt['delete'], '" class="button is-primary" />
             <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
             <input type="hidden" name="u" value="', $context['id_member'], '" />
             <input type="hidden" name="sa" value="', $context['menu_item_selected'], '" />
@@ -2716,7 +2720,7 @@ function template_profile_save()
 
   echo '
           <div class="righttext">
-            <input type="submit" value="', $txt['change_profile'], '" class="button_submit" />
+            <input type="submit" value="', $txt['change_profile'], '" class="button is-primary" />
             <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
             <input type="hidden" name="u" value="', $context['id_member'], '" />
             <input type="hidden" name="sa" value="', $context['menu_item_selected'], '" />
@@ -2837,7 +2841,7 @@ function template_profile_signature_modify()
       // Spell check button
       if ($context['show_spellchecking'])
       echo '
-        <input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'creator\', \'signature\');" class="button_submit button" />';
+        <input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'creator\', \'signature\');" class="button" />';
     echo'
     </div>
 
@@ -3067,7 +3071,7 @@ function template_profile_avatar_select()
           echo '
             <div id="avatar_external">
               <div class="smalltext">', $txt['avatar_by_url'], '</div>
-              <input type="text" name="userpicpersonal" size="45" value="', $context['member']['avatar']['external_original'], '" onfocus="selectRadioByName(document.forms.creator.avatar_choice, \'external\');" onchange="if (typeof(previewExternalAvatar) != \'undefined\') previewExternalAvatar(this.value);" class="input_text input" />
+              <input type="text" name="userpicpersonal" size="45" value="', $context['member']['avatar']['external_original'], '" onfocus="selectRadioByName(document.forms.creator.avatar_choice, \'external\');" onchange="if (typeof(previewExternalAvatar) != \'undefined\') previewExternalAvatar(this.value);" class="input input" />
             </div>';
         }
 
@@ -3144,7 +3148,7 @@ function template_profile_karma_modify()
                 <strong>', $modSettings['karmaLabel'], '</strong>
               </dt>
               <dd>
-                ', $modSettings['karmaApplaudLabel'], ' <input type="text" name="karma_good" size="4" value="', $context['member']['karma']['good'], '" onchange="setInnerHTML(document.getElementById(\'karmaTotal\'), this.value - this.form.karma_bad.value);" style="margin-right: 2ex;" class="input_text" /> ', $modSettings['karmaSmiteLabel'], ' <input type="text" name="karma_bad" size="4" value="', $context['member']['karma']['bad'], '" onchange="this.form.karma_good.onchange();" class="input_text" /><br />
+                ', $modSettings['karmaApplaudLabel'], ' <input type="text" name="karma_good" size="4" value="', $context['member']['karma']['good'], '" onchange="setInnerHTML(document.getElementById(\'karmaTotal\'), this.value - this.form.karma_bad.value);" style="margin-right: 2ex;" class="input" /> ', $modSettings['karmaSmiteLabel'], ' <input type="text" name="karma_bad" size="4" value="', $context['member']['karma']['bad'], '" onchange="this.form.karma_good.onchange();" class="input" /><br />
                 (', $txt['total'], ': <span id="karmaTotal">', ($context['member']['karma']['good'] - $context['member']['karma']['bad']), '</span>)
               </dd>';
 }
@@ -3202,7 +3206,7 @@ function template_profile_timeoffset_modify()
           <p class="help mb-1">' , $txt['date_format'], '</p>
           <p class="help mb-1">', $txt['current_time'], ': <em>', $context['current_forum_time'], '</em></p>
           <div class="control">
-            <input type="text" name="time_offset" id="time_offset" size="5" maxlength="5" value="', $context['member']['time_offset'], '" class="input_text" /> <a href="javascript:void(0);" onclick="currentDate = new Date(', $context['current_forum_time_js'], '); document.getElementById(\'time_offset\').value = autoDetectTimeOffset(currentDate); return false;">', $txt['timeoffset_autodetect'], '</a>
+            <input type="text" name="time_offset" id="time_offset" size="5" maxlength="5" value="', $context['member']['time_offset'], '" class="input" /> <a href="javascript:void(0);" onclick="currentDate = new Date(', $context['current_forum_time_js'], '); document.getElementById(\'time_offset\').value = autoDetectTimeOffset(currentDate); return false;">', $txt['timeoffset_autodetect'], '</a>
           </div>
           
         </div>
@@ -3276,7 +3280,7 @@ function template_authentication_method()
                   <em>', $txt['authenticate_openid_url'], ':</em>
                 </dt>
                 <dd>
-                  <input type="text" name="openid_identifier" id="openid_url" size="30" tabindex="', $context['tabindex']++, '" value="', $context['member']['openid_uri'], '" class="input_text openid_login" />
+                  <input type="text" name="openid_identifier" id="openid_url" size="30" tabindex="', $context['tabindex']++, '" value="', $context['member']['openid_uri'], '" class="input openid_login" />
                 </dd>
               </dl>
               <dl id="auth_pass_div">
@@ -3316,7 +3320,7 @@ echo '
             <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
             <input type="hidden" name="u" value="', $context['id_member'], '" />
             <input type="hidden" name="sa" value="', $context['menu_item_selected'], '" />
-            <input type="submit" value="', $txt['change_profile'], '" class="button_submit" />
+            <input type="submit" value="', $txt['change_profile'], '" class="button is-primary" />
           </div>
         </div>
         <span class="botslice"><span></span></span>

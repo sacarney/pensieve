@@ -755,7 +755,7 @@ function template_subject_list()
         </select>
         </div>
         <noscript>
-          <input type="submit" value="', $txt['pm_apply'], '" class="button_submit" />
+          <input type="submit" value="', $txt['pm_apply'], '" class="button is-primary" />
         </noscript>';
     }
 
@@ -803,7 +803,7 @@ function template_search()
       <div class="roundframe">
         <div id="search_term_input">
           <strong>', $txt['pm_search_text'], ':</strong>
-          <input type="text" name="search"', !empty($context['search_params']['search']) ? ' value="' . $context['search_params']['search'] . '"' : '', ' size="40" class="input_text" />
+          <input type="text" name="search"', !empty($context['search_params']['search']) ? ' value="' . $context['search_params']['search'] . '"' : '', ' size="40" class="input" />
           <input type="submit" name="submit" value="', $txt['pm_search_go'], '" class="button is-small" />
         </div>
         <a href="', $scripturl, '?action=pm;sa=search;advanced" onclick="this.href += \';search=\' + escape(document.forms.searchform.search.value);">', $txt['pm_search_advanced'], '</a>
@@ -823,7 +823,7 @@ function template_search()
         <input type="hidden" name="advanced" value="1" />
         <span class="enhanced">
           <strong>', $txt['pm_search_text'], ':</strong>
-          <input type="text" name="search"', !empty($context['search_params']['search']) ? ' value="' . $context['search_params']['search'] . '"' : '', ' size="40" class="input_text" />
+          <input type="text" name="search"', !empty($context['search_params']['search']) ? ' value="' . $context['search_params']['search'] . '"' : '', ' size="40" class="input" />
           <script type="text/javascript"><!-- // --><![CDATA[
             function initSearch()
             {
@@ -840,7 +840,7 @@ function template_search()
         </span>
         <dl id="search_options">
           <dt>', $txt['pm_search_user'], ':</dt>
-          <dd><input type="text" name="userspec" value="', empty($context['search_params']['userspec']) ? '*' : $context['search_params']['userspec'], '" size="40" class="input_text" /></dd>
+          <dd><input type="text" name="userspec" value="', empty($context['search_params']['userspec']) ? '*' : $context['search_params']['userspec'], '" size="40" class="input" /></dd>
           <dt>', $txt['pm_search_order'], ':</dt>
           <dd>
             <select name="sort">
@@ -855,7 +855,7 @@ function template_search()
             <label for="subject_only"><input type="checkbox" name="subject_only" id="subject_only" value="1"', !empty($context['search_params']['subject_only']) ? ' checked="checked"' : '', ' class="input_check" /> ', $txt['pm_search_subject_only'], '</label>
           </dd>
           <dt class="between">', $txt['pm_search_post_age'], ':</dt>
-          <dd>', $txt['pm_search_between'], ' <input type="text" name="minage" value="', empty($context['search_params']['minage']) ? '0' : $context['search_params']['minage'], '" size="5" maxlength="5" class="input_text" />&nbsp;', $txt['pm_search_between_and'], '&nbsp;<input type="text" name="maxage" value="', empty($context['search_params']['maxage']) ? '9999' : $context['search_params']['maxage'], '" size="5" maxlength="5" class="input_text" /> ', $txt['pm_search_between_days'], '</dd>
+          <dd>', $txt['pm_search_between'], ' <input type="text" name="minage" value="', empty($context['search_params']['minage']) ? '0' : $context['search_params']['minage'], '" size="5" maxlength="5" class="input" />&nbsp;', $txt['pm_search_between_and'], '&nbsp;<input type="text" name="maxage" value="', empty($context['search_params']['maxage']) ? '9999' : $context['search_params']['maxage'], '" size="5" maxlength="5" class="input" /> ', $txt['pm_search_between_days'], '</dd>
         </dl>
       </div>
       <span class="lowerframe"><span></span></span>
@@ -1065,14 +1065,16 @@ function template_send()
       </div>
       <div class="windowbg">
         <div class="content">
-          <div class="notification is-primary';
-            if (!empty($context['send_log']['sent']))
-              foreach ($context['send_log']['sent'] as $log_entry)
-                echo '<span class="error">', $log_entry, '</span><br />';
-            if (!empty($context['send_log']['failed']))
-              foreach ($context['send_log']['failed'] as $log_entry)
-                echo '<span class="error">', $log_entry, '</span><br />';
-          echo '
+          <div class="message is-info">
+            <div class="message-body">';
+              if (!empty($context['send_log']['sent']))
+                foreach ($context['send_log']['sent'] as $log_entry)
+                  echo '<span class="error">', $log_entry, '</span><br />';
+              if (!empty($context['send_log']['failed']))
+                foreach ($context['send_log']['failed'] as $log_entry)
+                  echo '<span class="error">', $log_entry, '</span><br />';
+            echo '
+            </div>
           </div>
         </div>
       </div>';
@@ -1318,7 +1320,7 @@ function template_prune()
     <div class="windowbg">
       <span class="topslice"><span></span></span>
       <div class="content">
-        <p>', $txt['pm_prune_desc1'], ' <input type="text" name="age" size="3" value="14" class="input_text" /> ', $txt['pm_prune_desc2'], '</p>
+        <p>', $txt['pm_prune_desc1'], ' <input type="text" name="age" size="3" value="14" class="input" /> ', $txt['pm_prune_desc2'], '</p>
         <div class="righttext">
           <input type="submit" value="', $txt['delete'], '" class="button is-small" />
         </div>
@@ -1368,7 +1370,7 @@ function template_labels()
         echo '
       <tr class="', $alternate ? 'windowbg2' : 'windowbg', '">
         <td>
-          <input type="text" name="label_name[', $label['id'], ']" value="', $label['name'], '" size="30" maxlength="30" class="input_text" />
+          <input type="text" name="label_name[', $label['id'], ']" value="', $label['name'], '" size="30" maxlength="30" class="input" />
         </td>
         <td align="center"><input type="checkbox" class="input_check" name="delete_label[', $label['id'], ']" /></td>
       </tr>';
@@ -1402,7 +1404,7 @@ function template_labels()
             <strong><label for="add_label">', $txt['pm_label_name'], '</label>:</strong>
           </dt>
           <dd>
-            <input type="text" id="add_label" name="label" value="" size="30" maxlength="30" class="input_text" />
+            <input type="text" id="add_label" name="label" value="" size="30" maxlength="30" class="input" />
           </dd>
         </dl>
         <div class="righttext">
@@ -1595,7 +1597,7 @@ function template_add_rule()
         }
         criteriaNum++
 
-        setOuterHTML(document.getElementById("criteriaAddHere"), \'<br /><select name="ruletype[\' + criteriaNum + \']" id="ruletype\' + criteriaNum + \'" onchange="updateRuleDef(\' + criteriaNum + \'); rebuildRuleDesc();"><option value="">', addslashes($txt['pm_rule_criteria_pick']), ':<\' + \'/option><option value="mid">', addslashes($txt['pm_rule_mid']), '<\' + \'/option><option value="gid">', addslashes($txt['pm_rule_gid']), '<\' + \'/option><option value="sub">', addslashes($txt['pm_rule_sub']), '<\' + \'/option><option value="msg">', addslashes($txt['pm_rule_msg']), '<\' + \'/option><option value="bud">', addslashes($txt['pm_rule_bud']), '<\' + \'/option><\' + \'/select>&nbsp;<span id="defdiv\' + criteriaNum + \'" style="display: none;"><input type="text" name="ruledef[\' + criteriaNum + \']" id="ruledef\' + criteriaNum + \'" onkeyup="rebuildRuleDesc();" value="" class="input_text" /><\' + \'/span><span id="defseldiv\' + criteriaNum + \'" style="display: none;"><select name="ruledefgroup[\' + criteriaNum + \']" id="ruledefgroup\' + criteriaNum + \'" onchange="rebuildRuleDesc();"><option value="">', addslashes($txt['pm_rule_sel_group']), '<\' + \'/option>';
+        setOuterHTML(document.getElementById("criteriaAddHere"), \'<br /><select name="ruletype[\' + criteriaNum + \']" id="ruletype\' + criteriaNum + \'" onchange="updateRuleDef(\' + criteriaNum + \'); rebuildRuleDesc();"><option value="">', addslashes($txt['pm_rule_criteria_pick']), ':<\' + \'/option><option value="mid">', addslashes($txt['pm_rule_mid']), '<\' + \'/option><option value="gid">', addslashes($txt['pm_rule_gid']), '<\' + \'/option><option value="sub">', addslashes($txt['pm_rule_sub']), '<\' + \'/option><option value="msg">', addslashes($txt['pm_rule_msg']), '<\' + \'/option><option value="bud">', addslashes($txt['pm_rule_bud']), '<\' + \'/option><\' + \'/select>&nbsp;<span id="defdiv\' + criteriaNum + \'" style="display: none;"><input type="text" name="ruledef[\' + criteriaNum + \']" id="ruledef\' + criteriaNum + \'" onkeyup="rebuildRuleDesc();" value="" class="input" /><\' + \'/span><span id="defseldiv\' + criteriaNum + \'" style="display: none;"><select name="ruledefgroup[\' + criteriaNum + \']" id="ruledefgroup\' + criteriaNum + \'" onchange="rebuildRuleDesc();"><option value="">', addslashes($txt['pm_rule_sel_group']), '<\' + \'/option>';
 
   foreach ($context['groups'] as $id => $group)
     echo '<option value="', $id, '">', strtr($group, array("'" => "\'")), '<\' + \'/option>';
@@ -1750,7 +1752,7 @@ function template_add_rule()
             <span class="smalltext">', $txt['pm_rule_name_desc'], '</span>
           </dt>
           <dd>
-            <input type="text" name="rule_name" value="', empty($context['rule']['name']) ? $txt['pm_rule_name_default'] : $context['rule']['name'], '" class="input_text" style="width: 100%" />
+            <input type="text" name="rule_name" value="', empty($context['rule']['name']) ? $txt['pm_rule_name_default'] : $context['rule']['name'], '" class="input" style="width: 100%" />
           </dd>
         </dl>
         <fieldset>
@@ -1778,7 +1780,7 @@ function template_add_rule()
             <option value="bud" ', $criteria['t'] == 'bud' ? 'selected="selected"' : '', '>', $txt['pm_rule_bud'], '</option>
           </select>
           <span id="defdiv', $k, '" ', !in_array($criteria['t'], array('gid', 'bud')) ? '' : 'style="display: none;"', '>
-            <input type="text" name="ruledef[', $k, ']" id="ruledef', $k, '" onkeyup="rebuildRuleDesc();" value="', in_array($criteria['t'], array('mid', 'sub', 'msg')) ? $criteria['v'] : '', '" class="input_text" />
+            <input type="text" name="ruledef[', $k, ']" id="ruledef', $k, '" onkeyup="rebuildRuleDesc();" value="', in_array($criteria['t'], array('mid', 'sub', 'msg')) ? $criteria['v'] : '', '" class="input" />
           </span>
           <span id="defseldiv', $k, '" ', $criteria['t'] == 'gid' ? '' : 'style="display: none;"', '>
             <select name="ruledefgroup[', $k, ']" id="ruledefgroup', $k, '" onchange="rebuildRuleDesc();">

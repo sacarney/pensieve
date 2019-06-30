@@ -312,7 +312,9 @@ function template_main()
 
     else // There are no topics...
     echo '
-    <div class="notification is-danger">', $txt['msg_alert_none'], '</div>
+    <div class="message is-danger">
+      <div class="message-body">', $txt['msg_alert_none'], '</div>
+    </div>
     ';
 
     echo'
@@ -423,14 +425,62 @@ function template_main()
               ';
             }
             echo '
-        </div>
-      ';
+        </div>';
     }
   }
   echo '
-  </div>
+    </div>
     </div>
   ';
+
+  if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] == 1 && !empty($context['topics']))
+    {
+      echo '
+        <div class="select is-small">
+          <select class="qaction" name="qaction"', $context['can_move'] ? ' onchange="this.form.moveItTo.disabled = (this.options[this.selectedIndex].value != \'move\');"' : '', '>
+            <option value="">--------</option>', $context['can_remove'] ? '
+            <option value="remove">' . $txt['quick_mod_remove'] . '</option>' : '', $context['can_lock'] ? '
+            <option value="lock">' . $txt['quick_mod_lock'] . '</option>' : '', $context['can_sticky'] ? '
+            <option value="sticky">' . $txt['quick_mod_sticky'] . '</option>' : '', $context['can_move'] ? '
+            <option value="move">' . $txt['quick_mod_move'] . ': </option>' : '', $context['can_merge'] ? '
+            <option value="merge">' . $txt['quick_mod_merge'] . '</option>' : '', $context['can_restore'] ? '
+            <option value="restore">' . $txt['quick_mod_restore'] . '</option>' : '', $context['can_approve'] ? '
+            <option value="approve">' . $txt['quick_mod_approve'] . '</option>' : '', $context['user']['is_logged'] ? '
+            <option value="markread">' . $txt['quick_mod_markread'] . '</option>' : '', '
+          </select>
+        </div>';
+
+      // Show a list of boards they can move the topic to.
+      if ($context['can_move'])
+      {
+          echo '
+            <div class="select is-small">
+              <select class="qaction" id="moveItTo" name="move_to" disabled="disabled">';
+
+          foreach ($context['move_to_boards'] as $category)
+          {
+            echo '
+              <optgroup label="', $category['name'], '">';
+            foreach ($category['boards'] as $board)
+                echo '
+                <option value="', $board['id'], '"', $board['selected'] ? ' selected="selected"' : '', '>', $board['child_level'] > 0 ? str_repeat('==', $board['child_level'] - 1) . '=&gt;' : '', ' ', $board['name'], '</option>';
+            echo '
+              </optgroup>';
+          }
+          echo '
+            </select>
+          </div>';
+      }
+
+      echo '
+            <input type="submit" value="', $txt['quick_mod_go'], '" onclick="return document.forms.quickModForm.qaction.value != \'\' &amp;&amp; confirm(\'', $txt['quickmod_confirm'], '\');" class="button is-primary is-small qaction" />';
+    }
+
+    // Finish off the form - again.
+    if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] > 0 && !empty($context['topics']))
+      echo '
+  <input type="hidden" name="' . $context['session_var'] . '" value="' . $context['session_id'] . '" />
+  </form>';
 
 }
 

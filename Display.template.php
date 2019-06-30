@@ -19,7 +19,10 @@ function template_main()
   // Let them know, if their report was a success!
   if ($context['report_sent'])
   {
-    echo '<div class="notification is-info">', $txt['report_sent'], '</div>';
+    echo '
+      <div class="message is-info">
+        <div class="message-body">', $txt['report_sent'], '</div>
+      </div>';
   }
 
   // Show the page index... "Pages: [1]".
@@ -176,7 +179,7 @@ function template_main()
                 echo '
                 </ul>
 
-                <input type="submit" value="', $txt['poll_vote'], '" class="button_submit button is-small is-primary" />
+                <input type="submit" value="', $txt['poll_vote'], '" class="button is-small is-primary" />
                 <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
             </form>';
           }
@@ -300,7 +303,7 @@ function template_main()
 
       // Tagging System
       echo '
-      <div class="container is-flex align-items-center mt-2 mb-2">
+      <div class="container is-flex flex-wrap align-items-center mt-2 mb-2">
 
         <h2 class="title is-6 mb-0 mr-2">', $txt['smftags_topic'], '</h2>';
 
@@ -417,7 +420,7 @@ function template_main()
                         
                         // Mobile titles
 
-                        echo'<div class="is-flex has-text-weight-normal pl-2 is-size-7-mobile is-hidden-tablet">';
+                        echo'<div class="is-flex flex-wrap has-text-weight-normal pl-2 is-size-7-mobile is-hidden-tablet">';
                         // Show primary group, if they have one.
                           if (!empty($message['member']['group']))
                             echo'<p class="is-uppercase is-muted mr-2">', $message['member']['group'], '</p>';
@@ -522,6 +525,17 @@ function template_main()
                       <p class="is-muted">', $message['member']['blurb'], '</p>
                     </div>';
 
+                  // Any custom fields for standard placement?
+                  if (!empty($message['member']['custom_fields']))
+                  {
+                    echo'<div class="card-content is-size-6-5 is-hidden-mobile">';
+
+                    foreach ($message['member']['custom_fields'] as $custom)
+                      if (empty($custom['placement']) || empty($custom['value']))
+                        echo '<div class="mb-2">', $custom['value'], '</div>';
+                    echo '</div>';
+                  }
+
                   // Any custom fields to show as icons?
                   if (!empty($message['member']['custom_fields']))
                   {
@@ -535,25 +549,16 @@ function template_main()
                         $shown = true;
                         echo '
                           <div class="card-content is-size-6-5 is-hidden-mobile">
-                            <ul>';
+                            <ul class="is-flex">';
                       }
                       echo '
-                            <li>', $custom['value'], '</li>';
+                            <li class="mr-2">', $custom['value'], '</li>';
                     }
                     if ($shown)
                       echo '
                             </ul>
                           </div>
                       ';
-                  }
-
-                  // Any custom fields for standard placement?
-                  if (!empty($message['member']['custom_fields']))
-                  {
-                    foreach ($message['member']['custom_fields'] as $custom)
-                      if (empty($custom['placement']) || empty($custom['value']))
-                        echo '
-                            <li class="custom">', $custom['title'], ': ', $custom['value'], '</li>';
                   }
 
                   // Are we showing the warning status?
@@ -620,7 +625,7 @@ function template_main()
               <header class="columns">
                 <div class="column pb-0">
                   <div>
-                    <h1 class="title is-6 mb-0" id="subject_', $message['id'], '">
+                    <h1 class="title is-6 mb-0 is-hidden-mobile" id="subject_', $message['id'], '">
                       <a href="', $message['href'], '" rel="nofollow">', $message['subject'], '</a>
                     </h1>
                     <p class="is-muted is-size-6-5"><span class="is-uppercase">', !empty($message['counter']) ? $txt['reply_noun'] . ' #' . $message['counter'] : '', ' </span>', $txt['on'], '<span class="is-uppercase"> ', $message['time'], '</span></p>
@@ -707,7 +712,7 @@ function template_main()
               if (!empty($message['attachment']))
               {
                 echo '
-                        <div id="msg_', $message['id'], '_footer" class="attachments smalltext">
+                        <div id="msg_', $message['id'], '_footer" class="box">
                           <div style="overflow: ', $context['browser']['is_firefox'] ? 'visible' : 'auto', ';">';
 
                 $last_approved_state = 1;
@@ -860,7 +865,7 @@ function template_main()
         </form>
       </article>
 
-      <div class="container">
+      <div class="">
         <a id="lastPost"></a>';
 
       $mod_buttons = array(
@@ -939,9 +944,37 @@ function template_main()
     echo '
     <div id="moderationbuttons" class="mt-2 has-text-right-tablet" role="toolbar" aria-label="Moderator Toolbar">', template_button_strip($mod_buttons, 'bottom', array('id' => 'moderationbuttons_strip')), '</div>';
 
-  // Show the jumpto box, or actually...let Javascript do it.
-  echo '
-      <div class="plainbox mt-2 mb-2" id="display_jump_to">&nbsp;</div>';
+    // Tagging System
+      echo '
+      <div class="is-flex flex-wrap align-items-center mt-2 mb-2">
+        <h2 class="title is-6 mb-0 mr-2">', $txt['smftags_topic'], '</h2>';
+        echo'<ul class="tags mb-0">';
+        foreach ($context['topic_tags'] as $i => $tag)
+        {
+          echo '
+            <li>
+              <div class="tags has-addons mr-2">
+                <a class="tag" href="' . $scripturl . '?action=tags;tagid=' . $tag['ID_TAG']  . '">' . $tag['tag'] . '</a>';
+
+                if(!$context['user']['is_guest'] && allowedTo('smftags_del'))
+                  echo'
+                    <a class="tag is-delete" href="' . $scripturl . '?action=tags;sa=deletetag;tagid=' . $tag['ID']  . '"></a>
+                      ';
+             echo'</div>
+             </li>';
+        }
+
+        echo'</ul>';
+
+        global $topic;
+        if(!$context['user']['is_guest'] && allowedTo('smftags_add'))
+        echo '
+        <a class="button is-small" href="' . $scripturl . '?action=tags;sa=addtag;topic=',$topic, '">' . $txt['smftags_addtag'] . '</a>';
+
+      echo '
+        </div>';
+    
+    // End Tagging System
 
   if ($context['can_reply'] && !empty($options['display_quick_reply']))
   {
@@ -953,7 +986,8 @@ function template_main()
           <h2 class="title is-5">
             <a href="javascript:oQuickReply.swap();">
               <span class="icon">
-                <span class="fa ', $options['display_quick_reply'] == 2 ? 'fa-minus-square-o' : 'fa-plus-square-o' ,'"></span>
+                <img src="', $settings['images_url'], '/', $options['display_quick_reply'] == 2 ? 'collapse' : 'expand', '.gif" alt="+" id="quickReplyExpand" style="display: none;" />
+                <span class="fa fa-pencil"></span>
               </span>
             </a>
             <a href="javascript:oQuickReply.swap();">', $txt['quick_reply'], '</a>
@@ -982,8 +1016,8 @@ function template_main()
       // Guests just need more.
       if ($context['user']['is_guest'])
         echo '
-              <strong>', $txt['name'], ':</strong> <input type="text" name="guestname" value="', $context['name'], '" size="25" class="input_text" tabindex="', $context['tabindex']++, '" />
-              <strong>', $txt['email'], ':</strong> <input type="text" name="email" value="', $context['email'], '" size="25" class="input_text" tabindex="', $context['tabindex']++, '" /><br />';
+              <strong>', $txt['name'], ':</strong> <input type="text" name="guestname" value="', $context['name'], '" size="25" class="input" tabindex="', $context['tabindex']++, '" />
+              <strong>', $txt['email'], ':</strong> <input type="text" name="email" value="', $context['email'], '" size="25" class="input" tabindex="', $context['tabindex']++, '" /><br />';
 
       // Is visual verification enabled?
       if ($context['require_verification'])
@@ -995,12 +1029,12 @@ function template_main()
           <textarea class="textarea" cols="600" rows="7" name="message" tabindex="', $context['tabindex']++, '"></textarea>
         </div>
         <div class="mt-2">
-          <input class="button is-primary" type="submit" name="post" value="', $txt['post'], '" onclick="return submitThisOnce(this);" accesskey="s" tabindex="', $context['tabindex']++, '" class="button_submit" />
-          <input class="button" type="submit" name="preview" value="', $txt['preview'], '" onclick="return submitThisOnce(this);" accesskey="p" tabindex="', $context['tabindex']++, '" class="button_submit" />';
+          <input class="button is-primary" type="submit" name="post" value="', $txt['post'], '" onclick="return submitThisOnce(this);" accesskey="s" tabindex="', $context['tabindex']++, '" class="button is-primary" />
+          <input class="button" type="submit" name="preview" value="', $txt['preview'], '" onclick="return submitThisOnce(this);" accesskey="p" tabindex="', $context['tabindex']++, '" class="button is-primary" />';
 
       if ($context['show_spellchecking'])
         echo '
-            <input class="button" type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'postmodify\', \'message\');" tabindex="', $context['tabindex']++, '" class="button_submit" />';
+            <input class="button" type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'postmodify\', \'message\');" tabindex="', $context['tabindex']++, '" class="button is-primary" />';
 
       echo '
 
@@ -1008,7 +1042,7 @@ function template_main()
         </form>
       </div>
     </div>
-  </div>';
+    </div>';
   }
 
   else
@@ -1018,6 +1052,10 @@ function template_main()
     echo '
       <form action="', $scripturl, '?action=spellcheck" method="post" accept-charset="', $context['character_set'], '" name="spell_form" id="spell_form" target="spellWindow"><input type="hidden" name="spellstring" value="" /></form>
         <script type="text/javascript" src="' . $settings['default_theme_url'] . '/scripts/spellcheck.js"></script>';
+
+  // Show the jumpto box, or actually...let Javascript do it.
+  echo '
+      <div class="plainbox mt-4 mb-2" id="display_jump_to">&nbsp;</div>';
 
   echo '
         <script type="text/javascript" src="' . $settings['default_theme_url'] . '/scripts/topic.js"></script>
@@ -1075,10 +1113,10 @@ function template_main()
                   <input type="hidden" name="topic" value="' . $context['current_topic'] . '" />
                   <input type="hidden" name="msg" value="%msg_id%" />
                   <div class="righttext">
-                    <input type="submit" name="post" value="' . $txt['save'] . '" tabindex="' . $context['tabindex']++ . '" onclick="return oQuickModify.modifySave(\'' . $context['session_id'] . '\', \'' . $context['session_var'] . '\');" accesskey="s" class="button_submit" />&nbsp;&nbsp;' . ($context['show_spellchecking'] ? '<input type="button" value="' . $txt['spell_check'] . '" tabindex="' . $context['tabindex']++ . '" onclick="spellCheck(\'quickModForm\', \'message\');" class="button_submit" />&nbsp;&nbsp;' : '') . '<input type="submit" name="cancel" value="' . $txt['modify_cancel'] . '" tabindex="' . $context['tabindex']++ . '" onclick="return oQuickModify.modifyCancel();" class="button_submit" />
+                    <input type="submit" name="post" value="' . $txt['save'] . '" tabindex="' . $context['tabindex']++ . '" onclick="return oQuickModify.modifySave(\'' . $context['session_id'] . '\', \'' . $context['session_var'] . '\');" accesskey="s" class="button is-primary" />&nbsp;&nbsp;' . ($context['show_spellchecking'] ? '<input type="button" value="' . $txt['spell_check'] . '" tabindex="' . $context['tabindex']++ . '" onclick="spellCheck(\'quickModForm\', \'message\');" class="button is-primary" />&nbsp;&nbsp;' : '') . '<input type="submit" name="cancel" value="' . $txt['modify_cancel'] . '" tabindex="' . $context['tabindex']++ . '" onclick="return oQuickModify.modifyCancel();" class="button is-primary" />
                   </div>
                 </div>'), ',
-              sTemplateSubjectEdit: ', JavaScriptEscape('<input type="text" style="width: 90%;" name="subject" value="%subject%" size="80" maxlength="80" tabindex="' . $context['tabindex']++ . '" class="input_text" />'), ',
+              sTemplateSubjectEdit: ', JavaScriptEscape('<input type="text" style="width: 90%;" name="subject" value="%subject%" size="80" maxlength="80" tabindex="' . $context['tabindex']++ . '" class="input" />'), ',
               sTemplateBodyNormal: ', JavaScriptEscape('%body%'), ',
               sTemplateSubjectNormal: ', JavaScriptEscape('<a href="' . $scripturl . '?topic=' . $context['current_topic'] . '.msg%msg_id%#msg%msg_id%" rel="nofollow">%subject%</a>'), ',
               sTemplateTopSubject: ', JavaScriptEscape($txt['topic'] . ': %subject% &nbsp;(' . $txt['read'] . ' ' . $context['num_views'] . ' ' . $txt['times'] . ')'), ',
@@ -1155,48 +1193,12 @@ function template_main()
   echo '
         // ]]></script>';
 
-  echo'</div>';
+    
 
-  
-		
-		
-		// Tagging System
-			echo '
-			<div class="container is-flex align-items-center mt-2 mb-2">
-
-				<h2 class="title is-6 mb-0 mr-2">', $txt['smftags_topic'], '</h2>';
-
-        echo'<ul class="tags mb-0">';
-
-				foreach ($context['topic_tags'] as $i => $tag)
-				{
-          echo '<li>
-                  <div class="tags has-addons mr-2">
-                    <a class="tag" href="' . $scripturl . '?action=tags;tagid=' . $tag['ID_TAG']  . '">' . $tag['tag'] . '</a>';
-
-                    if(!$context['user']['is_guest'] && allowedTo('smftags_del'))
-                    echo'
-                      <a class="tag is-delete" href="' . $scripturl . '?action=tags;sa=deletetag;tagid=' . $tag['ID']  . '"></a>
-                      ';
-             echo' </div>
-             </li>';
-				}
-
-        echo'</ul>';
-
-				global $topic;
-				if(!$context['user']['is_guest'] && allowedTo('smftags_add'))
-				echo '
-				<a class="button is-small" href="' . $scripturl . '?action=tags;sa=addtag;topic=',$topic, '">' . $txt['smftags_addtag'] . '</a>';
-
-			echo '
-				</div>';
-		
-		// End Tagging System
-		
-		// Show the lower breadcrumbs.
-		
-		
+      echo'</div>';
+    // Show the lower breadcrumbs.
+    
+    
   theme_linktree();
 }
 

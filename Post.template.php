@@ -104,12 +104,10 @@ function template_main()
   // End of the javascript, start the form and display the link tree.
   echo '
     // ]]></script>
+
+  <div class="container">
+
     <form action="', $scripturl, '?action=', $context['destination'], ';', empty($context['current_board']) ? '' : 'board=' . $context['current_board'], '" method="post" accept-charset="', $context['character_set'], '" name="postmodify" id="postmodify" class="flow_hidden" onsubmit="', ($context['becomes_approved'] ? '' : 'alert(\'' . $txt['js_post_will_require_approval'] . '\');'), 'submitonce(this);smc_saveEntities(\'postmodify\', [\'subject\', \'', $context['post_box_name'], '\', \'guestname\', \'evtitle\', \'question\'], \'options\');" enctype="multipart/form-data">';
-
-
-  echo'
-    <div class="container">
-      ';
 
   // If the user wants to see how their message looks - the preview section is where it's at!
   echo '
@@ -141,7 +139,8 @@ function template_main()
 
   // If an error occurred, explain what happened.
   echo '
-      <div class="notification is-danger"', empty($context['post_error']['messages']) ? ' style="display: none"' : '', ' id="errors">
+    <div class="message is-danger">
+      <div class="message-body"', empty($context['post_error']['messages']) ? ' style="display: none"' : '', ' id="errors">
         <dl>
           <dt>
             <strong style="', empty($context['error_type']) || $context['error_type'] != 'serious' ? 'display: none;' : '', '" id="error_serious">', $txt['error_while_submitting'], '</strong>
@@ -150,23 +149,28 @@ function template_main()
             ', empty($context['post_error']['messages']) ? '' : implode('<br />', $context['post_error']['messages']), '
           </dt>
         </dl>
-      </div>';
+      </div>
+    </div>';
 
   // If this won't be approved let them know!
   if (!$context['becomes_approved'])
   {
     echo '
-      <p class="notification is-warning">
+    <div class="message is-warning">
+      <div class="message-body">
         <em>', $txt['wait_for_approval'], '</em>
         <input type="hidden" name="not_approved" value="1" />
-      </p>';
+      </div>
+    </div>';
   }
 
   // If it's locked, show a message to warn the replyer.
   echo '
-    <p class="notification is-danger"', $context['locked'] ? '' : ' style="display: none"', ' id="lock_warning">
+  <div class="message is-danger">
+    <div class="message-body" ', $context['locked'] ? '' : ' style="display: none"', ' id="lock_warning">
       ', $txt['topic_locked_no_reply'], '
-    </p>';
+    </div>
+  </div>';
 
   // The post header... important stuff
   echo '
@@ -184,7 +188,7 @@ function template_main()
         <div class="field-body">
           <div class="field">
             <div class="control">
-              <input type="text" name="guestname" size="25" value="', $context['name'], '" class="input_text input" />
+              <input type="text" name="guestname" size="25" value="', $context['name'], '" class="input input" />
             </div>
           </div>
         </div>
@@ -200,7 +204,7 @@ function template_main()
           <div class="field-body">
             <div class="field">
               <div class="control">
-                <input type="text" name="email" size="25" value="', $context['email'], '" class="input_text input" />
+                <input type="text" name="email" size="25" value="', $context['email'], '" class="input input" />
               </div>
             </div>
           </div>
@@ -239,7 +243,7 @@ function template_main()
       <div class="field-body">
         <div class="field is-narrow">
           <div class="control">
-            <input type="text" name="subject"', $context['subject'] == '' ? '' : ' value="' . $context['subject'] . '"', ' size="80" maxlength="80" class="input_text input ', isset($context['post_error']) ? 'is-danger' : '' ,'" />
+            <input type="text" name="subject"', $context['subject'] == '' ? '' : ' value="' . $context['subject'] . '"', ' size="80" maxlength="80" class="input input ', isset($context['post_error']) ? 'is-danger' : '' ,'" />
           </div>
         </div>
       </div>
@@ -299,7 +303,7 @@ function template_main()
           <div id="post_event">
             <fieldset id="event_main">
               <legend><span', isset($context['post_error']['no_event']) ? ' class="error"' : '', ' id="caption_evtitle">', $txt['calendar_event_title'], '</span></legend>
-              <input type="text" name="evtitle" maxlength="255" size="60" value="', $context['event']['title'], '"  class="input_text" />
+              <input type="text" name="evtitle" maxlength="255" size="60" value="', $context['event']['title'], '"  class="input" />
               <div class="smalltext">
                 <input type="hidden" name="calendar" value="1" />', $txt['calendar_year'], '
                 <select name="year" id="year"  onchange="generateDays();">';
@@ -519,7 +523,7 @@ function template_main()
 
   // Show the actual posting area...
   if ($context['show_bbc'] || !empty($context['smileys']['postform'])) {
-    echo '<div class="notification">';
+    echo '<div class="mb-3">';
   
     if ($context['show_bbc'])
     {
@@ -534,7 +538,7 @@ function template_main()
     echo '</div>';
   }
 
-    echo '<div class="type-your-post">
+    echo '<div class="type-your-post mb-4">
           ', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message') , '</div>';
 
   // @TODO If this message has been edited in the past - display when it was.
@@ -545,17 +549,19 @@ function template_main()
             ', $context['last_modified'], '
       </div>';
 
-  // @TODO If the admin has enabled the hiding of the additional options - show a link and image for it.
-  if (!empty($settings['additional_options_collapsable']))
-    echo '
-      <div id="postAdditionalOptionsHeader">
-        <img src="', $settings['images_url'], '/collapse.gif" alt="-" id="postMoreExpand" style="display: none;" /> <strong><a href="#" id="postMoreExpandLink">', $txt['post_additionalopt'], '</a></strong>
-      </div>';
-
   // Display the check boxes for all the standard options - if they are available to the user!
   echo '
     <fieldset class="mt-4 mb-4">
-      <legend class="is-uppercase is-size-6-5 is-muted">', $txt['post_additionalopt'], '</legend>
+      <legend class="is-uppercase is-size-6-5 is-muted">';
+      // @TODO If the admin has enabled the hiding of the additional options - show a link and image for it.
+      if (!empty($settings['additional_options_collapsable']))
+        echo '
+          <div id="postAdditionalOptionsHeader">
+            <a href="#" id="postMoreExpandLink">', $txt['post_additionalopt'], '</a>
+          </div>';
+          echo'
+      </legend>
+
       <div id="postMoreOptions" class="smalltext">
         <ul class="post_options">
           ', $context['can_notify'] ? '<li><input type="hidden" name="notify" value="0" /><label for="check_notify"><input type="checkbox" name="notify" id="check_notify"' . ($context['notify'] || !empty($options['auto_notify']) ? ' checked="checked"' : '') . ' value="1" class="input_check" /> ' . $txt['notify_replies'] . '</label></li>' : '', '
@@ -568,17 +574,17 @@ function template_main()
           ', $context['show_approval'] ? '<li><label for="approve"><input type="checkbox" name="approve" id="approve" value="2" class="input_check" ' . ($context['show_approval'] === 2 ? 'checked="checked"' : '') . ' /> ' . $txt['approve_this_post'] . '</label></li>' : '', '
         </ul>
       </div>
-    </fieldset>';
+    ';
 
   // @TODO If this post already has attachments on it - give information about them.
   if (!empty($context['current_attachments']))
   {
     echo '
-          <dl id="postAttachment">
-            <dt>
+          <dl id="postAttachment" class="pensieve-post-attachments">
+            <dt class="is-size-5">
               ', $txt['attached'], ':
             </dt>
-            <dd class="smalltext">
+            <dd class="help">
               <input type="hidden" name="attach_del[]" value="0" />
               ', $txt['uncheck_unwatchd_attach'], ':
             </dd>';
@@ -595,8 +601,8 @@ function template_main()
   if ($context['can_post_attachment'])
   {
     echo '
-          <dl id="postAttachment2">
-            <dt>
+          <dl id="postAttachment2" class="pensieve-post-attachments">
+            <dt class="is-size-5">
               ', $txt['attach'], ':
             </dt>
             <dd class="smalltext">
@@ -642,7 +648,8 @@ function template_main()
 
     echo '
             </dd>
-          </dl>';
+          </dl>
+        </fieldset>';
   }
 
   // @TODO Is visual verification enabled?
@@ -668,13 +675,13 @@ function template_main()
   // Option to delete an event if user is editing one.
   if ($context['make_event'] && !$context['event']['new'])
     echo '
-            <input type="submit" name="deleteevent" value="', $txt['event_delete'], '" onclick="return confirm(\'', $txt['event_delete_confirm'], '\');" class="button_submit" />';
+            <input type="submit" name="deleteevent" value="', $txt['event_delete'], '" onclick="return confirm(\'', $txt['event_delete_confirm'], '\');" class="button is-primary" />';
 
   echo '
           </p>
         </div>
         
-      </div>';
+      ';
 
   // Assuming this isn't a new topic pass across the last message id.
   if (isset($context['topic_last_message']))
@@ -685,7 +692,7 @@ function template_main()
       <input type="hidden" name="additional_options" id="additional_options" value="', $context['show_additional_options'] ? '1' : '0', '" />
       <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
       <input type="hidden" name="seqnum" value="', $context['form_sequence_number'], '" />
-    </form>';
+    </form></div>';
 
   echo '
     <script type="text/javascript"><!-- // --><![CDATA[';
@@ -1071,7 +1078,7 @@ function template_spellcheck()
       <table border="0" cellpadding="4" cellspacing="0" width="100%"><tr class="windowbg">
         <td width="50%" valign="top">
           ', $txt['spellcheck_change_to'], '<br />
-          <input type="text" name="changeto" style="width: 98%;" class="input_text" />
+          <input type="text" name="changeto" style="width: 98%;" class="input" />
         </td>
         <td width="50%">
           ', $txt['spellcheck_suggest'], '<br />
@@ -1080,10 +1087,10 @@ function template_spellcheck()
         </td>
       </tr></table>
       <div class="righttext" style="padding: 4px;">
-        <input type="button" name="change" value="', $txt['spellcheck_change'], '" onclick="replaceWord();" class="button_submit" />
-        <input type="button" name="changeall" value="', $txt['spellcheck_change_all'], '" onclick="replaceAll();" class="button_submit" />
-        <input type="button" name="ignore" value="', $txt['spellcheck_ignore'], '" onclick="nextWord(false);" class="button_submit" />
-        <input type="button" name="ignoreall" value="', $txt['spellcheck_ignore_all'], '" onclick="nextWord(true);" class="button_submit" />
+        <input type="button" name="change" value="', $txt['spellcheck_change'], '" onclick="replaceWord();" class="button is-primary" />
+        <input type="button" name="changeall" value="', $txt['spellcheck_change_all'], '" onclick="replaceAll();" class="button is-primary" />
+        <input type="button" name="ignore" value="', $txt['spellcheck_ignore'], '" onclick="nextWord(false);" class="button is-primary" />
+        <input type="button" name="ignoreall" value="', $txt['spellcheck_ignore_all'], '" onclick="nextWord(true);" class="button is-primary" />
       </div>
     </form>
   </body>
@@ -1174,7 +1181,7 @@ function template_announce()
             </li>
           </ul>
           <div id="confirm_buttons">
-            <input type="submit" value="', $txt['post'], '" class="button_submit" />
+            <input type="submit" value="', $txt['post'], '" class="button is-primary" />
             <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
             <input type="hidden" name="topic" value="', $context['current_topic'], '" />
             <input type="hidden" name="move" value="', $context['move'], '" />
@@ -1201,7 +1208,7 @@ function template_announcement_send()
           <p>', $txt['announce_sending'], ' <a href="', $scripturl, '?topic=', $context['current_topic'], '.0" target="_blank" class="new_win">', $context['topic_subject'], '</a></p>
           <p><strong>', $context['percentage_done'], '% ', $txt['announce_done'], '</strong></p>
           <div id="confirm_buttons">
-            <input type="submit" name="b" value="', $txt['announce_continue'], '" class="button_submit" />
+            <input type="submit" name="b" value="', $txt['announce_continue'], '" class="button is-primary" />
             <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
             <input type="hidden" name="topic" value="', $context['current_topic'], '" />
             <input type="hidden" name="move" value="', $context['move'], '" />

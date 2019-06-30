@@ -13,9 +13,10 @@
  * 7. Add/Edit
  * 8. Messages
  * 9. Stats Graph
- * 10. Utility
- * 11. Accessibility
- * 12. SMF styles
+ * 10. Stats Page
+ * 11. Utility
+ * 12. Accessibility
+ * 13. SMF styles
  */
 
 /*
@@ -41,6 +42,9 @@ widescreen above 1180px
   --light-overlay: rgba(255, 255, 255, 0.1);
   --dark-overlay: rgba(0, 0, 0, 0.1);
 }
+
+html { min-height: 100%; }
+body { min-height: 100%; }
 
 .fa { font-weight: normal !important; }
 
@@ -117,6 +121,10 @@ legend { padding: 0 1rem; }
 /* ------------------------- */
 /* HEADER */
 /* ------------------------- */
+
+.pensieve-main-navbar {
+  z-index: 50;
+}
 
 .breadcrumb ul {
   display: flex;
@@ -220,6 +228,10 @@ code, pre { display: block; }
   left: 0.5rem;
 }
 
+.post-profile-image-mobile {
+  flex-shrink: 0;
+}
+
 .post-profile-image-mobile img {
   height: 50px;
   width: auto;
@@ -265,6 +277,7 @@ code, pre { display: block; }
 
 .bar { 
   height: 1rem;
+  border-radius: 2px;
 }
 
 /* ------------------------- */
@@ -294,6 +307,12 @@ code, pre { display: block; }
 
 .post_options {
   column-count: 2;
+}
+
+.pensieve-post-attachments {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--primary);
 }
 
 /* ------------------------- */
@@ -330,6 +349,20 @@ code, pre { display: block; }
 }
 
 /* ------------------------- */
+/* STATS PAGE */
+/* ------------------------- */
+
+.pensieve-stat-list {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.pensieve-statsbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ------------------------- */
 /* UTILITY */
 /* ------------------------- */
 
@@ -363,12 +396,14 @@ code, pre { display: block; }
 .mr-2 { margin-right: 0.5rem !important; }
 .mr-3 { margin-right: 0.75rem !important; }
 .mr-4 { margin-right: 1rem !important; }
+.mr-auto { margin-right: auto; }
 
 .ml-0 { margin-left: 0 !important; }
 .ml-1 { margin-left: 0.25rem !important; }
 .ml-2 { margin-left: 0.5rem !important; }
 .ml-3 { margin-left: 0.75rem !important; }
 .ml-4 { margin-left: 1rem !important; }
+.ml-auto { margin-left: auto; }
 
 .p-0 { padding: 0 !important; }
 .p-1 { padding: 0.25rem !important; }
@@ -407,6 +442,7 @@ code, pre { display: block; }
 .flex-grow-1 { flex-grow: 1 !important; }
 
 .align-items-center { align-items: center; }
+.justity-content-center { justify-content: center; }
 
 .flex-wrap { flex-wrap: wrap; }
 

@@ -261,15 +261,15 @@ function template_control_richedit_buttons($editor_id)
   $editor_context = &$context['controls']['richedit'][$editor_id];
 
   echo '
-    <input type="submit" value="', isset($editor_context['labels']['post_button']) ? $editor_context['labels']['post_button'] : $txt['post'], '" onclick="return submitThisOnce(this);" accesskey="s" class="button_submit button is-primary" />';
+    <input type="submit" value="', isset($editor_context['labels']['post_button']) ? $editor_context['labels']['post_button'] : $txt['post'], '" onclick="return submitThisOnce(this);" accesskey="s" class="button is-primary" />';
 
   if ($editor_context['preview_type'])
     echo '
-    <input type="submit" name="preview" value="', isset($editor_context['labels']['preview_button']) ? $editor_context['labels']['preview_button'] : $txt['preview'], '" onclick="', $editor_context['preview_type'] == 2 ? 'return event.ctrlKey || previewPost();' : 'return submitThisOnce(this);', '" accesskey="p" class="button_submit button ml-2" />';
+    <input type="submit" name="preview" value="', isset($editor_context['labels']['preview_button']) ? $editor_context['labels']['preview_button'] : $txt['preview'], '" onclick="', $editor_context['preview_type'] == 2 ? 'return event.ctrlKey || previewPost();' : 'return submitThisOnce(this);', '" accesskey="p" class="button ml-2" />';
 
   if ($context['show_spellchecking'])
     echo '
-    <input type="button" value="', $txt['spell_check'], '"  onclick="oEditorHandle_', $editor_id, '.spellCheckStart();" class="button_submit button ml-2" />';
+    <input type="button" value="', $txt['spell_check'], '"  onclick="oEditorHandle_', $editor_id, '.spellCheckStart();" class="button ml-2" />';
 }
 
 // What's this, verification?!
@@ -318,13 +318,13 @@ function template_control_verification($verify_id, $display_type = 'all', $reset
 
       if (WIRELESS)
         echo '<br />
-        <input type="text" name="', $verify_id, '_vv[code]" value="', !empty($verify_context['text_value']) ? $verify_context['text_value'] : '', '" size="30"  class="input_text" />';
+        <input type="text" name="', $verify_id, '_vv[code]" value="', !empty($verify_context['text_value']) ? $verify_context['text_value'] : '', '" size="30"  class="input" />';
       else
         echo '
         <div class="smalltext" style="margin: 4px 0 8px 0;">
           <a href="', $verify_context['image_href'], ';sound" id="visual_verification_', $verify_id, '_sound" rel="nofollow">', $txt['visual_verification_sound'], '</a> / <a href="#" id="visual_verification_', $verify_id, '_refresh">', $txt['visual_verification_request_new'], '</a>', $display_type != 'quick_reply' ? '<br />' : '', '<br />
           ', $txt['visual_verification_description'], ':', $display_type != 'quick_reply' ? '<br />' : '', '
-          <input type="text" name="', $verify_id, '_vv[code]" value="', !empty($verify_context['text_value']) ? $verify_context['text_value'] : '', '" size="30"  class="input_text" />
+          <input type="text" name="', $verify_id, '_vv[code]" value="', !empty($verify_context['text_value']) ? $verify_context['text_value'] : '', '" size="30"  class="input" />
         </div>';
     }
     else
@@ -335,7 +335,7 @@ function template_control_verification($verify_id, $display_type = 'all', $reset
       echo '
         <div class="smalltext">
           ', $verify_context['questions'][$qIndex]['q'], ':<br />
-          <input type="text" name="', $verify_id, '_vv[q][', $verify_context['questions'][$qIndex]['id'], ']" size="30" value="', $verify_context['questions'][$qIndex]['a'], '" ', $verify_context['questions'][$qIndex]['is_error'] ? 'style="border: 1px red solid;"' : '', ' tabindex="', $context['tabindex']++, '" class="input_text" />
+          <input type="text" name="', $verify_id, '_vv[q][', $verify_context['questions'][$qIndex]['id'], ']" size="30" value="', $verify_context['questions'][$qIndex]['a'], '" ', $verify_context['questions'][$qIndex]['is_error'] ? 'style="border: 1px red solid;"' : '', ' tabindex="', $context['tabindex']++, '" class="input" />
         </div>';
     }
 

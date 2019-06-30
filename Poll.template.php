@@ -35,23 +35,28 @@ function template_main()
 
   // Start the main poll form.
   echo '
-  <div id="edit_poll">
-    <form action="' . $scripturl . '?action=editpoll2', $context['is_edit'] ? '' : ';add', ';topic=' . $context['current_topic'] . '.' . $context['start'] . '" method="post" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this); smc_saveEntities(\'postmodify\', [\'question\'], \'options-\');" name="postmodify" id="postmodify">
+  <div class="container">
+  
+    <div id="edit_poll">
+    
+      <form action="' . $scripturl . '?action=editpoll2', $context['is_edit'] ? '' : ';add', ';topic=' . $context['current_topic'] . '.' . $context['start'] . '" method="post" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this); smc_saveEntities(\'postmodify\', [\'question\'], \'options-\');" name="postmodify" id="postmodify">
       <div class="cat_bar">
         <h3 class="title is-5 mt-4 mb-4">', $context['page_title'], '</h3>
       </div>';
 
     if (!empty($context['poll_error']['messages']))
     echo '
-      <div class="notification is-danger">
-        <dl class="poll_error">
-          <dt>
-            ', $context['is_edit'] ? $txt['error_while_editing_poll'] : $txt['error_while_adding_poll'], ':
-          </dt>
-          <dt>
-            ', empty($context['poll_error']['messages']) ? '' : implode('<br />', $context['poll_error']['messages']), '
-          </dt>
-        </dl>
+      <div class="message is-danger">
+        <div class="message-body">
+          <dl class="poll_error">
+            <dt>
+              ', $context['is_edit'] ? $txt['error_while_editing_poll'] : $txt['error_while_adding_poll'], ':
+            </dt>
+            <dt>
+              ', empty($context['poll_error']['messages']) ? '' : implode('<br />', $context['poll_error']['messages']), '
+            </dt>
+          </dl>
+        </div>
       </div>';
 
     echo '
@@ -102,8 +107,6 @@ function template_main()
       </ul>
       
       <strong><a href="javascript:addPollOption(); void(0);">(', $txt['poll_add_option'], ')</a></strong>
-    </fieldset>
-    
     </fieldset>
 
     <fieldset id="poll_options" class="mb-4">
@@ -199,6 +202,7 @@ function template_main()
       <input type="hidden" name="seqnum" value="', $context['form_sequence_number'], '" />
       <input type="hidden" name="' . $context['session_var'] . '" value="' . $context['session_id'] . '" />
     </form>
+  </div>
   </div>
   <br class="clear" />';
 }
