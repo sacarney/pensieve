@@ -433,6 +433,13 @@ function template_main()
     </div>
   ';
 
+  // Pagination
+    echo '
+    <div class="mb-3">
+      <span class="is-muted is-size-6-5 is-uppercase">', $txt['pages'], ': &nbsp;</span>
+      <span class="is-size-6-5 mr-3">', $context['page_index'], '</span>
+    </div>';
+
   if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] == 1 && !empty($context['topics']))
     {
       echo '

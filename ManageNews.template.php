@@ -17,7 +17,7 @@ function template_edit_news()
 
   echo '
   <form action="', $scripturl, '?action=admin;area=news;sa=editnews" method="post" accept-charset="', $context['character_set'], '" name="postmodify" id="postmodify">
-    <table class="table is-narrow is-striped">
+    <table class="table is-bordered">
       <thead>
         <tr>
           <th width="50%">', $txt['admin_edit_news'], '</th>

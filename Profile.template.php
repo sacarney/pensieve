@@ -228,9 +228,9 @@ function template_summary()
         if ($context['user']['is_owner'] || $context['user']['is_admin'])
         echo '
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $txt['username'], '</div>
-            <div class="level-right">', $context['member']['username'], '</div>
+          <div class="is-flex justify-content-between">
+            <div>', $txt['username'], '</div>
+            <div>', $context['member']['username'], '</div>
           </div>
         </div>';
 
@@ -238,9 +238,9 @@ function template_summary()
         if ($context['member']['show_email'] == 'yes')
         echo '
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $txt['email'], '</div>
-            <div class="level-right"><a href="', $scripturl, '?action=emailuser;sa=email;uid=', $context['member']['id'], '">', $context['member']['email'], '</a></div>
+          <div class="is-flex justify-content-between">
+            <div>', $txt['email'], '</div>
+            <div><a href="', $scripturl, '?action=emailuser;sa=email;uid=', $context['member']['id'], '">', $context['member']['email'], '</a></div>
           </div>
         </div>';
 
@@ -248,9 +248,9 @@ function template_summary()
         elseif ($context['member']['show_email'] == 'yes_permission_override')
         echo '
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $txt['email'], '</div>
-            <div class="level-right"><a href="', $scripturl, '?action=emailuser;sa=email;uid=', $context['member']['id'], '">', $context['member']['email'], '</a></div>
+          <div class="is-flex justify-content-between">
+            <div>', $txt['email'], '</div>
+            <div><a href="', $scripturl, '?action=emailuser;sa=email;uid=', $context['member']['id'], '">', $context['member']['email'], '</a></div>
           </div>
         </div>';
 
@@ -258,9 +258,9 @@ function template_summary()
         {
         echo '
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $txt['profile_posts'], '</div>
-            <div class="level-right">
+          <div class="is-flex justify-content-between">
+            <div>', $txt['profile_posts'], '</div>
+            <div>
               <div>', $context['member']['posts'], '<br>
                 <span class="is-muted is-size-7 is-uppercase">(', $context['member']['posts_per_day'], ' ', $txt['posts_per_day'], ')</span>
               </div>
@@ -271,9 +271,9 @@ function template_summary()
         if (isset($context['member']['subaccounts_posts']))
         echo '
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $txt['subaccount_posts'], '</div>
-            <div class="level-right">
+          <div class="is-flex justify-content-between">
+            <div>', $txt['subaccount_posts'], '</div>
+            <div>
               <div>', $context['member']['subaccountsposts'], '<br>
               <span class="is-muted is-size-7 is-uppercase">(', $context['member']['subaccounts_posts_per_day'], ' ', $txt['posts_per_day'], ')</span>
               </div>
@@ -286,26 +286,26 @@ function template_summary()
         if (!isset($context['disabled_fields']['gender']) && !empty($context['member']['gender']['name']))
         echo '
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $txt['gender'], '</div>
-            <div class="level-right">', $context['member']['gender']['name'], '</div>
+          <div class="is-flex justify-content-between">
+            <div>', $txt['gender'], '</div>
+            <div>', $context['member']['gender']['name'], '</div>
           </div>
         </div>';
 
         echo '
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $txt['age'], '</div>
-            <div class="level-right">', $context['member']['age'] . ($context['member']['today_is_birthday'] ? ' &nbsp; <img src="' . $settings['images_url'] . '/cake.png" alt="" />' : ''), '</div>
+          <div class="is-flex justify-content-between">
+            <div>', $txt['age'], '</div>
+            <div>', $context['member']['age'] . ($context['member']['today_is_birthday'] ? ' &nbsp; <img src="' . $settings['images_url'] . '/cake.png" alt="" />' : ''), '</div>
           </div>
         </div>';
 
         if (!isset($context['disabled_fields']['location']) && !empty($context['member']['location']))
         echo '
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $txt['location'], '</div>
-            <div class="level-right">', $context['member']['location'], '</div>
+          <div class="is-flex justify-content-between">
+            <div>', $txt['location'], '</div>
+            <div>', $context['member']['location'], '</div>
           </div>
         </div>';
 
@@ -313,27 +313,27 @@ function template_summary()
         if ($modSettings['karmaMode'] == '1')
         echo'
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $modSettings['karmaLabel'], '</div>
-            <div class="level-right">', ($context['member']['karma']['good'] - $context['member']['karma']['bad']), '</div>
+          <div class="is-flex justify-content-between">
+            <div>', $modSettings['karmaLabel'], '</div>
+            <div>', ($context['member']['karma']['good'] - $context['member']['karma']['bad']), '</div>
           </div>
         </div>';
 
         elseif ($modSettings['karmaMode'] == '2')
         echo '
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $modSettings['karmaLabel'], '</div>
-            <div class="level-right">+', $context['member']['karma']['good'], '/-', $context['member']['karma']['bad'], '</div>
+          <div class="is-flex justify-content-between">
+            <div>', $modSettings['karmaLabel'], '</div>
+            <div>+', $context['member']['karma']['good'], '/-', $context['member']['karma']['bad'], '</div>
           </div>
         </div>';
 
         // Registered
         echo'
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $txt['date_registered'], '</div>
-            <div class="level-right">', $context['member']['registered'], '</div>
+          <div class="is-flex justify-content-between">
+            <div>', $txt['date_registered'], '</div>
+            <div>', $context['member']['registered'], '</div>
           </div>
         </div>
         ';
@@ -341,9 +341,9 @@ function template_summary()
         // Last Active
         echo'
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $txt['lastLoggedIn'], '</div>
-            <div class="level-right">', $context['member']['last_login'], '</div>
+          <div class="is-flex justify-content-between">
+            <div>', $txt['lastLoggedIn'], '</div>
+            <div>', $context['member']['last_login'], '</div>
           </div>
         </div>
         ';
@@ -351,9 +351,9 @@ function template_summary()
         // Local Time
         echo'
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $txt['local_time'], '</div>
-            <div class="level-right">', $context['member']['local_time'], '</div>
+          <div class="is-flex justify-content-between">
+            <div>', $txt['local_time'], '</div>
+            <div>', $context['member']['local_time'], '</div>
           </div>
         </div>
         ';
@@ -362,9 +362,9 @@ function template_summary()
         if (!empty($modSettings['userLanguage']) && !empty($context['member']['language']))
         echo'
         <div class="panel-block is-block">
-          <div class="level">
-            <div class="level-left">', $txt['language'], '</div>
-            <div class="level-right">', $context['member']['language'], '</div>
+          <div class="is-flex justify-content-between">
+            <div>', $txt['language'], '</div>
+            <div>', $context['member']['language'], '</div>
           </div>
         </div>
         ';
@@ -375,9 +375,9 @@ function template_summary()
           if (!empty($context['member']['ip']))
           echo'
           <div class="panel-block is-block">
-            <div class="level">
-              <div class="level-left">', $txt['ip'], '</div>
-              <div class="level-right"><a href="', $scripturl, '?action=profile;area=tracking;sa=ip;searchip=', $context['member']['ip'], ';u=', $context['member']['id'], '">', $context['member']['ip'], '</a></div>
+            <div class="is-flex justify-content-between">
+              <div>', $txt['ip'], '</div>
+              <div><a href="', $scripturl, '?action=profile;area=tracking;sa=ip;searchip=', $context['member']['ip'], ';u=', $context['member']['id'], '">', $context['member']['ip'], '</a></div>
             </div>
           </div>
           ';
@@ -385,9 +385,9 @@ function template_summary()
           if (empty($modSettings['disableHostnameLookup']) && !empty($context['member']['ip']))
             echo'
             <div class="panel-block is-block">
-              <div class="level">
-                <div class="level-left">', $txt['hostname'], '</div>
-                <div class="level-right">', $context['member']['hostname'], '</div>
+              <div class="is-flex justify-content-between">
+                <div>', $txt['hostname'], '</div>
+                <div>', $context['member']['hostname'], '</div>
               </div>
             </div>
             ';

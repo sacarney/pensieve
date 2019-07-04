@@ -216,171 +216,235 @@ function template_edit_group()
         <h3 class="catbg">', $txt['membergroups_edit_group'], ' - ', $context['group']['name'], '
         </h3>
       </div>
-      <div class="windowbg2">
-        <span class="topslice"><span></span></span>
-        <div class="content">
-          <dl class="settings">
-            <dt>
-              <label for="group_name_input"><strong>', $txt['membergroups_edit_name'], ':</strong></label>
-            </dt>
-            <dd>
-              <input type="text" name="group_name" id="group_name_input" value="', $context['group']['editable_name'], '" size="30" class="input" />
-            </dd>';
 
-  if ($context['group']['id'] != 3 && $context['group']['id'] != 4)
-    echo '
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label" for="group_name_input">', $txt['membergroups_edit_name'], '</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <input type="text" name="group_name" id="group_name_input" value="', $context['group']['editable_name'], '" size="30" class="input is-auto" />
+          </div>
+        </div>
+      </div>';
 
-            <dt id="group_desc_text">
-              <label for="group_desc_input"><strong>', $txt['membergroups_edit_desc'], ':</strong></label>
-            </dt>
-            <dd>
-              <textarea name="group_desc" id="group_desc_input" rows="4" cols="40">', $context['group']['description'], '</textarea>
-            </dd>';
+    if ($context['group']['id'] != 3 && $context['group']['id'] != 4)
+      echo '
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label" for="group_desc_input">', $txt['membergroups_edit_desc'], '</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <textarea class="textarea" name="group_desc" id="group_desc_input" rows="4" cols="40">', $context['group']['description'], '</textarea>
+          </div>
+        </div>
+      </div>';
 
-  // Group type...
-  if ($context['group']['allow_post_group'])
-  {
-    echo '
-            <dt>
-              <label for="group_type"><strong>', $txt['membergroups_edit_group_type'], ':</strong></label>
-            </dt>
-            <dd>
-              <fieldset id="group_type">
-                <legend>', $txt['membergroups_edit_select_group_type'], '</legend>
-                <label for="group_type_private"><input type="radio" name="group_type" id="group_type_private" value="0" ', !$context['group']['is_post_group'] && $context['group']['type'] == 0 ? 'checked="checked"' : '', ' class="input_radio" onclick="swapPostGroup(0);" />', $txt['membergroups_group_type_private'], '</label><br />';
+    // Group type...
+    if ($context['group']['allow_post_group'])
+    {
+      echo '
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label" for="group_type">', $txt['membergroups_edit_group_type'], '</label>
+        </div>
+        <div class="field-body">
+          <fieldset id="group_type">
+            <legend>', $txt['membergroups_edit_select_group_type'], '</legend>
+            
+            <label for="group_type_private"><input type="radio" name="group_type" id="group_type_private" value="0" ', !$context['group']['is_post_group'] && $context['group']['type'] == 0 ? 'checked="checked"' : '', ' class="input_radio" onclick="swapPostGroup(0);" />  ', $txt['membergroups_group_type_private'], '</label><br />';
+
+            if ($context['group']['allow_protected'])
+            echo '
+              <label for="group_type_protected"><input type="radio" name="group_type" id="group_type_protected" value="1" ', $context['group']['type'] == 1 ? 'checked="checked"' : '', ' class="input_radio" onclick="swapPostGroup(0);" />  ', $txt['membergroups_group_type_protected'], '</label><br />';
+
+            echo '
+              <label for="group_type_request"><input type="radio" name="group_type" id="group_type_request" value="2" ', $context['group']['type'] == 2 ? 'checked="checked"' : '', ' class="input_radio" onclick="swapPostGroup(0);" />  ', $txt['membergroups_group_type_request'], '</label><br />
+              <label for="group_type_free"><input type="radio" name="group_type" id="group_type_free" value="3" ', $context['group']['type'] == 3 ? 'checked="checked"' : '', ' class="input_radio" onclick="swapPostGroup(0);" />', $txt['membergroups_group_type_free'], '</label><br />
+              <label for="group_type_post"><input type="radio" name="group_type" id="group_type_post" value="-1" ', $context['group']['is_post_group'] ? 'checked="checked"' : '', ' class="input_radio" onclick="swapPostGroup(1);" />  ', $txt['membergroups_group_type_post'], '</label><br />
+            </fieldset>
+          </div>
+        </div>
+      </div>';
+    }
 
     if ($context['group']['allow_protected'])
       echo '
-                <label for="group_type_protected"><input type="radio" name="group_type" id="group_type_protected" value="1" ', $context['group']['type'] == 1 ? 'checked="checked"' : '', ' class="input_radio" onclick="swapPostGroup(0);" />', $txt['membergroups_group_type_protected'], '</label><br />';
-
-    echo '
-                <label for="group_type_request"><input type="radio" name="group_type" id="group_type_request" value="2" ', $context['group']['type'] == 2 ? 'checked="checked"' : '', ' class="input_radio" onclick="swapPostGroup(0);" />', $txt['membergroups_group_type_request'], '</label><br />
-                <label for="group_type_free"><input type="radio" name="group_type" id="group_type_free" value="3" ', $context['group']['type'] == 3 ? 'checked="checked"' : '', ' class="input_radio" onclick="swapPostGroup(0);" />', $txt['membergroups_group_type_free'], '</label><br />
-                <label for="group_type_post"><input type="radio" name="group_type" id="group_type_post" value="-1" ', $context['group']['is_post_group'] ? 'checked="checked"' : '', ' class="input_radio" onclick="swapPostGroup(1);" />', $txt['membergroups_group_type_post'], '</label><br />
-              </fieldset>
-            </dd>';
-  }
-
-  if ($context['group']['id'] != 3 && $context['group']['id'] != 4)
-    echo '
-            <dt id="group_moderators_text">
-              <label for="group_moderators"><strong>', $txt['moderators'], ':</strong></label>
-            </dt>
-            <dd>
-              <input type="text" name="group_moderators" id="group_moderators" value="', $context['group']['moderator_list'], '" size="30" class="input" />
+        <div class="field is-horizontal">
+          <div class="field-label">
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <label for="group_type_protected"><input type="radio" name="group_type" id="group_type_protected" value="1" ', $context['group']['type'] == 1 ? 'checked="checked"' : '', ' class="input_radio" onclick="swapPostGroup(0);" />  ', $txt['membergroups_group_type_protected'], '</label>
+            </div>
+          </div>
+        </div>';
+    
+    if ($context['group']['id'] != 3 && $context['group']['id'] != 4)
+      echo '
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="group_moderators">', $txt['moderators'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <input type="text" name="group_moderators" id="group_moderators" value="', $context['group']['moderator_list'], '" size="30" class="input is-auto" />
               <div id="moderator_container"></div>
-            </dd>
-            <dt id="group_hidden_text">
-              <label for="group_hidden_input"><strong>', $txt['membergroups_edit_hidden'], ':</strong></label>
-            </dt>
-            <dd>
-              <select name="group_hidden" id="group_hidden_input" onchange="if (this.value == 2 &amp;&amp; !confirm(\'', $txt['membergroups_edit_hidden_warning'], '\')) this.value = 0;">
-                <option value="0" ', $context['group']['hidden'] ? '' : 'selected="selected"', '>', $txt['membergroups_edit_hidden_no'], '</option>
-                <option value="1" ', $context['group']['hidden'] == 1 ? 'selected="selected"' : '', '>', $txt['membergroups_edit_hidden_boardindex'], '</option>
-                <option value="2" ', $context['group']['hidden'] == 2 ? 'selected="selected"' : '', '>', $txt['membergroups_edit_hidden_all'], '</option>
-              </select>
-            </dd>';
+            </div>
+          </div>
+        </div>
 
-  // Can they inherit permissions?
-  if ($context['group']['id'] > 1 && $context['group']['id'] != 3)
-  {
-    echo '
-            <dt id="group_inherit_text">
-              <label for="group_inherit_input"><strong>', $txt['membergroups_edit_inherit_permissions'], '</strong></label>:<br />
-              <span class="smalltext">', $txt['membergroups_edit_inherit_permissions_desc'], '</span>
-            </dt>
-            <dd>
-              <select name="group_inherit" id="group_inherit_input">
-                <option value="-2">', $txt['membergroups_edit_inherit_permissions_no'], '</option>
-                <option value="-1" ', $context['group']['inherited_from'] == -1 ? 'selected="selected"' : '', '>', $txt['membergroups_edit_inherit_permissions_from'], ': ', $txt['membergroups_guests'], '</option>
-                <option value="0" ', $context['group']['inherited_from'] == 0 ? 'selected="selected"' : '', '>', $txt['membergroups_edit_inherit_permissions_from'], ': ', $txt['membergroups_members'], '</option>';
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="group_hidden_input">', $txt['membergroups_edit_hidden'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="select">
+                <select name="group_hidden" id="group_hidden_input" onchange="if (this.value == 2 &amp;&amp; !confirm(\'', $txt['membergroups_edit_hidden_warning'], '\')) this.value = 0;">
+                  <option value="0" ', $context['group']['hidden'] ? '' : 'selected="selected"', '>', $txt['membergroups_edit_hidden_no'], '</option>
+                  <option value="1" ', $context['group']['hidden'] == 1 ? 'selected="selected"' : '', '>', $txt['membergroups_edit_hidden_boardindex'], '</option>
+                  <option value="2" ', $context['group']['hidden'] == 2 ? 'selected="selected"' : '', '>', $txt['membergroups_edit_hidden_all'], '</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>';
 
-    // For all the inheritable groups show an option.
-    foreach ($context['inheritable_groups'] as $id => $group)
+    // Can they inherit permissions?
+    if ($context['group']['id'] > 1 && $context['group']['id'] != 3)
+    {
       echo '
-                <option value="', $id, '" ', $context['group']['inherited_from'] == $id ? 'selected="selected"' : '', '>', $txt['membergroups_edit_inherit_permissions_from'], ': ', $group, '</option>';
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="group_inherit_input">', $txt['membergroups_edit_inherit_permissions'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="select">
+                <select name="group_inherit" id="group_inherit_input">
+                  <option value="-2">', $txt['membergroups_edit_inherit_permissions_no'], '</option>
+                  <option value="-1" ', $context['group']['inherited_from'] == -1 ? 'selected="selected"' : '', '>', $txt['membergroups_edit_inherit_permissions_from'], ': ', $txt['membergroups_guests'], '</option>
+                  <option value="0" ', $context['group']['inherited_from'] == 0 ? 'selected="selected"' : '', '>', $txt['membergroups_edit_inherit_permissions_from'], ': ', $txt['membergroups_members'], '</option>';
 
-    echo '
-              </select>
+                  // For all the inheritable groups show an option.
+                  foreach ($context['inheritable_groups'] as $id => $group)
+                    echo '
+                    <option value="', $id, '" ', $context['group']['inherited_from'] == $id ? 'selected="selected"' : '', '>', $txt['membergroups_edit_inherit_permissions_from'], ': ', $group, '</option>';
+                  echo '
+                </select>
+              </div>
+              <span class="help">', $txt['membergroups_edit_inherit_permissions_desc'], '</span>
               <input type="hidden" name="old_inherit" value="', $context['group']['inherited_from'], '" />
-            </dd>';
-  }
+            </div>
+          </div>
+        </div>';
+    }
 
-  if ($context['group']['allow_post_group'])
-    echo '
-
-            <dt id="min_posts_text">
-              <label for="min_posts_input"><strong>', $txt['membergroups_min_posts'], ':</strong></label>
-            </dt>
-            <dd>
-              <input type="text" name="min_posts" id="min_posts_input"', $context['group']['is_post_group'] ? ' value="' . $context['group']['min_posts'] . '"' : '', ' size="6" class="input" />
-            </dd>';
-  echo '
-            <dt>
-              <label for="online_color_input"><strong>', $txt['membergroups_online_color'], ':</strong></label>
-            </dt>
-            <dd>
-              <input type="text" name="online_color" id="online_color_input" value="', $context['group']['color'], '" size="20" class="input" />
-            </dd>
-            <dt>
-              <label for="star_count_input"><strong>', $txt['membergroups_star_count'], ':</strong></label>
-            </dt>
-            <dd>
-              <input type="text" name="star_count" id="star_count_input" value="', $context['group']['star_count'], '" size="4" onkeyup="if (this.value.length > 2) this.value = 99;" onkeydown="this.onkeyup();" onchange="if (this.value != 0) this.form.star_image.onchange();" class="input" />
-            </dd>
-            <dt>
-              <label for="star_image_input"><strong>', $txt['membergroups_star_image'], ':</strong></label><br />
-              <span class="smalltext">', $txt['membergroups_star_image_note'], '</span>
-            </dt>
-            <dd>
-              ', $txt['membergroups_images_url'], '
-              <input type="text" name="star_image" id="star_image_input" value="', $context['group']['star_image'], '" onchange="if (this.value &amp;&amp; this.form.star_count.value == 0) this.form.star_count.value = 1; else if (!this.value) this.form.star_count.value = 0; document.getElementById(\'star_preview\').src = smf_images_url + \'/\' + (this.value &amp;&amp; this.form.star_count.value > 0 ? this.value.replace(/\$language/g, \'', $context['user']['language'], '\') : \'blank.gif\');" size="20" class="input" />
-              <img id="star_preview" src="', $settings['images_url'], '/', $context['group']['star_image'] == '' ? 'blank.gif' : $context['group']['star_image'], '" alt="*" />
-            </dd>
-            <dt>
-              <label for="max_messages_input"><strong>', $txt['membergroups_max_messages'], ':</strong></label><br />
-              <span class="smalltext">', $txt['membergroups_max_messages_note'], '</span>
-            </dt>
-            <dd>
-              <input type="text" name="max_messages" id="max_messages_input" value="', $context['group']['id'] == 1 ? 0 : $context['group']['max_messages'], '" size="6"', $context['group']['id'] == 1 ? ' disabled="disabled"' : '', ' class="input" />
-            </dd>';
-  if (!empty($context['boards']))
-  {
-    echo '
-            <dt>
-              <strong>', $txt['membergroups_new_board'], ':</strong>', $context['group']['is_post_group'] ? '<br />
-              <span class="smalltext">' . $txt['membergroups_new_board_post_groups'] . '</span>' : '', '
-            </dt>
-            <dd>
-              <fieldset id="visible_boards" style="width: 95%;">
-                <legend><a href="javascript:void(0);" onclick="document.getElementById(\'visible_boards\').style.display = \'none\';document.getElementById(\'visible_boards_link\').style.display = \'block\'; return false;">', $txt['membergroups_new_board_desc'], '</a></legend>';
-    foreach ($context['boards'] as $board)
+    if ($context['group']['allow_post_group'])
       echo '
-                <div style="margin-left: ', $board['child_level'], 'em;"><input type="checkbox" name="boardaccess[]" id="boardaccess_', $board['id'], '" value="', $board['id'], '" ', $board['selected'] ? ' checked="checked"' : '', ' class="input_check" /> <label for="boardaccess_', $board['id'], '">', $board['name'], '</label></div>';
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="min_posts_input">', $txt['membergroups_min_posts'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <input type="text" name="min_posts" id="min_posts_input"', $context['group']['is_post_group'] ? ' value="' . $context['group']['min_posts'] . '"' : '', ' size="6" class="input is-auto" />
+            </div>
+          </div>
+        </div>';
 
     echo '
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="online_color_input">', $txt['membergroups_online_color'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <input type="text" name="online_color" id="online_color_input" value="', $context['group']['color'], '" size="20" class="input is-auto" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="star_count_input">', $txt['membergroups_star_count'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <input type="text" name="star_count" id="star_count_input" value="', $context['group']['star_count'], '" size="4" onkeyup="if (this.value.length > 2) this.value = 99;" onkeydown="this.onkeyup();" onchange="if (this.value != 0) this.form.star_image.onchange();" class="input is-auto" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="star_image_input">', $txt['membergroups_star_image'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="help">', $txt['membergroups_images_url'], '</p>
+              <input type="text" name="star_image" id="star_image_input" value="', $context['group']['star_image'], '" onchange="if (this.value &amp;&amp; this.form.star_count.value == 0) this.form.star_count.value = 1; else if (!this.value) this.form.star_count.value = 0; document.getElementById(\'star_preview\').src = smf_images_url + \'/\' + (this.value &amp;&amp; this.form.star_count.value > 0 ? this.value.replace(/\$language/g, \'', $context['user']['language'], '\') : \'blank.gif\');" size="20" class="input is-auto" />
+              <img id="star_preview" src="', $settings['images_url'], '/', $context['group']['star_image'] == '' ? 'blank.gif' : $context['group']['star_image'], '" alt="*" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="max_messages_input">', $txt['membergroups_max_messages'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <input type="text" name="max_messages" id="max_messages_input" value="', $context['group']['id'] == 1 ? 0 : $context['group']['max_messages'], '" size="6"', $context['group']['id'] == 1 ? ' disabled="disabled"' : '', ' class="input is-auto" />
+            </div>
+          </div>
+        </div>';
+
+    if (!empty($context['boards']))
+    {
+      echo '
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label" >', $txt['membergroups_new_board'], '</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            ', $context['group']['is_post_group'] ? '<span class="help">' . $txt['membergroups_new_board_post_groups'] . '</span>' : '', '<br>
+            <fieldset id="visible_boards" style="width: 95%;">
+              <legend><a href="javascript:void(0);" onclick="document.getElementById(\'visible_boards\').style.display = \'none\';document.getElementById(\'visible_boards_link\').style.display = \'block\'; return false;">', $txt['membergroups_new_board_desc'], '</a></legend>';
+              
+              foreach ($context['boards'] as $board)
+              echo '
+                <div style="margin-left: ', $board['child_level'], 'em;">
+                  <input type="checkbox" name="boardaccess[]" id="boardaccess_', $board['id'], '" value="', $board['id'], '" ', $board['selected'] ? ' checked="checked"' : '', ' class="input_check" /> <label for="boardaccess_', $board['id'], '">', $board['name'], '</label>
+                </div>';
+
+              echo '
                 <br />
                 <input type="checkbox" id="checkall_check" class="input_check" onclick="invertAll(this, this.form, \'boardaccess\');" /> <label for="checkall_check"><em>', $txt['check_all'], '</em></label>
               </fieldset>
+
               <a href="javascript:void(0);" onclick="document.getElementById(\'visible_boards\').style.display = \'block\'; document.getElementById(\'visible_boards_link\').style.display = \'none\'; return false;" id="visible_boards_link" style="display: none;">[ ', $txt['membergroups_select_visible_boards'], ' ]</a>
               <script type="text/javascript"><!-- // --><![CDATA[
                 document.getElementById("visible_boards_link").style.display = "";
                 document.getElementById("visible_boards").style.display = "none";
               // ]]></script>
-            </dd>';
-  }
-  echo '
-          </dl>
-          <div class="righttext">
-            <input type="submit" name="submit" value="', $txt['membergroups_edit_save'], '" class="button is-primary" />', $context['group']['allow_delete'] ? '
-            <input type="submit" name="delete" value="' . $txt['membergroups_delete'] . '" onclick="return confirm(\'' . $txt['membergroups_confirm_delete'] . '\');" class="button is-primary" />' : '', '
           </div>
         </div>
-        <span class="botslice"><span></span></span>
-      </div>
+      </div>';
+    }
+
+    echo '
+      <input type="submit" name="submit" value="', $txt['membergroups_edit_save'], '" class="button is-primary" />', $context['group']['allow_delete'] ? '
+      <input type="submit" name="delete" value="' . $txt['membergroups_delete'] . '" onclick="return confirm(\'' . $txt['membergroups_confirm_delete'] . '\');" class="button" />' : '', '
       <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
     </form>
-  </div>
+  </div>';
+
+  echo'
+
   <br class="clear" />
     <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/suggest.js?fin20"></script>
     <script type="text/javascript"><!-- // --><![CDATA[

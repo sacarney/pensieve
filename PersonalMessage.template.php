@@ -22,7 +22,7 @@ function template_pm_above()
   if (!empty($context['limit_bar']))
   {
     echo '
-      <table class="table is-bordered is-striped">
+      <table class="table is-bordered is-striped is-fullwidth">
         <tr class="titlebg2">
           <td width="200" align="right"><strong>', $txt['pm_capacity'], ':</strong></td>
           <td width="50%">
@@ -40,8 +40,10 @@ function template_pm_above()
   // Message sent? Show a small indication.
   if (isset($context['pm_sent']))
     echo '
-      <div class="windowbg" id="profile_success">
-        ', $txt['pm_sent'], '
+      <div class="message is-success" id="profile_success">
+        <div class="message-body">
+          ', $txt['pm_sent'], '
+        </div>
       </div>';
 }
 
@@ -799,17 +801,25 @@ function template_search()
   {
     echo '
     <fieldset id="simple_search">
-      <span class="upperframe"><span></span></span>
-      <div class="roundframe">
-        <div id="search_term_input">
-          <strong>', $txt['pm_search_text'], ':</strong>
-          <input type="text" name="search"', !empty($context['search_params']['search']) ? ' value="' . $context['search_params']['search'] . '"' : '', ' size="40" class="input" />
-          <input type="submit" name="submit" value="', $txt['pm_search_go'], '" class="button is-small" />
+      <legend>Simple Search</legend>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">', $txt['pm_search_text'], '</label>
         </div>
-        <a href="', $scripturl, '?action=pm;sa=search;advanced" onclick="this.href += \';search=\' + escape(document.forms.searchform.search.value);">', $txt['pm_search_advanced'], '</a>
-        <input type="hidden" name="advanced" value="0" />
+        <div class="field-body">
+          <div class="field has-addons">
+            <div class="control">
+              <input type="text" name="search"', !empty($context['search_params']['search']) ? ' value="' . $context['search_params']['search'] . '"' : '', ' size="40" class="input" />
+            </div>
+            <div class="control">
+              <input type="submit" name="submit" value="', $txt['pm_search_go'], '" class="button is-primary" />
+            </div>
+          </div>
+        </div>
       </div>
-      <span class="lowerframe"><span></span></span>
+
+      <a class="button is-small" href="', $scripturl, '?action=pm;sa=search;advanced" onclick="this.href += \';search=\' + escape(document.forms.searchform.search.value);">', $txt['pm_search_advanced'], '</a>
+        <input type="hidden" name="advanced" value="0" />
     </fieldset>';
   }
 
@@ -818,47 +828,100 @@ function template_search()
   {
     echo '
     <fieldset id="advanced_search">
-      <span class="upperframe"><span></span></span>
-      <div class="roundframe">
-        <input type="hidden" name="advanced" value="1" />
-        <span class="enhanced">
-          <strong>', $txt['pm_search_text'], ':</strong>
-          <input type="text" name="search"', !empty($context['search_params']['search']) ? ' value="' . $context['search_params']['search'] . '"' : '', ' size="40" class="input" />
-          <script type="text/javascript"><!-- // --><![CDATA[
-            function initSearch()
-            {
-              if (document.forms.searchform.search.value.indexOf("%u") != -1)
-                document.forms.searchform.search.value = unescape(document.forms.searchform.search.value);
-            }
-            createEventListener(window);
-            window.addEventListener("load", initSearch, false);
-          // ]]></script>
-          <select name="searchtype">
-            <option value="1"', empty($context['search_params']['searchtype']) ? ' selected="selected"' : '', '>', $txt['pm_search_match_all'], '</option>
-            <option value="2"', !empty($context['search_params']['searchtype']) ? ' selected="selected"' : '', '>', $txt['pm_search_match_any'], '</option>
-          </select>
-        </span>
-        <dl id="search_options">
-          <dt>', $txt['pm_search_user'], ':</dt>
-          <dd><input type="text" name="userspec" value="', empty($context['search_params']['userspec']) ? '*' : $context['search_params']['userspec'], '" size="40" class="input" /></dd>
-          <dt>', $txt['pm_search_order'], ':</dt>
-          <dd>
-            <select name="sort">
-              <option value="relevance|desc">', $txt['pm_search_orderby_relevant_first'], '</option>
-              <option value="id_pm|desc">', $txt['pm_search_orderby_recent_first'], '</option>
-              <option value="id_pm|asc">', $txt['pm_search_orderby_old_first'], '</option>
-            </select>
-          </dd>
-          <dt class="options">', $txt['pm_search_options'], ':</dt>
-          <dd class="options">
-            <label for="show_complete"><input type="checkbox" name="show_complete" id="show_complete" value="1"', !empty($context['search_params']['show_complete']) ? ' checked="checked"' : '', ' class="input_check" /> ', $txt['pm_search_show_complete'], '</label><br />
-            <label for="subject_only"><input type="checkbox" name="subject_only" id="subject_only" value="1"', !empty($context['search_params']['subject_only']) ? ' checked="checked"' : '', ' class="input_check" /> ', $txt['pm_search_subject_only'], '</label>
-          </dd>
-          <dt class="between">', $txt['pm_search_post_age'], ':</dt>
-          <dd>', $txt['pm_search_between'], ' <input type="text" name="minage" value="', empty($context['search_params']['minage']) ? '0' : $context['search_params']['minage'], '" size="5" maxlength="5" class="input" />&nbsp;', $txt['pm_search_between_and'], '&nbsp;<input type="text" name="maxage" value="', empty($context['search_params']['maxage']) ? '9999' : $context['search_params']['maxage'], '" size="5" maxlength="5" class="input" /> ', $txt['pm_search_between_days'], '</dd>
-        </dl>
+      <legend>Advanced Search</legend>
+      <input type="hidden" name="advanced" value="1" />
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label">', $txt['pm_search_text'], '</label>
+        </div>
+        <div class="field-body">
+          <div class="field has-addons">
+            <div class="control">
+              <input type="text" name="search"', !empty($context['search_params']['search']) ? ' value="' . $context['search_params']['search'] . '"' : '', ' size="40" class="input" />
+            </div>
+            <div class="control">
+              <script type="text/javascript"><!-- // --><![CDATA[
+                function initSearch()
+                {
+                  if (document.forms.searchform.search.value.indexOf("%u") != -1)
+                    document.forms.searchform.search.value = unescape(document.forms.searchform.search.value);
+                }
+                createEventListener(window);
+                window.addEventListener("load", initSearch, false);
+              // ]]></script>
+                <div class="select">
+                  <select name="searchtype">
+                    <option value="1"', empty($context['search_params']['searchtype']) ? ' selected="selected"' : '', '>', $txt['pm_search_match_all'], '</option>
+                    <option value="2"', !empty($context['search_params']['searchtype']) ? ' selected="selected"' : '', '>', $txt['pm_search_match_any'], '</option>
+                  </select>
+                </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <span class="lowerframe"><span></span></span>
+
+      <div id="search_options">
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">', $txt['pm_search_user'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <input type="text" name="userspec" value="', empty($context['search_params']['userspec']) ? '*' : $context['search_params']['userspec'], '" size="40" class="input is-auto" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">', $txt['pm_search_order'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="select">
+                <select name="sort">
+                  <option value="relevance|desc">', $txt['pm_search_orderby_relevant_first'], '</option>
+                  <option value="id_pm|desc">', $txt['pm_search_orderby_recent_first'], '</option>
+                  <option value="id_pm|asc">', $txt['pm_search_orderby_old_first'], '</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">', $txt['pm_search_options'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <label for="show_complete"><input type="checkbox" name="show_complete" id="show_complete" value="1"', !empty($context['search_params']['show_complete']) ? ' checked="checked"' : '', ' class="input_check" /> ', $txt['pm_search_show_complete'], '</label><br />
+              <label for="subject_only"><input type="checkbox" name="subject_only" id="subject_only" value="1"', !empty($context['search_params']['subject_only']) ? ' checked="checked"' : '', ' class="input_check" /> ', $txt['pm_search_subject_only'], '</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label">', $txt['pm_search_post_age'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field is-flex" style="align-items: center;">
+              <div class="control mr-2">', $txt['pm_search_between'], '</div>
+              <div class="control mr-2">
+                <input type="text" name="minage" value="', empty($context['search_params']['minage']) ? '0' : $context['search_params']['minage'], '" size="5" maxlength="5" class="input" />
+              </div>
+              <div class="control mr-2">', $txt['pm_search_between_and'], '</div>
+              <div class="control mr-2">
+                <input type="text" name="maxage" value="', empty($context['search_params']['maxage']) ? '9999' : $context['search_params']['maxage'], '" size="5" maxlength="5" class="input" />
+              </div>
+              <div class="control">', $txt['pm_search_between_days'], '</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </fieldset>';
 
     // Do we have some labels setup? If so offer to search by them!
@@ -893,10 +956,10 @@ function template_search()
     }
 
     echo '
-    <div class="righttext padding">
-      <input type="submit" name="submit" value="', $txt['pm_search_go'], '" class="button is-small" />
-    </div>';
-  }
+    
+    <input type="submit" name="submit" value="', $txt['pm_search_go'], '" class="button is-primary mt-4" />
+    ';
+    }
 
   echo '
     </table>
@@ -911,7 +974,7 @@ function template_search_results()
   if (!empty($context['search_params']['show_complete']))
   {
     echo '
-    <table class="table is-bordered is-striped">
+    <table class="table is-bordered is-striped is-fullwidth">
       <tr class="titlebg">
         <td colspan="3">', $txt['pm_search_results'], '</td>
       </tr>
@@ -923,7 +986,7 @@ function template_search_results()
   else
   {
     echo '
-    <table class="table is-bordered is-striped">
+    <table class="table is-bordered is-striped is-fullwidth">
       <tr class="titlebg">
         <td colspan="3">', $txt['pm_search_results'], '</td>
       </tr>
@@ -947,7 +1010,7 @@ function template_search_results()
       // !!! This still needs to be made pretty.
       echo '
     <br />
-    <table class="table is-bordered is-striped">
+    <table class="table is-bordered is-striped is-fullwidth">
       <tr class="titlebg">
         <td align="left">
           <div class="floatleft">
@@ -1020,7 +1083,7 @@ function template_search_results()
     // No results?
     if (empty($context['personal_messages']))
       echo '
-    <table class="table is-bordered is-striped">
+    <table class="table is-bordered is-striped is-fullwidth">
       <tr class="windowbg">
         <td align="center">', $txt['pm_search_none_found'], '</td>
       </tr>
@@ -1030,7 +1093,7 @@ function template_search_results()
     <br />';
 
     echo '
-    <table class="table is-bordered is-striped">
+    <table class="table is-bordered is-striped is-fullwidth">
       <tr class="catbg" height="30">
         <td colspan="3"><strong>', $txt['pages'], ':</strong> ', $context['page_index'], '</td>
       </tr>
@@ -1176,7 +1239,6 @@ function template_send()
 
   // Show the actual posting area...
   if ($context['show_bbc'] || !empty($context['smileys']['postform'])) {
-    echo '<div class="notification">';
   
     if ($context['show_bbc'])
     {
@@ -1188,7 +1250,6 @@ function template_send()
     if (!empty($context['smileys']['postform']) || !empty($context['smileys']['popup']))
       echo '
         <div id="smileyBox_message"></div>';
-      echo '</div>';
     }
 
     echo '<div class="type-your-post">', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message') , '</div>';
@@ -1338,18 +1399,20 @@ function template_labels()
 
   echo '
   <form action="', $scripturl, '?action=pm;sa=manlabels" method="post" accept-charset="', $context['character_set'], '">
-    <div class="title_bar">
-      <h3 class="titlebg">', $txt['pm_manage_labels'], '</h3>
+    <div class="cat_bar">
+      <h3 class="catbg">', $txt['pm_manage_labels'], '</h3>
     </div>
     <div class="description">
       ', $txt['pm_labels_desc'], '
     </div>
-    <table class="table is-bordered is-striped">
+    <table class="table is-bordered is-fullwidth">
     <thead>
       <tr class="catbg">
         <th class="smalltext" colspan="2">
-          <div class="floatright centertext" style="width: 4%;"><input type="checkbox" class="input_check" onclick="invertAll(this, this.form);" /></div>
-          ', $txt['pm_label_name'], '
+          <div class="is-flex justify-content-between">
+            <div>', $txt['pm_label_name'], '</div>
+            <div><input type="checkbox" class="" onclick="invertAll(this, this.form);" /></div>
+          
         </th>
       </tr>
     </thead>
@@ -1372,7 +1435,7 @@ function template_labels()
         <td>
           <input type="text" name="label_name[', $label['id'], ']" value="', $label['name'], '" size="30" maxlength="30" class="input" />
         </td>
-        <td align="center"><input type="checkbox" class="input_check" name="delete_label[', $label['id'], ']" /></td>
+        <td align="center"  style="vertical-align:middle; text-align: center;"><input type="checkbox" name="delete_label[', $label['id'], ']" /></td>
       </tr>';
 
       $alternate = !$alternate;
@@ -1397,22 +1460,19 @@ function template_labels()
       <h3 class="catbg">', $txt['pm_label_add_new'], '</h3>
     </div>
     <div class="windowbg">
-      <span class="topslice"><span></span></span>
-      <div class="content">
-        <dl class="settings">
-          <dt>
-            <strong><label for="add_label">', $txt['pm_label_name'], '</label>:</strong>
-          </dt>
-          <dd>
-            <input type="text" id="add_label" name="label" value="" size="30" maxlength="30" class="input" />
-          </dd>
-        </dl>
-        <div class="righttext">
-          <input type="submit" name="add" value="', $txt['pm_label_add_new'], '" class="button is-small" />
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label" for="add_label">', $txt['pm_label_name'], '</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <input type="text" id="add_label" name="label" value="" size="30" maxlength="30" class="input is-auto" />
+          </div>
+          <div class="field">
+            <input type="submit" name="add" value="', $txt['pm_label_add_new'], '" class="button is-small" />
+          </div>
         </div>
       </div>
-      <span class="botslice"><span></span></span>
-    </div>
     <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
   </form>';
 }
@@ -1497,13 +1557,13 @@ function template_rules()
 
   echo '
   <form action="', $scripturl, '?action=pm;sa=manrules" method="post" accept-charset="', $context['character_set'], '" name="manRules">
-    <div class="title_bar">
-      <h3 class="titlebg">', $txt['pm_manage_rules'], '</h3>
+    <div class="cat_bar">
+      <h3 class="catbg">', $txt['pm_manage_rules'], '</h3>
     </div>
     <div class="description">
       ', $txt['pm_manage_rules_desc'], '
     </div>
-    <table class="table is-bordered is-striped">
+    <table class="table is-bordered is-striped is-fullwidth">
     <thead>
       <tr class="catbg">
         <th class="smalltext">
@@ -1547,12 +1607,12 @@ function template_rules()
   echo '
     </tbody>
     </table>
-    <div class="righttext">
-      [<a href="', $scripturl, '?action=pm;sa=manrules;add;rid=0">', $txt['pm_add_rule'], '</a>]';
+    <div>
+      <a class="button is-small" href="', $scripturl, '?action=pm;sa=manrules;add;rid=0">', $txt['pm_add_rule'], '</a>';
 
   if (!empty($context['rules']))
     echo '
-      [<a href="', $scripturl, '?action=pm;sa=manrules;apply;', $context['session_var'], '=', $context['session_id'], '" onclick="return confirm(\'', $txt['pm_js_apply_rules_confirm'], '\');">', $txt['pm_apply_rules'], '</a>]';
+      <a class="button is-small" href="', $scripturl, '?action=pm;sa=manrules;apply;', $context['session_var'], '=', $context['session_id'], '" onclick="return confirm(\'', $txt['pm_js_apply_rules_confirm'], '\');">', $txt['pm_apply_rules'], '</a>';
 
   if (!empty($context['rules']))
     echo '
@@ -1597,12 +1657,12 @@ function template_add_rule()
         }
         criteriaNum++
 
-        setOuterHTML(document.getElementById("criteriaAddHere"), \'<br /><select name="ruletype[\' + criteriaNum + \']" id="ruletype\' + criteriaNum + \'" onchange="updateRuleDef(\' + criteriaNum + \'); rebuildRuleDesc();"><option value="">', addslashes($txt['pm_rule_criteria_pick']), ':<\' + \'/option><option value="mid">', addslashes($txt['pm_rule_mid']), '<\' + \'/option><option value="gid">', addslashes($txt['pm_rule_gid']), '<\' + \'/option><option value="sub">', addslashes($txt['pm_rule_sub']), '<\' + \'/option><option value="msg">', addslashes($txt['pm_rule_msg']), '<\' + \'/option><option value="bud">', addslashes($txt['pm_rule_bud']), '<\' + \'/option><\' + \'/select>&nbsp;<span id="defdiv\' + criteriaNum + \'" style="display: none;"><input type="text" name="ruledef[\' + criteriaNum + \']" id="ruledef\' + criteriaNum + \'" onkeyup="rebuildRuleDesc();" value="" class="input" /><\' + \'/span><span id="defseldiv\' + criteriaNum + \'" style="display: none;"><select name="ruledefgroup[\' + criteriaNum + \']" id="ruledefgroup\' + criteriaNum + \'" onchange="rebuildRuleDesc();"><option value="">', addslashes($txt['pm_rule_sel_group']), '<\' + \'/option>';
+        setOuterHTML(document.getElementById("criteriaAddHere"), \'<div class="field has-addons"><div class="control"><div class="select"><select name="ruletype[\' + criteriaNum + \']" id="ruletype\' + criteriaNum + \'" onchange="updateRuleDef(\' + criteriaNum + \'); rebuildRuleDesc();"><option value="">', addslashes($txt['pm_rule_criteria_pick']), ':<\' + \'/option><option value="mid">', addslashes($txt['pm_rule_mid']), '<\' + \'/option><option value="gid">', addslashes($txt['pm_rule_gid']), '<\' + \'/option><option value="sub">', addslashes($txt['pm_rule_sub']), '<\' + \'/option><option value="msg">', addslashes($txt['pm_rule_msg']), '<\' + \'/option><option value="bud">', addslashes($txt['pm_rule_bud']), '<\' + \'/option><\' + \'/select></div></div>&nbsp;<span id="defdiv\' + criteriaNum + \'" style="display: none;"><input type="text" name="ruledef[\' + criteriaNum + \']" id="ruledef\' + criteriaNum + \'" onkeyup="rebuildRuleDesc();" value="" class="input" /><\' + \'/span><span id="defseldiv\' + criteriaNum + \'" style="display: none;"><div class="control"><div class="select"><select name="ruledefgroup[\' + criteriaNum + \']" id="ruledefgroup\' + criteriaNum + \'" onchange="rebuildRuleDesc();"><option value="">', addslashes($txt['pm_rule_sel_group']), '<\' + \'/option>';
 
   foreach ($context['groups'] as $id => $group)
     echo '<option value="', $id, '">', strtr($group, array("'" => "\'")), '<\' + \'/option>';
 
-  echo '<\' + \'/select><\' + \'/span><span id="criteriaAddHere"><\' + \'/span>\');
+  echo '<\' + \'/select></div></div></div><\' + \'/span><span id="criteriaAddHere"><\' + \'/span>\');
       }
 
       function addActionOption()
@@ -1615,13 +1675,13 @@ function template_add_rule()
         }
         actionNum++
 
-        setOuterHTML(document.getElementById("actionAddHere"), \'<br /><select name="acttype[\' + actionNum + \']" id="acttype\' + actionNum + \'" onchange="updateActionDef(\' + actionNum + \'); rebuildRuleDesc();"><option value="">', addslashes($txt['pm_rule_sel_action']), ':<\' + \'/option><option value="lab">', addslashes($txt['pm_rule_label']), '<\' + \'/option><option value="del">', addslashes($txt['pm_rule_delete']), '<\' + \'/option><\' + \'/select>&nbsp;<span id="labdiv\' + actionNum + \'" style="display: none;"><select name="labdef[\' + actionNum + \']" id="labdef\' + actionNum + \'" onchange="rebuildRuleDesc();"><option value="">', addslashes($txt['pm_rule_sel_label']), '<\' + \'/option>';
+        setOuterHTML(document.getElementById("actionAddHere"), \'<div class="field has-addons"><div class="control"><div class="select"><select name="acttype[\' + actionNum + \']" id="acttype\' + actionNum + \'" onchange="updateActionDef(\' + actionNum + \'); rebuildRuleDesc();"><option value="">', addslashes($txt['pm_rule_sel_action']), ':<\' + \'/option><option value="lab">', addslashes($txt['pm_rule_label']), '<\' + \'/option><option value="del">', addslashes($txt['pm_rule_delete']), '<\' + \'/option><\' + \'/select></div></div>&nbsp;<span id="labdiv\' + actionNum + \'" style="display: none;"><div class="control"><div class="select"><select name="labdef[\' + actionNum + \']" id="labdef\' + actionNum + \'" onchange="rebuildRuleDesc();"><option value="">', addslashes($txt['pm_rule_sel_label']), '<\' + \'/option>';
 
   foreach ($context['labels'] as $label)
     if ($label['id'] != -1)
       echo '<option value="', ($label['id'] + 1), '">', addslashes($label['name']), '<\' + \'/option>';
 
-  echo '<\' + \'/select><\' + \'/span><span id="actionAddHere"><\' + \'/span>\');
+  echo '<\' + \'/select></div></div></div><\' + \'/span><span id="actionAddHere"><\' + \'/span>\');
       }
 
       function updateRuleDef(optNum)
@@ -1744,19 +1804,21 @@ function template_add_rule()
       <h3 class="catbg">', $context['rid'] == 0 ? $txt['pm_add_rule'] : $txt['pm_edit_rule'], '</h3>
     </div>
     <div class="windowbg">
-      <span class="topslice"><span></span></span>
-      <div class="content">
-        <dl class="settings">
-          <dt>
-            <strong>', $txt['pm_rule_name'], ':</strong><br />
-            <span class="smalltext">', $txt['pm_rule_name_desc'], '</span>
-          </dt>
-          <dd>
-            <input type="text" name="rule_name" value="', empty($context['rule']['name']) ? $txt['pm_rule_name_default'] : $context['rule']['name'], '" class="input" style="width: 100%" />
-          </dd>
-        </dl>
-        <fieldset>
-          <legend>', $txt['pm_rule_criteria'], '</legend>';
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label">', $txt['pm_rule_name'], '</label>
+        </div>
+      <div class="field-body">
+        <div class="field">
+          <input type="text" name="rule_name" value="', empty($context['rule']['name']) ? $txt['pm_rule_name_default'] : $context['rule']['name'], '" class="input is-auto" style="width: 100%" />
+          <p class="help">', $txt['pm_rule_name_desc'], '</p>
+        </div>
+      </div>
+    </div>
+
+      <fieldset>
+        <legend>', $txt['pm_rule_criteria'], '</legend>';
 
   // Add a dummy criteria to allow expansion for none js users.
   $context['rule']['criteria'][] = array('t' => '', 'v' => '');
@@ -1768,9 +1830,12 @@ function template_add_rule()
     if (!$isFirst && $criteria['t'] == '')
       echo '<div id="removeonjs1">';
     else
-      echo '<br />';
+      echo '';
 
     echo '
+    <div class="field has-addons">
+      <div class="control">
+        <div class="select">
           <select name="ruletype[', $k, ']" id="ruletype', $k, '" onchange="updateRuleDef(', $k, '); rebuildRuleDesc();">
             <option value="">', $txt['pm_rule_criteria_pick'], ':</option>
             <option value="mid" ', $criteria['t'] == 'mid' ? 'selected="selected"' : '', '>', $txt['pm_rule_mid'], '</option>
@@ -1779,19 +1844,26 @@ function template_add_rule()
             <option value="msg" ', $criteria['t'] == 'msg' ? 'selected="selected"' : '', '>', $txt['pm_rule_msg'], '</option>
             <option value="bud" ', $criteria['t'] == 'bud' ? 'selected="selected"' : '', '>', $txt['pm_rule_bud'], '</option>
           </select>
-          <span id="defdiv', $k, '" ', !in_array($criteria['t'], array('gid', 'bud')) ? '' : 'style="display: none;"', '>
-            <input type="text" name="ruledef[', $k, ']" id="ruledef', $k, '" onkeyup="rebuildRuleDesc();" value="', in_array($criteria['t'], array('mid', 'sub', 'msg')) ? $criteria['v'] : '', '" class="input" />
-          </span>
-          <span id="defseldiv', $k, '" ', $criteria['t'] == 'gid' ? '' : 'style="display: none;"', '>
+        </div>
+      </div>
+      <div class="control">
+        <span id="defdiv', $k, '" ', !in_array($criteria['t'], array('gid', 'bud')) ? '' : 'style="display: none;"', '>
+          <input type="text" name="ruledef[', $k, ']" id="ruledef', $k, '" onkeyup="rebuildRuleDesc();" value="', in_array($criteria['t'], array('mid', 'sub', 'msg')) ? $criteria['v'] : '', '" class="input is-auto" />
+        </span>
+        <span id="defseldiv', $k, '" ', $criteria['t'] == 'gid' ? '' : 'style="display: none;"', '>
+          <div class="select">
             <select name="ruledefgroup[', $k, ']" id="ruledefgroup', $k, '" onchange="rebuildRuleDesc();">
               <option value="">', $txt['pm_rule_sel_group'], '</option>';
-
-    foreach ($context['groups'] as $id => $group)
-      echo '
-              <option value="', $id, '" ', $criteria['t'] == 'gid' && $criteria['v'] == $id ? 'selected="selected"' : '', '>', $group, '</option>';
-    echo '
+              
+              foreach ($context['groups'] as $id => $group)
+                echo '
+                <option value="', $id, '" ', $criteria['t'] == 'gid' && $criteria['v'] == $id ? 'selected="selected"' : '', '>', $group, '</option>';
+              echo '
             </select>
-          </span>';
+          </div>
+        </span>
+      </div>
+    </div>';
 
     // If this is the dummy we add a means to hide for non js users.
     if ($isFirst)
@@ -1801,17 +1873,27 @@ function template_add_rule()
   }
 
   echo '
-          <span id="criteriaAddHere"></span><br />
-          <a href="#" onclick="addCriteriaOption(); return false;" id="addonjs1" style="display: none;">(', $txt['pm_rule_criteria_add'], ')</a>
-          <br /><br />
-          ', $txt['pm_rule_logic'], ':
-          <select name="rule_logic" id="logic" onchange="rebuildRuleDesc();">
-            <option value="and" ', $context['rule']['logic'] == 'and' ? 'selected="selected"' : '', '>', $txt['pm_rule_logic_and'], '</option>
-            <option value="or" ', $context['rule']['logic'] == 'or' ? 'selected="selected"' : '', '>', $txt['pm_rule_logic_or'], '</option>
-          </select>
-        </fieldset>
-        <fieldset>
-          <legend>', $txt['pm_rule_actions'], '</legend>';
+    <span id="criteriaAddHere"></span>
+    <a class="button is-small" href="#" onclick="addCriteriaOption(); return false;" id="addonjs1" style="display: none;">', $txt['pm_rule_criteria_add'], '</a>
+    <div class="field is-horizontal mt-4">
+      <div class="field-label">
+        <label class="label">', $txt['pm_rule_logic'], '</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="select">
+            <select name="rule_logic" id="logic" onchange="rebuildRuleDesc();">
+              <option value="and" ', $context['rule']['logic'] == 'and' ? 'selected="selected"' : '', '>', $txt['pm_rule_logic_and'], '</option>
+              <option value="or" ', $context['rule']['logic'] == 'or' ? 'selected="selected"' : '', '>', $txt['pm_rule_logic_or'], '</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>', $txt['pm_rule_actions'], '</legend>';
 
   // As with criteria - add a dummy action for "expansion".
   $context['rule']['actions'][] = array('t' => '', 'v' => '');
@@ -1823,15 +1905,18 @@ function template_add_rule()
     if (!$isFirst && $action['t'] == '')
       echo '<div id="removeonjs2">';
     else
-      echo '<br />';
+      echo '';
 
     echo '
+      <div class="select">
           <select name="acttype[', $k, ']" id="acttype', $k, '" onchange="updateActionDef(', $k, '); rebuildRuleDesc();">
             <option value="">', $txt['pm_rule_sel_action'] , ':</option>
             <option value="lab" ', $action['t'] == 'lab' ? 'selected="selected"' : '', '>', $txt['pm_rule_label'] , '</option>
             <option value="del" ', $action['t'] == 'del' ? 'selected="selected"' : '', '>', $txt['pm_rule_delete'] , '</option>
           </select>
-          <span id="labdiv', $k, '">
+        </div>
+        <span id="labdiv', $k, '">
+          <div class="select">
             <select name="labdef[', $k, ']" id="labdef', $k, '" onchange="rebuildRuleDesc();">
               <option value="">', $txt['pm_rule_sel_label'], '</option>';
     foreach ($context['labels'] as $label)
@@ -1841,7 +1926,8 @@ function template_add_rule()
 
     echo '
             </select>
-          </span>';
+          </div>
+        </span>';
 
     if ($isFirst)
       $isFirst = false;
@@ -1852,20 +1938,21 @@ function template_add_rule()
 
   echo '
           <span id="actionAddHere"></span><br />
-          <a href="#" onclick="addActionOption(); return false;" id="addonjs2" style="display: none;">(', $txt['pm_rule_add_action'], ')</a>
+          <div class="mb-4">
+            <a class="button is-small" href="#" onclick="addActionOption(); return false;" id="addonjs2" style="display: none;">', $txt['pm_rule_add_action'], '</a>
+          </div>
         </fieldset>
       </div>
-      <span class="botslice"><span></span></span>
     </div>
-    <div class="cat_bar">
+    <div class="cat_bar mt-4">
       <h3 class="catbg">', $txt['pm_rule_description'], '</h3>
     </div>
-    <div class="information">
-      <div id="ruletext" class="smalltext">', $txt['pm_rule_js_disabled'], '</div>
+    <div class="box is-size-6-5">
+      <div id="ruletext">', $txt['pm_rule_js_disabled'], '</div>
     </div>
-    <div class="righttext">
+    <div>
       <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-      <input type="submit" name="save" value="', $txt['pm_rule_save'], '" class="button is-small" />
+      <input type="submit" name="save" value="', $txt['pm_rule_save'], '" class="button is-primary" />
     </div>
   </form>';
 

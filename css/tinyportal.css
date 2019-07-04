@@ -1,0 +1,134 @@
+/*
+ * Special overrides for the TinyPortal mod 
+ * Duplicates .card and .columns
+ *
+ */
+
+/* --- Container --- */
+
+#frontpage .tp_nonresponsive {
+  margin: 0 auto;
+  position: relative;
+  max-width: none;
+  width: auto;
+}
+
+@media screen and (min-width: 1088px) {
+  #frontpage .tp_nonresponsive {
+    max-width: 960px;
+    width: 960px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  #frontpage .tp_nonresponsive {
+    max-width: 1152px;
+    width: 1152px;
+  }
+}
+
+@media screen and (min-width: 1472px) {
+  #frontpage .tp_nonresponsive {
+    max-width: 1344px;
+    width: 1344px;
+  }
+}
+
+
+/* --- Columns --- */
+@media (max-width: 900px) and (min-width: 0px) {
+  body.tpcontnainer { min-width: 0 !important; }
+}
+
+#mainContainer {
+  /* Duplicates .columns */
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+  margin-top: -0.75rem;
+}
+
+@media screen and (min-width: 769px), print {
+  #mainContainer {
+    display: flex;
+  }
+}
+
+#tpleftbarContainer,
+#centerContainer{
+  /* Duplicates .column.is-one-quarter */
+  display: block;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: 0.75rem;
+  
+  float: none;
+  width: auto !important;
+}
+
+@media (min-width: 769px) {
+  #tpleftbarContainer {
+    flex: none;
+    width: 25%;
+  }
+}
+
+
+/* --- Cards --- */
+
+.tp_leftblock_frame,
+.tp_frontblock_frame {
+  /* Duplicates .card */
+  background-color: var(--dark);
+  box-shadow: 0 2px 3px var(--darker-overlay), 0 0 0 1px var(--darker-overlay);
+  color: var(--white);
+  max-width: 100%;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.tp_leftblock_frame .title_bar,
+.tp_frontblock_frame .title_bar {
+  /* Dupliclates .card-header */
+    background-color: var(--dark-overlay);
+    align-items: stretch;
+    box-shadow: 0 1px 2px var(--darker-overlay);
+    display: flex;
+}
+
+.tp_leftblock_frame .titlebg,
+.tp_frontblock_frame .titlebg {
+  /* Duplicates .card-header-title */
+  align-items: center;
+  color: var(--light);
+  display: flex;
+  flex-grow: 1;
+  font-weight: 700;
+  padding: 0.75rem;
+}
+
+/* Align collapse button */
+.tp_leftblock_frame .titlebg,
+.tp_frontblock_frame .titlebg {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.tp_leftblock_frame .tp_leftblock_body,
+.tp_frontblock_frame .tp_frontblock_body {
+  /* Duplicates .card-body */
+    background-color: transparent;
+    padding: 0.75rem;
+}
+
+/* Cancel out some extra padding */
+.tp_leftblock_frame .topslice + div {
+  padding: 0 !important;
+}
+
+
+}
+  
+  
+    

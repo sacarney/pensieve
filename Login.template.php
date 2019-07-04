@@ -17,7 +17,7 @@ function template_login()
 
   echo '
     <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/sha1.js"></script>
-    <div class="container">
+    <div class="container pensieve-login-container">
       <div class="columns is-centered">
         <div class="column is-5">
 

@@ -19,15 +19,16 @@ function template_main()
   <div id="admincenter">
     <form action="', $scripturl, '?action=admin;area=theme;sa=admin" method="post" accept-charset="', $context['character_set'], '">
       <input type="hidden" value="0" name="options[theme_allow]" />
+
       <div class="cat_bar">
-        <h3 class="title is-5 mb-4">
-          <a href="', $scripturl, '?action=helpadmin;help=themes" onclick="return reqWin(this.href);">
-            <span class="icon">
-              <span class="fa fa-question-circle"></span>
-            </span>
-          </a>
+        <h2 class="title is-4 mb-4">
+            <a href="', $scripturl, '?action=helpadmin;help=themes" onclick="return reqWin(this.href);">
+              <span class="icon">
+                <span class="fa fa-question-circle is-size-5"></span>
+              </span>
+            </a>
           ', $txt['themeadmin_title'], '
-        </h3>
+        </h2>
       </div>
 
       <div class="notification is-size-6-5">
@@ -494,11 +495,19 @@ function template_set_settings()
   echo '
   <div id="admincenter">
     <form action="', $scripturl, '?action=admin;area=theme;sa=settings;th=', $context['theme_settings']['theme_id'], '" method="post" accept-charset="', $context['character_set'], '">
-      <div class="title_bar">
-        <h3 class="titlebg">
-          <span class="ie6_header floatleft"><a href="', $scripturl, '?action=helpadmin;help=theme_settings" onclick="return reqWin(this.href);" class="help"><img src="', $settings['images_url'], '/helptopics.gif" alt="', $txt['help'], '" class="icon" /></a> ', $txt['theme_settings'], ' - ', $context['theme_settings']['name'], '</span>
-        </h3>
-      </div>';
+
+
+      <div class="cat_bar">
+        <h2 class="title is-4 mb-4">
+            <a href="', $scripturl, '?action=helpadmin;help=theme_settings" onclick="return reqWin(this.href);" onclick="return reqWin(this.href);">
+              <span class="icon">
+                <span class="fa fa-question-circle is-size-5"></span>
+              </span>
+            </a>
+          ', $txt['theme_settings'], ' - ', $context['theme_settings']['name'], '
+        </h2>
+      </div>
+      ';
 
   // !!! Why can't I edit the default theme popup.
   if ($context['theme_settings']['theme_id'] != 1)
@@ -529,37 +538,49 @@ function template_set_settings()
           <span class="ie6_header floatleft"><img src="', $settings['images_url'], '/icons/config_sm.gif" alt="" class="icon" /> ', $txt['theme_url_config'], '</span>
         </h3>
       </div>
-      <div class="windowbg2">
-        <span class="topslice"><span></span></span>
-        <div class="content">
-          <dl class="settings">
-            <dt>
-              <label for="theme_name">', $txt['actual_theme_name'], '</label>
-            </dt>
-            <dd>
-              <input type="text" id="theme_name" name="options[name]" value="', $context['theme_settings']['name'], '" size="32" class="input" />
-            </dd>
-            <dt>
-              <label for="theme_url">', $txt['actual_theme_url'], '</label>
-            </dt>
-            <dd>
-              <input type="text" id="theme_url" name="options[theme_url]" value="', $context['theme_settings']['actual_theme_url'], '" size="50" style="max-width: 100%; width: 50ex;" class="input" />
-            </dd>
-            <dt>
-              <label for="images_url">', $txt['actual_images_url'], '</label>
-            </dt>
-            <dd>
-              <input type="text" id="images_url" name="options[images_url]" value="', $context['theme_settings']['actual_images_url'], '" size="50" style="max-width: 100%; width: 50ex;" class="input" />
-            </dd>
-            <dt>
-              <label for="theme_dir">', $txt['actual_theme_dir'], '</label>
-            </dt>
-            <dd>
-              <input type="text" id="theme_dir" name="options[theme_dir]" value="', $context['theme_settings']['actual_theme_dir'], '" size="50" style="max-width: 100%; width: 50ex;" class="input" />
-            </dd>
-          </dl>
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label" for="theme_name">', $txt['actual_theme_name'], '</label>
         </div>
-        <span class="botslice"><span></span></span>
+        <div class="field-body">
+          <div class="field">
+            <input type="text" id="theme_name" name="options[name]" value="', $context['theme_settings']['name'], '" size="32" class="input is-auto" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label" for="theme_url">', $txt['actual_theme_url'], '</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <input type="text" id="theme_url" name="options[theme_url]" value="', $context['theme_settings']['actual_theme_url'], '" size="50" style="max-width: 100%; width: 50ex;" class="input" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label" for="images_url">', $txt['actual_images_url'], '</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <input type="text" id="images_url" name="options[images_url]" value="', $context['theme_settings']['actual_images_url'], '" size="50" style="max-width: 100%; width: 50ex;" class="input" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label" for="theme_dir">', $txt['actual_theme_dir'], '</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <input type="text" id="theme_dir" name="options[theme_dir]" value="', $context['theme_settings']['actual_theme_dir'], '" size="50" style="max-width: 100%; width: 50ex;" class="input" />
+          </div>
+        </div>
       </div>';
 
   // Do we allow theme variants?
@@ -571,34 +592,47 @@ function template_set_settings()
           <span class="ie6_header floatleft"><img src="', $settings['images_url'], '/icons/config_sm.gif" alt="" align="top" /> ', $txt['theme_variants'], '</span>
         </h3>
       </div>
-      <div class="windowbg2">
-        <span class="topslice"><span></span></span>
-        <div class="content">
-          <dl class="settings">
-            <dt>
-              <label for="variant">', $txt['theme_variants_default'], '</label>:
-            </dt>
-            <dd>
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label" for="variant">', $txt['theme_variants_default'], '</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="select">
               <select id="variant" name="options[default_variant]" onchange="changeVariant(this.value)">';
 
-    foreach ($context['theme_variants'] as $key => $variant)
-      echo '
+              foreach ($context['theme_variants'] as $key => $variant)
+                echo '
                 <option value="', $key, '" ', $context['default_variant'] == $key ? 'selected="selected"' : '', '>', $variant['label'], '</option>';
-
-    echo '
+              echo '
               </select>
-            </dd>
-            <dt>
-              <label for="disable_user_variant">', $txt['theme_variants_user_disable'], '</label>:
-            </dt>
-            <dd>
-              <input type="hidden" name="options[disable_user_variant]" value="0" />
-              <input type="checkbox" name="options[disable_user_variant]" id="disable_user_variant"', !empty($context['theme_settings']['disable_user_variant']) ? ' checked="checked"' : '', ' value="1" class="input_check" />
-            </dd>
-          </dl>
-          <img src="', $context['theme_variants'][$context['default_variant']]['thumbnail'], '" id="variant_preview" alt="" />
+            </div>
+          </div>
         </div>
-        <span class="botslice"><span></span></span>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label" for="disable_user_variant">', $txt['theme_variants_user_disable'], '</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <input type="hidden" name="options[disable_user_variant]" value="0" />
+            <input type="checkbox" name="options[disable_user_variant]" id="disable_user_variant"', !empty($context['theme_settings']['disable_user_variant']) ? ' checked="checked"' : '', ' value="1" class="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+         
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <img src="', $context['theme_variants'][$context['default_variant']]['thumbnail'], '" id="variant_preview" alt="" />
+          </div>
+        </div>
       </div>';
   }
 
@@ -608,10 +642,7 @@ function template_set_settings()
           <span class="ie6_header floatleft"><img src="', $settings['images_url'], '/icons/config_sm.gif" alt="" class="icon" /> ', $txt['theme_options'], '</span>
         </h3>
       </div>
-      <div class="windowbg">
-        <span class="topslice"><span></span></span>
-        <div class="content">
-          <dl class="settings flow_auto">';
+';
 
   foreach ($context['settings'] as $setting)
   {
@@ -619,79 +650,79 @@ function template_set_settings()
     if (empty($setting))
     {
       echo '
-          </dl>
-          <hr class="hrcolor" />
-          <dl class="settings flow_auto">';
+          <hr>';
     }
     // A checkbox?
     elseif ($setting['type'] == 'checkbox')
     {
       echo '
-            <dt>
-              <label for="', $setting['id'], '">', $setting['label'], '</label>:';
-
-      if (isset($setting['description']))
-        echo '<br />
-              <span class="smalltext">', $setting['description'], '</span>';
-
-      echo '
-            </dt>
-            <dd>
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="', $setting['id'], '">', $setting['label'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
               <input type="hidden" name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" value="0" />
               <input type="checkbox" name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" id="', $setting['id'], '"', !empty($setting['value']) ? ' checked="checked"' : '', ' value="1" class="input_check" />
-            </dd>';
+            ';
+            if (isset($setting['description']))
+            echo '<div class="help">', $setting['description'], '</div>';
+              echo'
+            </div>
+          </div>
+        </div>';
     }
     // A list with options?
     elseif ($setting['type'] == 'list')
     {
       echo '
-            <dt>
-              <label for="', $setting['id'], '">', $setting['label'], '</label>:';
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="', $setting['id'], '">', $setting['label'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="select">
+                <select name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" id="', $setting['id'], '">';
 
-      if (isset($setting['description']))
-        echo '<br />
-              <span class="smalltext">', $setting['description'], '</span>';
-
-      echo '
-            </dt>
-            <dd>
-              <select name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" id="', $setting['id'], '">';
-
-      foreach ($setting['options'] as $value => $label)
-        echo '
-              <option value="', $value, '"', $value == $setting['value'] ? ' selected="selected"' : '', '>', $label, '</option>';
-
-      echo '
-              </select>
-            </dd>';
+                  foreach ($setting['options'] as $value => $label)
+                    echo '
+                    <option value="', $value, '"', $value == $setting['value'] ? ' selected="selected"' : '', '>', $label, '</option>';
+                  echo '
+                </select>
+              </div>
+              ';
+            if (isset($setting['description']))
+            echo '<div class="help">', $setting['description'], '</div>';
+              echo'
+            </div>
+          </div>
+        </div>';
     }
     // A regular input box, then?
     else
     {
       echo '
-            <dt>
-              <label for="', $setting['id'], '">', $setting['label'], '</label>:';
-
-      if (isset($setting['description']))
-        echo '<br />
-              <span class="smalltext">', $setting['description'], '</span>';
-
-      echo '
-            </dt>
-            <dd>
-              <input type="text" name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" id="', $setting['id'], '" value="', $setting['value'], '"', $setting['type'] == 'number' ? ' size="5"' : (empty($setting['size']) ? ' size="40"' : ' size="' . $setting['size'] . '"'), ' class="input" />
-            </dd>';
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="', $setting['id'], '">', $setting['label'], '</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+            <input type="text" name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" id="', $setting['id'], '" value="', $setting['value'], '"', $setting['type'] == 'number' ? ' size="5"' : (empty($setting['size']) ? ' size="40"' : ' size="' . $setting['size'] . '"'), ' class="input is-auto" />
+              ';
+              if (isset($setting['description']))
+              echo '<div class="help">', $setting['description'], '</div>';
+                echo'
+            </div>
+          </div>
+        </div>';
     }
   }
 
   echo '
-          </dl>
-          <div class="righttext">
-            <input type="submit" name="submit" value="', $txt['save'], '" class="button is-primary" />
-          </div>
-        </div>
-        <span class="botslice"><span></span></span>
-      </div>
+  <hr>
+      <input type="submit" name="submit" value="', $txt['save'], '" class="button is-primary" />
       <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
     </form>
   </div>
@@ -729,59 +760,68 @@ function template_pick()
   global $context, $settings, $options, $scripturl, $txt;
 
   echo '
-  <div id="pick_theme">
-    <form action="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';', $context['session_var'], '=', $context['session_id'], '" method="post" accept-charset="', $context['character_set'], '">';
+  <div class="container">
+    <div id="pick_theme">
+    
+      <form action="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';', $context['session_var'], '=', $context['session_id'], '" method="post" accept-charset="', $context['character_set'], '">';
 
-  // Just go through each theme and show its information - thumbnail, etc.
-  foreach ($context['available_themes'] as $theme)
-  {
-    echo '
-      <div class="cat_bar">
-        <h3 class="catbg">
-          <a href="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';th=', $theme['id'], ';', $context['session_var'], '=', $context['session_id'], '">', $theme['name'], (!empty($theme['variants']) ? ';vrt=' . $theme['selected_variant'] : ''), '</a>
-        </h3>
-      </div>
-      <div class="', $theme['selected'] ? 'windowbg' : 'windowbg2', '">
-        <span class="topslice"><span></span></span>
-        <div class="flow_hidden content">
-          <div class="floatright"><a href="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';theme=', $theme['id'], ';', $context['session_var'], '=', $context['session_id'], '" id="theme_thumb_preview_', $theme['id'], '" title="', $txt['theme_preview'], '"><img src="', $theme['thumbnail_href'], '" id="theme_thumb_', $theme['id'], '" alt="" class="padding" /></a></div>
-          <p>', $theme['description'], '</p>';
+        // Just go through each theme and show its information - thumbnail, etc.
+        foreach ($context['available_themes'] as $theme)
+        {
+          echo '
+          <div class="mb-4">
+            <div class="cat_bar">
+              <h3 class="catbg">
+                <a href="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';th=', $theme['id'], ';', $context['session_var'], '=', $context['session_id'], '">', $theme['name'], (!empty($theme['variants']) ? ' | variant: ' . $theme['selected_variant'] : ''), '</a>
+              </h3>
+            </div>
 
-    if (!empty($theme['variants']))
-    {
-      echo '
-          <label for="variant', $theme['id'], '"><strong>', $theme['pick_label'], '</strong></label>:
-          <select id="variant', $theme['id'], '" name="vrt[', $theme['id'], ']" onchange="changeVariant', $theme['id'], '(this.value);">';
+            <div class="columns">
+              <div class="column is-narrow">
+                <a class="is-block" href="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';theme=', $theme['id'], ';', $context['session_var'], '=', $context['session_id'], '" id="theme_thumb_preview_', $theme['id'], '" title="', $txt['theme_preview'], '">
+                  <img src="', $theme['thumbnail_href'], '" id="theme_thumb_', $theme['id'], '" alt="" class="padding" />
+                </a>
+              </div>
 
-      foreach ($theme['variants'] as $key => $variant)
-      {
+              <div class="column">
+                <p>', $theme['description'], '</p>
+                <p>', $theme['num_users'], ' ', ($theme['num_users'] == 1 ? $txt['theme_user'] : $txt['theme_users']), '</p>';
+                if (!empty($theme['variants']))
+                {
+                  echo '
+
+                  <div class="field">
+                    <label class="label" for="variant', $theme['id'], '">', $theme['pick_label'], '</label>
+                    <div class="control">
+                      <div class="select">
+                        <select id="variant', $theme['id'], '" name="vrt[', $theme['id'], ']" onchange="changeVariant', $theme['id'], '(this.value);">';
+
+                        foreach ($theme['variants'] as $key => $variant)
+                        {
+                          echo '
+                          <option value="', $key, '" ', $theme['selected_variant'] == $key ? 'selected="selected"' : '', '>', $variant['label'], '</option>';
+                        }
+                      echo '
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+              <noscript>
+                <input type="submit" name="save[', $theme['id'], ']" value="', $txt['save'], '" class="button is-primary" />
+              </noscript>';
+          }
+              echo'
+            </div>
+          </div>';
+
         echo '
-            <option value="', $key, '" ', $theme['selected_variant'] == $key ? 'selected="selected"' : '', '>', $variant['label'], '</option>';
-      }
-      echo '
-          </select>
-          <noscript>
-            <input type="submit" name="save[', $theme['id'], ']" value="', $txt['save'], '" class="button is-primary" />
-          </noscript>';
-    }
-
-    echo '
-          <br />
-          <p>
-            <em class="smalltext">', $theme['num_users'], ' ', ($theme['num_users'] == 1 ? $txt['theme_user'] : $txt['theme_users']), '</em>
-          </p>
-          <br />
-          <ul class="reset">
-            <li>
-              <a href="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';th=', $theme['id'], ';', $context['session_var'], '=', $context['session_id'], (!empty($theme['variants']) ? ';vrt=' . $theme['selected_variant'] : ''), '" id="theme_use_', $theme['id'], '">[', $txt['theme_set'], ']</a>
-            </li>
-            <li>
-              <a href="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';theme=', $theme['id'], ';', $context['session_var'], '=', $context['session_id'],  (!empty($theme['variants']) ? ';vrt=' . $theme['selected_variant'] : ''), '" id="theme_preview_', $theme['id'], '">[', $txt['theme_preview'], ']</a>
-            </li>
-          </ul>
-        </div>
-        <span class="botslice"><span></span></span>
-      </div>';
+          <div>
+            <a class="button is-small is-primary" href="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';th=', $theme['id'], ';', $context['session_var'], '=', $context['session_id'], (!empty($theme['variants']) ? ';vrt=' . $theme['selected_variant'] : ''), '" id="theme_use_', $theme['id'], '">', $txt['theme_set'], '</a>
+              <a class="button is-small" href="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';theme=', $theme['id'], ';', $context['session_var'], '=', $context['session_id'],  (!empty($theme['variants']) ? ';vrt=' . $theme['selected_variant'] : ''), '" id="theme_preview_', $theme['id'], '">', $txt['theme_preview'], '</a>
+            </div>
+          </div>
+          ';
 
     if (!empty($theme['variants']))
     {
@@ -816,6 +856,7 @@ function template_pick()
 
   echo '
     </form>
+    </div>
   </div>
   <br class="clear" />';
 }

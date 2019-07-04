@@ -832,7 +832,9 @@ function template_servers()
           </div>';
 
   echo '
-  <h3 class="title is-5 mb-4">', $txt['download_new_package'], '</h3>
+  <div class="cat_bar">
+    <h3 class="catbg">' . $txt['download_new_package'] . '</h3>
+  </div>
   ';
 
   if ($context['package_download_broken'])
@@ -997,14 +999,29 @@ function template_servers()
     </form>
   </fieldset>
 
-  <h3 class="title is-6 mb-4">' . $txt['package_upload_title'] . '</h3>
+  <div class="cat_bar">
+    <h3 class="catbg">' . $txt['package_upload_title'] . '</h3>
+  </div>
   
   <form action="' . $scripturl . '?action=admin;area=packages;get;sa=upload" method="post" accept-charset="', $context['character_set'], '" enctype="multipart/form-data" style="margin-bottom: 0;">
     
     <div class="field">
       <label class="label">' . $txt['package_upload_select'] . '</label>
       <div class="control">
-        <input type="file" name="package" size="38" class="input_file" />
+        
+        <div class="file">
+        <label class="file-label">
+          <input type="file" name="package" size="38" class="file-input" />
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fa fa-upload"></i>
+            </span>
+            <span class="file-label">
+              Choose a file…
+            </span>
+          </span>
+        </label>
+      </div>
       </div>
     </div>
 
@@ -1337,33 +1354,61 @@ function template_control_chmod() // @TODO
 
   echo '
           <fieldset>
-          <dl class="settings">
-            <dt>
-              <label for="ftp_server">', $txt['package_ftp_server'], ':</label>
-            </dt>
-            <dd>
-              <input type="text" size="30" name="ftp_server" id="ftp_server" value="', $context['package_ftp']['server'], '" class="input" />
-              <label for="ftp_port">', $txt['package_ftp_port'], ':&nbsp;</label> <input type="text" size="3" name="ftp_port" id="ftp_port" value="', $context['package_ftp']['port'], '" class="input" />
-            </dd>
-            <dt>
-              <label for="ftp_username">', $txt['package_ftp_username'], ':</label>
-            </dt>
-            <dd>
-              <input type="text" size="50" name="ftp_username" id="ftp_username" value="', $context['package_ftp']['username'], '" style="width: 98%;" class="input" />
-            </dd>
-            <dt>
-              <label for="ftp_password">', $txt['package_ftp_password'], ':</label>
-            </dt>
-            <dd>
-              <input type="password" size="50" name="ftp_password" id="ftp_password" style="width: 98%;" class="input_password" />
-            </dd>
-            <dt>
-              <label for="ftp_path">', $txt['package_ftp_path'], ':</label>
-            </dt>
-            <dd>
-              <input type="text" size="50" name="ftp_path" id="ftp_path" value="', $context['package_ftp']['path'], '" style="width: 98%;" class="input" />
-            </dd>
-          </dl>
+
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <label class="label" for="ftp_server">', $txt['package_ftp_server'], '</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <input type="text" size="30" name="ftp_server" id="ftp_server" value="', $context['package_ftp']['server'], '" class="input is-auto" />
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label">
+                 <label class="label" for="ftp_port">', $txt['package_ftp_port'], '</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <input type="text" size="3" name="ftp_port" id="ftp_port" value="', $context['package_ftp']['port'], '" class="input is-auto" />
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <label class="label" for="ftp_username">', $txt['package_ftp_username'], '</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <input type="text" size="50" name="ftp_username" id="ftp_username" value="', $context['package_ftp']['username'], '" style="width: 98%;" class="input is-auto" />
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <label class="label" for="ftp_password">', $txt['package_ftp_password'], '</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <input type="password" size="50" name="ftp_password" id="ftp_password" style="width: 98%;" class="input is-auto" />
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <label class="label" for="ftp_path">', $txt['package_ftp_path'], '</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <input type="text" size="50" name="ftp_path" id="ftp_path" value="', $context['package_ftp']['path'], '" style="width: 98%;" class="input is-auto" />
+                </div>
+              </div>
+            </div>
           </fieldset>';
 
   if (empty($context['package_ftp']['form_elements_only']))

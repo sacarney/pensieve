@@ -15,7 +15,7 @@ function template_main()
       <h2 class="title is-5 mb-1">',$txt['smftags_popular'], '</h2>
     </div>
 
-    <div class="is-flex is-multiline mb-4">';
+    <div class="pensieve-tags-list">';
       if (isset($context['poptags']))
         echo $context['poptags'];
       echo '

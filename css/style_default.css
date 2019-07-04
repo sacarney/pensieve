@@ -28,14 +28,6 @@
   --dark-overlay: rgba(0, 0, 0, 0.1);
 }
 
-.sticky-tab {
-  border-color: var(--primary) transparent transparent var(--primary);
-}
-
-.topic-is-locked {
-  box-shadow: inset 5px 0 var(--danger);
-}
-
 .previous-next-buttons a {
   background-color: white;
   border-color: var(--grey);
@@ -77,3 +69,4 @@
 .input_text {
   border-color: var(--grey);
 }
+

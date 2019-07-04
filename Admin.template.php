@@ -592,7 +592,7 @@ function template_edit_censored()
       </div>
       <div>
         
-        <div class="content">
+        <div class="">
           <p>', $txt['admin_censored_where'], '</p>';
 
   // Show text boxes for censoring [bad   ] => [good  ].
@@ -674,6 +674,7 @@ function template_edit_censored()
 
   // This table lets you test out your filters by typing in rude words and seeing what comes out.
   echo '
+  <hr>
       <div>
         <h3 class="title is-5 mb-4">
           ', $txt['censor_test'], '
@@ -710,7 +711,7 @@ function template_not_done()
       </h3>
     </div>
     <div>
-      <div class="content">
+      <div class="">
         ', $txt['not_done_reason'];
 
   if (!empty($context['continue_percent']))
@@ -1143,7 +1144,7 @@ function template_edit_profile_field()
         </div>
       </div>
         
-        <div class="content">
+        <div class="">
           <fieldset class="p-4">
             <legend class="is-uppercase is-muted is-size-6-5">', $txt['custom_edit_general'], '</legend>
 
@@ -1504,7 +1505,7 @@ function template_admin_search_results()
     </div>
   <div class="nopadding">
     
-    <div class="content">';
+    <div class="">';
 
   if (empty($context['search_results']))
   {
@@ -1688,7 +1689,7 @@ function template_add_language()
       </div>
       <div>
         
-        <div class="content">
+        <div class="">
           <fieldset class="p-4 mb-4">
             <legend class="is-uppercase is-muted is-size-6-5">', $txt['add_language_smf'], '</legend>
             <div class="field">
@@ -1798,7 +1799,7 @@ function template_download_language()
       </div>
       <div>
         
-        <div class="content">
+        <div class="">
           <p class="notification is-size-6-5 mb-4">
             ', $txt['languages_download_note'], '
           </p>

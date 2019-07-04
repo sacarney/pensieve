@@ -164,19 +164,12 @@ code, pre { display: block; }
 /* TOPIC LIST */
 /* ------------------------- */
 
-.sticky-tab {
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  border: 1rem solid;
+.topic-is-sticky {
+  box-shadow: inset 3px 0 var(--primary);
 }
 
-.sticky-tab .fa {
-  position: absolute;
-  top: -0.65rem;
-  left: -0.65rem;
-  font-size: 0.75rem;
-  color: white;
+.topic-is-locked {
+  box-shadow: inset 3px 0 var(--danger);
 }
 
 /* ------------------------- */
@@ -443,12 +436,15 @@ code, pre { display: block; }
 
 .align-items-center { align-items: center; }
 .justity-content-center { justify-content: center; }
+.justify-content-between { justify-content: space-between; }
 
 .flex-wrap { flex-wrap: wrap; }
 
 .vertical-align-middle { vertical-align: middle !important; }
 
 .word-break-break-word { word-break: break-word; }
+
+.background-overlay-dark { background: var(--dark-overlay); }
 
 /* ------------------------- */
 /* ACCESSIBILITY */
