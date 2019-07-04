@@ -1321,7 +1321,8 @@ a.box:active {
   background-color: var(--white);
   border-color: #dbdbdb;
   box-shadow:none;
-  opacity:.5
+  opacity:.5;
+  color: var(--grey-1);
 }
 
 .button.is-static {
