@@ -466,7 +466,7 @@ function template_view_installed()
   else
   {
     echo '
-    <table class="table is-narrow is-striped" width="100%">
+    <table class="table is-narrow is-striped is-fullwidth">
     <thead>
       <tr>
         <th scope="col" width="32"></th>
@@ -494,8 +494,8 @@ function template_view_installed()
     </tbody>
     </table>
     
-    <div>
-      <a class="button is-secondary" href="', $scripturl, '?action=admin;area=packages;sa=flush;', $context['session_var'], '=', $context['session_id'], '">[ ', $txt['delete_list'], ' ]</a>
+    <div class="mt-3 mb-3 has-text-right">
+      <a class="button" href="', $scripturl, '?action=admin;area=packages;sa=flush;', $context['session_var'], '=', $context['session_id'], '">[ ', $txt['delete_list'], ' ]</a>
     </div>';
 
   }
@@ -506,15 +506,17 @@ function template_browse()
   global $context, $settings, $options, $txt, $scripturl, $modSettings, $forum_version;
 
   echo '
-  <h3 class="title is-5 mb-4">
-    <a href="', $scripturl, '?action=helpadmin;help=latest_packages" onclick="return reqWin(this.href);">
-      <span class="icon">
-        <span class="fa fa-question-circle"></span>
-      </span>
-    </a> ', $txt['packages_latest'], '</span>
-  </h3>
+  <div class="cat_bar">
+    <h3 class="title is-4 mb-4">
+      <a href="', $scripturl, '?action=helpadmin;help=latest_packages" onclick="return reqWin(this.href);">
+        <span class="icon">
+          <span class="fa fa-question-circle"></span>
+        </span>
+      </a> ', $txt['packages_latest'], '</span>
+    </h3>
+  </div>
   
-  <div class="mb-4" id="packagesLatest">', $txt['packages_latest_fetch'], '</div>
+  <div class="box mb-4" id="packagesLatest">', $txt['packages_latest_fetch'], '</div>
 
     <script type="text/javascript"><!-- // --><![CDATA[
       window.smfForum_scripturl = "', $scripturl, '";
@@ -558,9 +560,9 @@ function template_browse()
     echo '
     <h4 class="title is-6 mb-4">', $txt['modification_package'], '</h4>
 
-    <table class="table is-narrow is-striped" width="100%">
+    <table class="table is-narrow is-striped is-fullwidth">
     <thead>
-      <tr class="catbg">
+      <tr>
         <th width="32"></th>
         <th width="25%">', $txt['mod_name'], '</th>
         <th width="25%">', $txt['mod_version'], '</th>
@@ -615,7 +617,7 @@ function template_browse()
     echo '
     <h4 class="title is-6 mb-4">', $txt['avatar_package'], '</h4>
     </div>
-    <table class="table is-narrow is-striped" width="100%">
+    <table class="table is-narrow is-striped is-fullwidth">
     <thead>
       <tr>
         <th width="32"></th>
@@ -669,7 +671,7 @@ function template_browse()
     echo '
     <h4 class="title is-6 mb-4">' . $txt['language_package'] . '</h4>
     </div>
-    <table class="table is-narrow is-striped" width="100%">
+    <table class="table is-narrow is-striped is-fullwidth">
     <thead>
       <tr>
         <th width="32"></th>
@@ -723,7 +725,7 @@ function template_browse()
     echo '
     <h4 class="title is-6 mb-4">' . $txt['unknown_package'] . '</h4>
     </div>
-    <table class="table is-narrow is-striped" width="100%">
+    <table class="table is-narrow is-striped is-fullwidth"">
     <thead>
       <tr>
         <th width="32"></th>
@@ -774,7 +776,7 @@ function template_browse()
 
   if (empty($context['available_mods']) && empty($context['available_avatars']) && empty($context['available_languages']) && empty($context['available_other']))
     echo '
-    <div class="information">', $txt['no_packages'], '</div>';
+      <div class="notification is-size-6-5 p-2">', $txt['no_packages'], '</div>';
 
   echo '
     <div>
@@ -792,13 +794,14 @@ function template_browse()
         </span>
         <span>', $txt['package_advanced_button'], '</span>
       </a>
+
     </div>
 
     <form action="', $scripturl, '?action=admin;area=packages;sa=browse" method="get">
       <div id="advanced_box" style="display: none;">
         <h3 class="title is-5 mt-4 mb-4">', $txt['package_advanced_options'], '</h3>
         <p class="is-size-6-5 mb-4">', $txt['package_emulate_desc'], '</p>
-        
+      
         <label class="label">', $txt['package_emulate'], '</label>
         <div class="field has-addons">
           <div class="control">
@@ -811,7 +814,6 @@ function template_browse()
             <input type="submit" value="', $txt['package_apply'], '" class="button is-primary" />
           </div>
         </div>
-
       </div>
 
       <input type="hidden" name="action" value="admin" />
@@ -826,21 +828,20 @@ function template_servers()
   global $context, $settings, $options, $txt, $scripturl;
 
   if (!empty($context['package_ftp']['error']))
-      echo '
-          <p class="notification is-danger">
-            <tt>', $context['package_ftp']['error'], '</tt>
-          </div>';
+    echo '
+      <p class="notification is-danger">
+        <tt>', $context['package_ftp']['error'], '</tt>
+      </div>';
 
   echo '
-  <div class="cat_bar">
-    <h3 class="catbg">' . $txt['download_new_package'] . '</h3>
-  </div>
-  ';
+    <div class="cat_bar">
+      <h2 class="title is-4 mb-4">' . $txt['download_new_package'] . '</h2>
+    </div>';
 
   if ($context['package_download_broken'])
   {
     echo '
-    <h4 class="title is-6 mb-4">', $txt['package_ftp_necessary'], '</h4>
+    <h3 class="title is-6 mb-4">', $txt['package_ftp_necessary'], '</h3>
     
     <p class="is-size-6-5">', $txt['package_ftp_why_download'], '</p>
     
@@ -898,8 +899,8 @@ function template_servers()
         </div>
       </div>
 
-      <div>
-        <input type="submit" value="', $txt['package_proceed'], '" class="button is-primary" />
+      <div class="mt-3 mb-3 has-text-right">
+        <input type="submit" value="', $txt['package_proceed'], '" class="button" />
       </div>
 
     </form>
@@ -953,8 +954,8 @@ function template_servers()
         </div>
       </div>
 
-      <div>
-        <input type="submit" value="' . $txt['add_server'] . '" class="button is-small is-secondary" />
+      <div class="mt-3 mb-3 has-text-right">
+        <input type="submit" value="' . $txt['add_server'] . '" class="button" />
         <input type="hidden" name="' . $context['session_var'] . '" value="' . $context['session_id'] . '" />
       </div>
           
@@ -993,14 +994,14 @@ function template_servers()
         </div>
       </div>
 
-      <div>
-        <input type="submit" value="', $txt['download'], '" class="button is-secondary is-small" />
+      <div class="mt-3 mb-3 has-text-right">
+        <input type="submit" value="', $txt['download'], '" class="button" />
       </div>
     </form>
   </fieldset>
 
   <div class="cat_bar">
-    <h3 class="catbg">' . $txt['package_upload_title'] . '</h3>
+    <h2 class="title is-4 mb-4">' . $txt['package_upload_title'] . '</h2>
   </div>
   
   <form action="' . $scripturl . '?action=admin;area=packages;get;sa=upload" method="post" accept-charset="', $context['character_set'], '" enctype="multipart/form-data" style="margin-bottom: 0;">
@@ -1025,8 +1026,8 @@ function template_servers()
       </div>
     </div>
 
-    <div>
-      <input type="submit" value="' . $txt['package_upload'] . '" class="button is-secondary is-small" />
+    <div class="mt-3 mb-3 has-text-right">
+      <input type="submit" value="' . $txt['package_upload'] . '" class="button" />
       <input type="hidden" name="' . $context['session_var'] . '" value="' . $context['session_id'] . '" />
     </div>
   </form>
@@ -1244,7 +1245,7 @@ function template_downloaded()
     </li>
   </ul>
 
-  <p><a class="button is-secondary is-small" href="', $scripturl, '?action=admin;area=packages;get', (isset($context['package_server']) ? ';sa=browse;server=' . $context['package_server'] : ''), '">', $txt['back'], '</a></p>
+  <p><a class="button" href="', $scripturl, '?action=admin;area=packages;get', (isset($context['package_server']) ? ';sa=browse;server=' . $context['package_server'] : ''), '">', $txt['back'], '</a></p>
 ';
 }
 
@@ -1310,8 +1311,8 @@ function template_install_options()
       </div>
     </div>
 
-    <div>
-      <input type="submit" name="submit" value="', $txt['save'], '" class="button is-primary" />
+    <div class="mt-3 mb-3 has-text-right">
+      <input type="submit" name="submit" value="', $txt['save'], '" class="button" />
       <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
     </div>
   </form>
@@ -1414,9 +1415,9 @@ function template_control_chmod() // @TODO
   if (empty($context['package_ftp']['form_elements_only']))
     echo '
 
-          <div class="righttext" style="margin: 1ex;">
+          <div>
             <span id="test_ftp_placeholder_full"></span>
-            <input type="submit" value="', $txt['package_proceed'], '" class="button is-primary" />
+            <input type="submit" value="', $txt['package_proceed'], '" class="button" />
           </div>';
 
   if (!empty($context['package_ftp']['destination']))
@@ -1845,7 +1846,7 @@ function template_file_permissions()
   <form action="', $scripturl, '?action=admin;area=packages;sa=perms;', $context['session_var'], '=', $context['session_id'], '" method="post" accept-charset="', $context['character_set'], '">
     <h3 class="title is-5 mb-4">', $txt['package_file_perms'], '</h3>
 
-    <table width="100%" class="table is-narrow is-striped mb-0">
+    <table class="table is-narrow is-striped is-fullwidth">
       <thead>
         <tr>
           <th width="30%">', $txt['package_file_perms_name'], '</th>
@@ -1861,7 +1862,7 @@ function template_file_permissions()
   foreach ($context['file_tree'] as $name => $dir)
   {
     echo '
-      <tbody class=" word-break-break-word">
+      <tbody class="word-break-break-word">
         <tr>
           <td width="30%">';
 
@@ -1932,9 +1933,9 @@ function template_file_permissions()
 
   echo '
         <span id="test_ftp_placeholder_full"></span>
-        <div>
+        <div class="mt-3 mb-3 has-text-right">
           <input type="hidden" name="action_changes" value="1" />
-          <input type="submit" value="', $txt['package_file_perms_go'], '" name="go" class="button is-primary" />
+          <input type="submit" value="', $txt['package_file_perms_go'], '" name="go" class="button" />
         </div>';
 
   // Any looks fors we've already done?
@@ -1961,7 +1962,7 @@ function template_permission_show_contents($ident, $contents, $level, $has_more 
         $drawn_div = true;
         echo '
       </table>
-      <table width="100%" class="table is-narrow is-striped mb-0" id="', $js_ident, '">';
+      <table class="table is-narrow is-striped is-fullwidth" id="', $js_ident, '">';
       }
 
       $cur_ident = preg_replace('~[^A-Za-z0-9_\-=:]~', ':-:', $ident . '/' . $name);
@@ -2053,16 +2054,13 @@ function template_action_permissions() // @TODO
   $progress_percent = round(($context['total_items'] - $remaining_items) / $context['total_items'] * 100, 1);
 
   echo '
-      <div class="windowbg">
-        <span class="topslice"><span></span></span>
-        <div class="content">
-          <div style="padding-left: 20%; padding-right: 20%; margin-top: 1ex;">
-            <strong>', $progress_message, '</strong>
-            <div style="font-size: 8pt; height: 12pt; border: 1px solid black; background-color: white; padding: 1px; position: relative;">
-              <div style="padding-top: ', $context['browser']['is_webkit'] || $context['browser']['is_konqueror'] ? '2pt' : '1pt', '; width: 100%; z-index: 2; color: black; position: absolute; text-align: center; font-weight: bold;">', $progress_percent, '%</div>
-              <div style="width: ', $progress_percent, '%; height: 12pt; z-index: 1; background-color: #98b8f4;">&nbsp;</div>
-            </div>
-          </div>';
+    <div class="box">
+      <strong>', $progress_message, '</strong>
+      <div style="font-size: 8pt; height: 12pt; border: 1px solid black; background-color: white; padding: 1px; position: relative;">
+        <div style="padding-top: ', $context['browser']['is_webkit'] || $context['browser']['is_konqueror'] ? '2pt' : '1pt', '; width: 100%; z-index: 2; color: black; position: absolute; text-align: center; font-weight: bold;">', $progress_percent, '%</div>
+        <div style="width: ', $progress_percent, '%; height: 12pt; z-index: 1; background-color: #98b8f4;">&nbsp;</div>
+      </div>
+    </div>';
 
   // Second progress bar for a specific directory?
   if ($context['method'] != 'individual' && !empty($context['total_files']))
@@ -2111,15 +2109,10 @@ function template_action_permissions() // @TODO
   echo '
           <input type="hidden" name="method" value="', $context['method'], '" />
           <input type="hidden" name="action_changes" value="1" />
-          <div class="righttext padding">
-            <input type="submit" name="go" id="cont" value="', $txt['not_done_continue'], '" class="button is-primary" />
+          <div class="mt-3 mb-3 has-text-right">
+            <input type="submit" name="go" id="cont" value="', $txt['not_done_continue'], '" class="button" />
           </div>
-        </div>
-        <span class="botslice"><span></span></span>
-      </div>
-    </form>
-  </div>
-  <br class="clear" />';
+  </form>';
 
   // Just the countdown stuff
   echo '

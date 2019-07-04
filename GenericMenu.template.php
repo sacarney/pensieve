@@ -331,15 +331,15 @@ function template_generic_menu_tabs(&$menu_context)
   </div>';
 
   echo '
-  <p class="notification is-size-6-5">
+  <div class="notification is-size-6-5 p-2">
     ', !empty($selected_tab['description']) ? $selected_tab['description'] : $tab_context['description'], '
-  </p>';
+  </div>';
   }
   // ...if not use the old style
   else
   {
     echo '
-  <p class="tabs">';
+  <div class="tabs">';
 
     // Print out all the items in this tab.
     foreach ($tab_context['tabs'] as $sa => $tab)
@@ -361,8 +361,8 @@ function template_generic_menu_tabs(&$menu_context)
     }
 
     echo '
-  </p>
-  <p class="notification is-size-6-5">', isset($selected_tab['description']) ? $selected_tab['description'] : $tab_context['description'], '</p>';
+  </div>
+  <div class="notification is-size-6-5 p-2">', isset($selected_tab['description']) ? $selected_tab['description'] : $tab_context['description'], '</div>';
   }
 }
 

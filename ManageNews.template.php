@@ -17,12 +17,12 @@ function template_edit_news()
 
   echo '
   <form action="', $scripturl, '?action=admin;area=news;sa=editnews" method="post" accept-charset="', $context['character_set'], '" name="postmodify" id="postmodify">
-    <table class="table is-bordered">
+    <table class="table is-fullwidth is-bordered">
       <thead>
         <tr>
           <th width="50%">', $txt['admin_edit_news'], '</th>
-          <th width="45%">', $txt['preview'], '</th>
-          <th width="5%">
+          <th>', $txt['preview'], '</th>
+          <th>
             <input type="checkbox" class="input_check" onclick="invertAll(this, this.form);" />
           </th>
         </tr>
@@ -34,7 +34,7 @@ function template_edit_news()
     echo '
         <tr>
           <td>
-            <textarea class="textarea is-small" rows="3" cols="65" name="news[]">', $admin_news['unparsed'], '</textarea>
+            <textarea class="textarea" rows="3" cols="65" name="news[]">', $admin_news['unparsed'], '</textarea>
           </td>
           <td>
             <div class="content">', $admin_news['parsed'], '</div>
@@ -58,7 +58,7 @@ function template_edit_news()
 
     <div>
       <div id="moreNewsItems_link" style="display: none;">
-        <a class="button is-small is-secondary" href="javascript:void(0);" onclick="addNewsItem(); return false;">', $txt['editnews_clickadd'], '</a>
+        <a class="button is-small" href="javascript:void(0);" onclick="addNewsItem(); return false;">', $txt['editnews_clickadd'], '</a>
       </div>
 
       <script type="text/javascript"><!-- // --><![CDATA[
@@ -76,15 +76,14 @@ function template_edit_news()
       </noscript>
 
       </div>
-      <div class="field is-grouped mt-4">
-        <div class="control">
-          <input type="submit" name="save_items" value="', $txt['save'], '" class="button is-primary" />
-        </div>
-        <div class="control">
-          <input type="submit" name="delete_selection" value="', $txt['editnews_remove_selected'], '" onclick="return confirm(\'', $txt['editnews_remove_confirm'], '\');" class="button is-secondary" />
-        </div>
+
+      <div class="mt-3 mb-3">
+        <input type="submit" name="save_items" value="', $txt['save'], '" class="button" />
+        <input type="submit" name="delete_selection" value="', $txt['editnews_remove_selected'], '" onclick="return confirm(\'', $txt['editnews_remove_confirm'], '\');" class="button" />
       </div>
+
       <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+
     </form>
 ';
 }
@@ -117,7 +116,6 @@ function template_email_members()
     <div class="field">
       <label class="label">', $txt['admin_news_select_group'], '</label>
       <p class="help mt-0 mb-2">', $txt['admin_news_select_group_desc'], '</p>
-      
       ';
 
       foreach ($context['groups'] as $group)
@@ -161,7 +159,7 @@ function template_email_members()
       <div class="field">
         <label class="label">', $txt['admin_news_select_email'], '</label>
         <div class="control">
-          <textarea class="textarea is-small" name="emails" rows="5" cols="30"></textarea>
+          <textarea class="textarea" name="emails" rows="5" cols="30"></textarea>
         </div>
         <p class="help">', $txt['admin_news_select_email_desc'], '</p>
       </div>
@@ -208,18 +206,16 @@ function template_email_members()
       </div>
 
       <div class="field">
-        <label class="label">', $txt['admin_news_select_override_notify'], '</label>
-        <div class="control">
-          <input type="checkbox" name="email_force" id="email_force" value="1" />
-        </div>
+        <label class="label"><input type="checkbox" name="email_force" id="email_force" value="1" />  ', $txt['admin_news_select_override_notify'], '</label>
         <p class="help">', $txt['email_force'], '</p>
       </div>
+    </div>
 
-      <div>
-        <input type="submit" value="', $txt['admin_next'], '" class="button is-primary" />
-        <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-      </div>
+    <hr>
 
+    <div class="mt-3 mb-3 xhas-text-right">
+      <input type="submit" value="', $txt['admin_next'], '" class="button" />
+      <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
     </div>
 
   </form>
@@ -309,9 +305,10 @@ function template_email_members_compose()
       </div>
     </div>
 
-    <p>
-      <input type="submit" value="', $txt['sendtopic_send'], '" class="button is-primary" />
-    </p>
+    <div class="mt-3 mb-3 xhas-text-right">
+      <input type="submit" value="', $txt['sendtopic_send'], '" class="button" />
+    </div>
+
     <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
     <input type="hidden" name="email_force" value="', $context['email_force'], '" />
     <input type="hidden" name="total_emails" value="', $context['total_emails'], '" />
@@ -345,7 +342,10 @@ function template_email_members_send()
       <strong>', $context['percentage_done'], '% ', $txt['email_done'], '</strong>
     </p>
 
-    <input type="submit" name="b" value="', $txt['email_continue'], '" class="button is-primary" />
+    <div class="mt-3 mb-3 has-text-right">
+      <input type="submit" name="b" value="', $txt['email_continue'], '" class="button" />
+    </div>
+
     <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
     <input type="hidden" name="subject" value="', $context['subject'], '" />
     <input type="hidden" name="message" value="', $context['message'], '" />
