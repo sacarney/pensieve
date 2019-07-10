@@ -1,0 +1,143 @@
+/*
+ * Special overrides for the SimplePortal mod 
+ * Duplicates .card and .columns among other things
+ *
+ */
+
+/* override portal.css */
+body { min-width: 0 !important; }
+
+/* --- .container ---*/
+
+#sp_main,
+.sp_fullwidth.sp_right {
+  margin: 0 auto;
+  position: relative;
+}
+
+@media (min-width: 1088px) {
+  #sp_main,
+  .sp_fullwidth.sp_right {
+    max-width: 960px;
+    width: 960px;
+  }
+}
+
+@media (min-width: 1280px) {
+  #sp_main,
+  .sp_fullwidth.sp_right {
+    max-width: 1152px;
+    width: 1152px;
+  }
+}
+
+@media (min-width: 1472px) {
+  #sp_main,
+  .sp_fullwidth.sp_right {
+    max-width: 1344px;
+    width: 1344px;
+  }
+}
+
+/* --- .columns .column --- */
+#sp_main,
+#sp_left,
+#sp_right,
+#sp_center,
+#sp_main > tbody {
+  display: block;
+  width: 100%;
+}
+
+#sp_main > tbody > tr {
+  display: block;
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+  margin-top: -0.75rem;
+}
+
+@media (min-width: 769px) {
+  #sp_main > tbody > tr {
+    display: flex;
+  }
+}
+
+#sp_left, 
+#sp_right,
+#sp_center {
+  display: block;
+  xflex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: 0.75rem;
+}
+
+/* .column.is-one-quarter */
+@media (min-width: 769px) {
+  #sp_left, 
+  #sp_right {
+  flex: none;
+  width: 25%;
+  }
+}
+
+
+/* --- .card --- */
+
+.sp_block_section,
+.sp_block_section_last {
+  /* .card */
+  max-width: 100%;
+  position: relative;
+  margin-bottom: 1rem;
+  
+  /* style_omen.css */
+  background-color: var(--dark);
+  box-shadow: 0 2px 3px var(--darker-overlay), 0 0 0 1px var(--darker-overlay);
+  color: var(--white);
+  
+  /* override portal.css */
+  padding-bottom: 0;
+}
+
+/* .card-header */
+.sp_block_section .cat_bar,
+.sp_block_section_last .cat_bar {
+  background-color: transparent;
+  align-items: stretch;
+  box-shadow: 0 1px 2px var(--darker-overlay);
+  display: flex;
+}
+
+/* .card-header-title */
+.sp_block_section .catbg,
+.sp_block_section_last .catbg {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  
+  margin-bottom: 0 !important;
+  padding: 0.75rem;
+  color: var(--light);
+}
+
+.sp_block_section .catbg .sp_float_right,
+.sp_block_section_last .catbg .sp_float_right {
+  float: none;
+  margin-right: 0.5rem;
+  padding: 0;
+}
+
+/* .card-content */
+.sp_block_section .windowbg,
+.sp_block_section_last .windowbg {
+  background-color: transparent;
+  padding: 0.75rem;
+  color: #afafaf;
+}
+
+
+select[name="theme"] ~ .button_submit {
+  margin-top: 1rem;
+}
+

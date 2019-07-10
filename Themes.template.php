@@ -1128,7 +1128,7 @@ function template_edit_style()
   echo '
     <form action="', $scripturl, '?action=admin;area=theme;th=', $context['theme_id'], ';sa=edit" method="post" accept-charset="', $context['character_set'], '" name="stylesheetForm" id="stylesheetForm">
       <div class="cat_bar">
-        <h3 class="title is-5 mb-4">', $txt['theme_edit'], ' - ', $context['edit_filename'], '</h3>
+        <h3 class="title is-5m mb-4">', $txt['theme_edit'], ' - ', $context['edit_filename'], '</h3>
       </div>';
 
       if (!$context['allow_save'])

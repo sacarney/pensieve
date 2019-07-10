@@ -127,7 +127,7 @@ function template_summary()
         echo'
           <div class="mb-3">', $context['member']['avatar']['image'], '</div>
           <h2 class="title is-4 mb-2">', $context['member']['name'], '</h2>
-          <p>', (!empty($context['member']['group']) ? $context['member'][
+          <p class="is-uppercase is-muted">', (!empty($context['member']['group']) ? $context['member'][
             'group'] : $context['member']['post_group']), '</p>';
           
           if (!empty($modSettings['titlesEnable']) && !empty($context['member']['title']))
@@ -156,15 +156,18 @@ function template_summary()
         if (($field['placement'] == 1 || empty($field['output_html'])) && !empty($field['value']))
         echo '
         <li class="custom_field mr-2">', $field['output_html'], '</li>';
+      echo'
+      </ul>';
     }
 
-    echo '
+    echo '<ul class="is-flex justity-content-center mt-3">
       ', !isset($context['disabled_fields']['icq']) && !empty($context['member']['icq']['link']) ? '<li>' . $context['member']['icq']['link'] . '</li>' : '', '
       ', !isset($context['disabled_fields']['msn']) && !empty($context['member']['msn']['link']) ? '<li>' . $context['member']['msn']['link'] . '</li>' : '', '
       ', !isset($context['disabled_fields']['aim']) && !empty($context['member']['aim']['link']) ? '<li>' . $context['member']['aim']['link'] . '</li>' : '', '
-      ', !isset($context['disabled_fields']['yim']) && !empty($context['member']['yim']['link']) ? '<li>' . $context['member']['yim']['link'] . '</li>' : '', '
-    </ul>';
-        echo'
+      ', !isset($context['disabled_fields']['yim']) && !empty($context['member']['yim']['link']) ? '<li>' . $context['member']['yim']['link'] . '</li>' : '', '';
+      
+      echo'
+      </ul>
         </div>
         <div class="card-footer">
           <div class="card-footer-item">
@@ -1177,16 +1180,16 @@ function template_statPanel()
     <h2 class="title is-4 mb-4">', $txt['statPanel_generalStats'], ' - ', $context['member']['name'], '</h2>
     <div>
       <dl class="columns is-multiline is-gapless">
-        <dt class="column is-4">', $txt['statPanel_total_time_online'], ':</dt>
-        <dd class="column is-8">', $context['time_logged_in'], '</dd>
-        <dt class="column is-4">', $txt['statPanel_total_posts'], ':</dt>
-        <dd class="column is-8">', $context['num_posts'], ' ', $txt['statPanel_posts'], '</dd>
-        <dt class="column is-4">', $txt['statPanel_total_topics'], ':</dt>
-        <dd class="column is-8">', $context['num_topics'], ' ', $txt['statPanel_topics'], '</dd>
-        <dt class="column is-4">', $txt['statPanel_users_polls'], ':</dt>
-        <dd class="column is-8">', $context['num_polls'], ' ', $txt['statPanel_polls'], '</dd>
-        <dt class="column is-4">', $txt['statPanel_users_votes'], ':</dt>
-        <dd class="column is-8">', $context['num_votes'], ' ', $txt['statPanel_votes'], '</dd>
+        <dt class="column is-4 no-float has-text-white">', $txt['statPanel_total_time_online'], ':</dt>
+        <dd class="column is-8 no-float">', $context['time_logged_in'], '</dd>
+        <dt class="column is-4 no-float has-text-white">', $txt['statPanel_total_posts'], ':</dt>
+        <dd class="column is-8 no-float">', $context['num_posts'], ' ', $txt['statPanel_posts'], '</dd>
+        <dt class="column is-4 no-float has-text-white">', $txt['statPanel_total_topics'], ':</dt>
+        <dd class="column is-8 no-float">', $context['num_topics'], ' ', $txt['statPanel_topics'], '</dd>
+        <dt class="column is-4 no-float has-text-white">', $txt['statPanel_users_polls'], ':</dt>
+        <dd class="column is-8 no-float">', $context['num_polls'], ' ', $txt['statPanel_polls'], '</dd>
+        <dt class="column is-4 no-float has-text-white">', $txt['statPanel_users_votes'], ':</dt>
+        <dd class="column is-8 no-float">', $context['num_votes'], ' ', $txt['statPanel_votes'], '</dd>
       </dl>
     </div>
   </div>';
@@ -1213,7 +1216,7 @@ function template_statPanel()
     {
       echo '
       <li>
-        <div class="stats-graph_bar" style="height: ', ((int) ($time_of_day['relative_percent'])), ';"></div>
+        <div class="stats-graph_bar" style="height: ', ((int) ($time_of_day['relative_percent'])), '%;"></div>
         <span class="stats-graph_hour">', $time_of_day['hour_format'], '</span>
       </li>';
 
@@ -1249,14 +1252,14 @@ function template_statPanel()
 
         else {
           echo '
-          <dl class="columns is-multiline is-gapless">';
+          <dl class="columns is-mobile is-multiline is-gapless">';
 
           // Draw a bar for every board.
           foreach ($context['popular_boards'] as $board)
           {
           echo '
-            <dt class="column is-9 mb-2">', $board['link'], '</dt>
-            <dd class="column is-3 mb-2">
+            <dt class="column is-9 mb-2 no-float">', $board['link'], '</dt>
+            <dd class="column is-3 mb-2 no-float">
               <div class="tag is-small">', empty($context['hide_num_posts']) ? $board['posts'] : '', ' (', round($board['posts_percent'], 2) ,'%)</div>
             </dd>';
           }
@@ -1287,8 +1290,8 @@ function template_statPanel()
             foreach ($context['board_activity'] as $activity)
             {
             echo '
-              <dt class="column is-9 mb-2">', $activity['link'], '</dt>
-              <dd class="column is-3 mb-2">
+              <dt class="column is-9 mb-2 no-float">', $activity['link'], '</dt>
+              <dd class="column is-3 mb-2 no-float">
                 <div class="tag is-small">', $activity['percent'], '%</div>
               </dd>';
             }
@@ -2832,40 +2835,49 @@ function template_profile_birthdate()
 // Show the signature editing box?
 function template_profile_signature_modify()
 {
-  global $txt, $context, $settings;
+  /* INCLUDES ADVANCED SIGNAUTRES */
+  global $txt, $context, $settings, $modSettings;
 
   echo '
-  <div class="field is-horizontal">
-    <div class="field-label has-text-left">
-      <label class="label">', $txt['signature'], '</label>';
-      // Spell check button
-      if ($context['show_spellchecking'])
-      echo '
-        <input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'creator\', \'signature\');" class="button" />';
+
+  <input type="hidden" name="signature" value="1">';
+
+  for ($i = 0; $i < $modSettings['max_numberofSignatures']; $i++) {
     echo'
-    </div>
-
-    <div class="field-body">
-      <div class="field">
-        <p class="help mb-2">', $txt['sig_info'], '</p>
-        <div class="control">
-          <textarea class="textarea" onkeyup="calcCharLeft();" name="signature" rows="5" cols="50">', $context['member']['signature'], '</textarea>
-        </div>';
-
-        // If there is a limit at all!
-        if (!empty($context['signature_limits']['max_length']))
-        echo '
-        <p class="help">', sprintf($txt['max_sig_characters'], $context['signature_limits']['max_length']), ' <span id="signatureLeft">', $context['signature_limits']['max_length'], '</span></p>';
-
-        // Signature warning
-        if ($context['signature_warning'])
-        echo '
-         <p class="help">', $context['signature_warning'], '</p>';
-
+      <div class="field is-horizontal">
+        <div class="field-label has-text-left">
+          <label class="label">', sprintf($txt['signature_numb'], $i + 1), '</label>';
+          // Spell check button
+          if ($context['show_spellchecking'])
+          echo '
+            <input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'creator\', \'signature\');" class="button" />';
         echo'
-      </div>
-    </div>
-  </div>';
+        </div>
+
+        <div class="field-body">
+          <div class="field">
+            <p class="help mb-2">', $txt['sig_info'], '</p>
+            <div class="control">';
+            /* <textarea class="textarea" onkeyup="calcCharLeft();" name="signature" rows="5" cols="50">', $context['member']['signature'], '</textarea> */
+              echo'
+              <textarea class="textarea" onkeyup="calcCharLeft_', $i , '();" name="signature[', $i , ']" rows="5" cols="50">', isset($context['member']['signature'][$i]) ? $context['member']['signature'][$i] : '' , '</textarea>
+            </div>';
+
+            // If there is a limit at all!
+            if (!empty($context['signature_limits']['max_length']))
+            echo '
+            <p class="help">', sprintf($txt['max_sig_characters'], $context['signature_limits']['max_length']), ' <span id="signatureLeft">', $context['signature_limits']['max_length'], '</span></p>';
+
+            // Signature warning
+            if ($context['signature_warning'])
+            echo '
+             <p class="help">', $context['signature_warning'], '</p>';
+
+            echo'
+          </div>
+        </div>
+      </div>';
+      }
 
   // Load the spell checker?
   if ($context['show_spellchecking'])
@@ -2874,7 +2886,7 @@ function template_profile_signature_modify()
   // Some javascript used to count how many characters have been used so far in the signature.
   echo '
     <script type="text/javascript"><!-- // --><![CDATA[
-      function tick()
+      function tick', $i , '()
       {
         if (typeof(document.forms.creator) != "undefined")
         {
@@ -2885,7 +2897,7 @@ function template_profile_signature_modify()
           setTimeout("tick()", 800);
       }
 
-      function calcCharLeft()
+      function calcCharLeft_', $i , '()
       {
         var maxLength = ', $context['signature_limits']['max_length'], ';
         var oldSignature = "", currentSignature = document.forms.creator.signature.value;
@@ -2905,7 +2917,7 @@ function template_profile_signature_modify()
         setInnerHTML(document.getElementById("signatureLeft"), maxLength - currentSignature.length);
       }
 
-      addLoadEvent(tick);
+      addLoadEvent(tick', $i , ');
     // ]]></script>';
 }
 

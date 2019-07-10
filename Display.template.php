@@ -342,7 +342,7 @@ function template_main()
           // Who is viewing
           if (!empty($settings['display_who_viewing']))
           {
-            echo '<span id="whoisviewing" class="is-muted is-size-6-5">&nbsp;/ ';
+            echo '<span id="whoisviewing" class="is-muted is-size-6-5"> / ';
 
             // Show just numbers...?
             if ($settings['display_who_viewing'] == 1)
@@ -560,6 +560,17 @@ function template_main()
                           </div>
                       ';
                   }
+
+
+                  // This shows the popular messaging icons.
+                  if ($message['member']['has_messenger'] && $message['member']['can_view_profile'])
+                    echo '
+                    <ul class="is-flex justity-content-center mt-3">
+                      ', !empty($message['member']['icq']['link']) ? '<li>' . $message['member']['icq']['link'] . '</li>' : '', '
+                      ', !empty($message['member']['msn']['link']) ? '<li>' . $message['member']['msn']['link'] . '</li>' : '', '
+                      ', !empty($message['member']['aim']['link']) ? '<li>' . $message['member']['aim']['link'] . '</li>' : '', '
+                      ', !empty($message['member']['yim']['link']) ? '<li>' . $message['member']['yim']['link'] . '</li>' : '', '
+                    </ul>';
 
                   // Are we showing the warning status?
                   if ($message['member']['can_see_warning'])

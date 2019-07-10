@@ -110,7 +110,9 @@ function template_main()
     <form action="', $scripturl, '?action=', $context['destination'], ';', empty($context['current_board']) ? '' : 'board=' . $context['current_board'], '" method="post" accept-charset="', $context['character_set'], '" name="postmodify" id="postmodify" class="flow_hidden" onsubmit="', ($context['becomes_approved'] ? '' : 'alert(\'' . $txt['js_post_will_require_approval'] . '\');'), 'submitonce(this);smc_saveEntities(\'postmodify\', [\'subject\', \'', $context['post_box_name'], '\', \'guestname\', \'evtitle\', \'question\'], \'options\');" enctype="multipart/form-data">';
 
   // If the user wants to see how their message looks - the preview section is where it's at!
-  echo '
+  // DRAFTS component
+  if (!isset($context['draft_saved']) || $context['draft_saved'] !== true)
+    echo '
       <div id="preview_section"', isset($context['preview_message']) ? '' : ' style="display: none;"', '>
         <div class="cat_bar">
           <h2 class="title is-5 mb-1">
@@ -136,6 +138,15 @@ function template_main()
     <div>', isset($context['current_topic']) ? '
       <input type="hidden" name="topic" value="' . $context['current_topic'] . '" />' : ''
       ;
+
+  // DRAFTS
+    if (isset($context['draft_saved']) && $context['draft_saved'] === true)
+    {
+      echo '
+        <div id="drafts-success" class="message is-success">
+          <div class="message-body">', $txt['drafts'][1], '</div>
+        </div>';
+    }
 
   // If an error occurred, explain what happened.
   echo '
@@ -211,6 +222,9 @@ function template_main()
         </div>';
   }
 
+  // Drafts Modification for SMF 2.0 / 1.1
+  if (!$context['make_event'] && ($drafts_template_loaded = loadTemplate('Drafts', false)) !== false)
+    template_drafts_post_extra_inputs();
   // Now show the subject box for this post.
 
   // SUBACCOUNTS
@@ -541,7 +555,7 @@ function template_main()
     echo '<div class="type-your-post mb-4">
           ', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message') , '</div>';
 
-  // @TODO If this message has been edited in the past - display when it was.
+  // If this message has been edited in the past - display when it was.
   if (isset($context['last_modified']))
     echo '
       <div class="notification is-size-6-5 p-2 mt-3">
@@ -576,31 +590,31 @@ function template_main()
       </div>
     ';
 
-  // @TODO If this post already has attachments on it - give information about them.
-  if (!empty($context['current_attachments']))
-  {
-    echo '
-          <dl id="postAttachment" class="pensieve-post-attachments">
-            <dt class="is-size-5">
-              ', $txt['attached'], ':
-            </dt>
-            <dd class="help">
-              <input type="hidden" name="attach_del[]" value="0" />
-              ', $txt['uncheck_unwatchd_attach'], ':
-            </dd>';
-    foreach ($context['current_attachments'] as $attachment)
+    // @TODO If this post already has attachments on it - give information about them.
+    if (!empty($context['current_attachments']))
+    {
       echo '
-            <dd class="smalltext">
-              <label for="attachment_', $attachment['id'], '"><input type="checkbox" id="attachment_', $attachment['id'], '" name="attach_del[]" value="', $attachment['id'], '"', empty($attachment['unchecked']) ? ' checked="checked"' : '', ' class="input_check" /> ', $attachment['name'], (empty($attachment['approved']) ? ' (' . $txt['awaiting_approval'] . ')' : ''), '</label>
-            </dd>';
-    echo '
-          </dl>';
-  }
+            <dl id="postAttachment" class="pensieve-post-attachments">
+              <dt class="is-size-5">
+                ', $txt['attached'], ':
+              </dt>
+              <dd class="help">
+                <input type="hidden" name="attach_del[]" value="0" />
+                ', $txt['uncheck_unwatchd_attach'], ':
+              </dd>';
+      foreach ($context['current_attachments'] as $attachment)
+        echo '
+              <dd class="smalltext">
+                <label for="attachment_', $attachment['id'], '"><input type="checkbox" id="attachment_', $attachment['id'], '" name="attach_del[]" value="', $attachment['id'], '"', empty($attachment['unchecked']) ? ' checked="checked"' : '', ' class="input_check" /> ', $attachment['name'], (empty($attachment['approved']) ? ' (' . $txt['awaiting_approval'] . ')' : ''), '</label>
+              </dd>';
+      echo '
+            </dl>';
+    }
 
-  // @TODO Is the user allowed to post any additional ones? If so give them the boxes to do it!
-  if ($context['can_post_attachment'])
-  {
-    echo '
+    //Is the user allowed to post any additional ones? If so give them the boxes to do it!
+    if ($context['can_post_attachment'])
+    {
+      echo '
           <dl id="postAttachment2" class="pensieve-post-attachments">
             <dt class="is-size-5">
               ', $txt['attach'], ':
@@ -608,9 +622,9 @@ function template_main()
             <dd class="smalltext">
               <input type="file" size="60" name="attachment[]" id="attachment1" class="input_file" /> (<a href="javascript:void(0);" onclick="cleanFileInput(\'attachment1\');">', $txt['clean_attach'], '</a>)';
 
-    // Show more boxes only if they aren't approaching their limit.
-    if ($context['num_allowed_attachments'] > 1)
-      echo '
+            // Show more boxes only if they aren't approaching their limit.
+            if ($context['num_allowed_attachments'] > 1)
+              echo '
               <script type="text/javascript"><!-- // --><![CDATA[
                 var allowed_attachments = ', $context['num_allowed_attachments'], ';
                 var current_attachment = 1;
@@ -630,27 +644,56 @@ function template_main()
             </dd>
             <dd class="smalltext" id="moreAttachments"><a href="#" onclick="addAttachment(); return false;">(', $txt['more_attachments'], ')</a></dd>';
 
-    echo '
-            <dd class="smalltext">';
+          echo '
+            <dd>';
+              // Show some useful information such as allowed extensions, maximum size and amount of attachments allowed.
+              if (!empty($modSettings['attachmentCheckExtensions']))
+                echo '
+                ', $txt['allowed_types'], ': ', $context['allowed_extensions'], '<br />';
 
-    // Show some useful information such as allowed extensions, maximum size and amount of attachments allowed.
-    if (!empty($modSettings['attachmentCheckExtensions']))
-      echo '
-              ', $txt['allowed_types'], ': ', $context['allowed_extensions'], '<br />';
+              if (!empty($context['attachment_restrictions']))
+                echo '
+                ', $txt['attach_restrictions'], ' ', implode(', ', $context['attachment_restrictions']), '<br />';
 
-    if (!empty($context['attachment_restrictions']))
-      echo '
-              ', $txt['attach_restrictions'], ' ', implode(', ', $context['attachment_restrictions']), '<br />';
+              if (!$context['can_post_attachment_unapproved'])
+                echo '
+                <span class="alert">', $txt['attachment_requires_approval'], '</span>', '<br />';
 
-    if (!$context['can_post_attachment_unapproved'])
-      echo '
-              <span class="alert">', $txt['attachment_requires_approval'], '</span>', '<br />';
-
-    echo '
+              echo '
             </dd>
-          </dl>
-        </fieldset>';
-  }
+          </dl>';
+    }
+
+      // ADVANCED SIGNATURE Show the available signatures for the poster
+      if(!empty($context['avail_signatures'])) {
+        echo '
+        
+        <div id="multiplesignatures">
+          <hr>
+          <div class="field is-horizontal">
+            <div class="field-label">
+              <label class="label" >' . $txt['signature'] . '</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <div class="select">
+                  <select name="multiplesignatures">';
+                    foreach($context['avail_signatures'] as $sign){
+                      echo '
+                        <option value="' . $sign['name'] . '"' . (($sign['selected']) ? '  selected="selected"' : '') . '>' . $sign['label'] . '</option>';
+                    }
+                    echo '
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>';
+      }
+
+      echo'
+    </fieldset>';
+  
 
   // @TODO Is visual verification enabled?
   if ($context['require_verification'])
@@ -671,6 +714,10 @@ function template_main()
           </p>
           <p id="post_confirm_buttons" class="righttext">
             ', template_control_richedit_buttons($context['post_box_name']);
+
+  // DRAFTS
+  if (!$context['make_event'] && $drafts_template_loaded !== false)
+    template_drafts_post_save_as_draft_button();
 
   // Option to delete an event if user is editing one.
   if ($context['make_event'] && !$context['event']['new'])
@@ -693,6 +740,10 @@ function template_main()
       <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
       <input type="hidden" name="seqnum" value="', $context['form_sequence_number'], '" />
     </form></div>';
+
+  // DRAFTS
+    if (!$context['make_event'] && $drafts_template_loaded !== false)
+    template_drafts_post_list_of_drafts();
 
   echo '
     <script type="text/javascript"><!-- // --><![CDATA[';
@@ -838,11 +889,11 @@ function template_main()
 
             newPostsHTML += \'<div class="windowbg\' + (++reply_counter % 2 == 0 ? \'2\' : \'\') + \' core_posts"><span class="topslice"><span></span></span><div class="content" id="msg\' + newPosts[i].getAttribute("id") + \'"><div class="floatleft"><h5>', $txt['posted_by'], ': \' + newPosts[i].getElementsByTagName("poster")[0].firstChild.nodeValue + \'</h5><span class="smalltext">&#171;&nbsp;<strong>', $txt['on'], ':</strong> \' + newPosts[i].getElementsByTagName("time")[0].firstChild.nodeValue + \'&nbsp;&#187;</span> <img src="\' + smf_images_url + \'/', $context['user']['language'], '/new.gif" alt="', $txt['preview_new'], '" id="image_new_\' + newPosts[i].getAttribute("id") + \'" /></div>\';';
 
-  if ($context['can_quote'])
-    echo '
+        if ($context['can_quote'])
+          echo '
             newPostsHTML += \'<ul class="reset smalltext quickbuttons" id="msg_\' + newPosts[i].getAttribute("id") + \'_quote"><li class="quote_button"><a href="#postmodify" onclick="return insertQuoteFast(\\\'\' + newPosts[i].getAttribute("id") + \'\\\');"><span>',$txt['bbc_quote'],'</span><\' + \'/a></li></ul>\';';
 
-  echo '
+          echo '
             newPostsHTML += \'<br class="clear" />\';
 
             if (ignoring)
@@ -896,7 +947,8 @@ function template_main()
           \'postMoreOptions\',
           \'postAttachment\',
           \'postAttachment2\',
-          \'postAttachment3\'
+          \'postAttachment3\',
+          \'multiplesignatures\'
         ],
         aSwapImages: [
           {
@@ -916,7 +968,7 @@ function template_main()
         ]
       });';
 
-  echo '
+    echo '
     // ]]></script>';
 
   // If the user is replying to a topic show the previous posts.
@@ -982,25 +1034,25 @@ function template_main()
     <script type="text/javascript"><!-- // --><![CDATA[
       var aIgnoreToggles = new Array();';
 
-    foreach ($ignored_posts as $post_id)
-    {
-      echo '
-      aIgnoreToggles[', $post_id, '] = new smc_Toggle({
-        bToggleEnabled: true,
-        bCurrentlyCollapsed: true,
-        aSwappableContainers: [
-          \'msg_', $post_id, '_body\',
-          \'msg_', $post_id, '_quote\',
-        ],
-        aSwapLinks: [
-          {
-            sId: \'msg_', $post_id, '_ignored_link\',
-            msgExpanded: \'\',
-            msgCollapsed: ', JavaScriptEscape($txt['show_ignore_user_post']), '
-          }
-        ]
-      });';
-    }
+      foreach ($ignored_posts as $post_id)
+      {
+        echo '
+        aIgnoreToggles[', $post_id, '] = new smc_Toggle({
+          bToggleEnabled: true,
+          bCurrentlyCollapsed: true,
+          aSwappableContainers: [
+            \'msg_', $post_id, '_body\',
+            \'msg_', $post_id, '_quote\',
+          ],
+          aSwapLinks: [
+            {
+              sId: \'msg_', $post_id, '_ignored_link\',
+              msgExpanded: \'\',
+              msgCollapsed: ', JavaScriptEscape($txt['show_ignore_user_post']), '
+            }
+          ]
+        });';
+      }
 
     echo '
       function insertQuoteFast(messageid)

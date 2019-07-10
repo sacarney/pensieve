@@ -1,0 +1,27 @@
+/*
+ * Special overrides for the Footnotes mod 
+ * Duplicates .card and .columns among other things
+ *
+ */
+
+table.footnotes {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  border-top: 1px solid var(--light-overlay);
+}
+
+table.footnotes .footnum,
+table.footnotes .footnote {
+  padding: 0.25em 0.5em;
+}
+
+table.footnotes .footnum a {
+  text-decoration: none;
+}
+
+a.fnotel {
+  position: relative;
+  top: -0.5em;
+  font-size: 0.85rem;
+  text-decoration: none;
+}

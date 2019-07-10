@@ -221,6 +221,7 @@ function template_folder()
         // Show information about the poster of this message.
           echo '
           <aside class="column is-one-fifth p-0">
+          <a id="msg', $message['id'], '"></a>
             <div class="card ">
               <div class="card-header ">
                 <div class="card-header-title">';
@@ -351,38 +352,53 @@ function template_folder()
                     <p class="is-muted">', $message['member']['blurb'], '</p>
                   </div>';
 
-                // Any custom fields to show as icons?
-                if (!empty($message['member']['custom_fields']))
-                {
-                  $shown = false;
-                  foreach ($message['member']['custom_fields'] as $custom)
-                  {
-                    if ($custom['placement'] != 1 || empty($custom['value']))
-                      continue;
-                    if (empty($shown))
-                    {
-                      $shown = true;
-                      echo '
-                        
-                            <ul>';
-                    }
-                    echo '
-                              <li>', $custom['value'], '</li>';
-                  }
-                  if ($shown)
-                    echo '
-                            </ul>
-                    ';
-                }
-
                 // Any custom fields for standard placement?
-                if (!empty($message['member']['custom_fields']))
-                {
-                  foreach ($message['member']['custom_fields'] as $custom)
-                    if (empty($custom['placement']) || empty($custom['value']))
+                  if (!empty($message['member']['custom_fields']))
+                  {
+                    echo'<div class="card-content is-size-6-5 is-hidden-mobile">';
+
+                    foreach ($message['member']['custom_fields'] as $custom)
+                      if (empty($custom['placement']) || empty($custom['value']))
+                        echo '<div class="mb-2">', $custom['value'], '</div>';
+                    echo '</div>';
+                  }
+
+                  // Any custom fields to show as icons?
+                  if (!empty($message['member']['custom_fields']))
+                  {
+                    $shown = false;
+                    foreach ($message['member']['custom_fields'] as $custom)
+                    {
+                      if ($custom['placement'] != 1 || empty($custom['value']))
+                        continue;
+                      if (empty($shown))
+                      {
+                        $shown = true;
+                        echo '
+                          <div class="card-content is-size-6-5 is-hidden-mobile">
+                            <ul class="is-flex">';
+                      }
                       echo '
-                          <li class="custom">', $custom['title'], ': ', $custom['value'], '</li>';
-                }
+                            <li class="mr-2">', $custom['value'], '</li>';
+                    }
+                    if ($shown)
+                      echo '
+                            </ul>
+                          </div>
+                      ';
+                  }
+
+                  // This shows the popular messaging icons.
+                    if ($message['member']['has_messenger'] && $message['member']['can_view_profile'])
+                      echo '
+                    <div class="card-content is-size-6-5 is-hidden-mobile">
+                      <ul class="is-flex">', !isset($context['disabled_fields']['icq']) && !empty($message['member']['icq']['link']) ? '
+                        <li>' . $message['member']['icq']['link'] . '</li>' : '', !isset($context['disabled_fields']['msn']) && !empty($message['member']['msn']['link']) ? '
+                        <li>' . $message['member']['msn']['link'] . '</li>' : '', !isset($context['disabled_fields']['aim']) && !empty($message['member']['aim']['link']) ? '
+                        <li>' . $message['member']['aim']['link'] . '</li>' : '', !isset($context['disabled_fields']['yim']) && !empty($message['member']['yim']['link']) ? '
+                        <li>' . $message['member']['yim']['link'] . '</li>' : '', '
+                      </ul>
+                    </div>';
 
                 // Are we showing the warning status?
                 if ($message['member']['can_see_warning'])
@@ -443,7 +459,7 @@ function template_folder()
 
         // The post
           echo'
-          <div class="column is-four-fifths p-0 the-post">
+          <div class="column is-four-fifths p-0 the-post" id="msg_', $message['id'], '"', '>
 
             <header class="columns">
               <div class="column pb-0">
@@ -1252,7 +1268,7 @@ function template_send()
         <div id="smileyBox_message"></div>';
     }
 
-    echo '<div class="type-your-post">', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message') , '</div>';
+    echo '<div class="type-your-post mt-3">', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message') , '</div>';
 
   // Require an image to be typed to save spamming?
   if ($context['require_verification'])
@@ -1263,6 +1279,20 @@ function template_send()
       ', template_control_verification($context['visual_verification_id'], 'all'), '
     </div>';
   }
+
+  // ADVANCED SIGNATURE
+    echo '
+    <div class="mt-3">
+      <div class="select">
+        <select name="multiplesignatures">';
+          foreach($context['avail_signatures'] as $sign){
+          echo '
+                    <option value="' . $sign['name'] . '"' . (($sign['selected']) ? '  selected="selected"' : '') . '>' . $sign['label'] . '</option>';
+          }
+        echo '
+        </select>
+      </div>
+    </div>';
 
   // Send, Preview, spellcheck buttons.
   echo '

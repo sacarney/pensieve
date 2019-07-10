@@ -16,7 +16,7 @@ function template_main()
 
   // BOARD INDEX
   echo'
-  <div class="container">
+  <div class="container pensieve-board-index">
   ';
 
   // NEWS

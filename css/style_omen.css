@@ -17,6 +17,7 @@
   --grey-1: #272b30; /* darkest */
   --grey-2: #444;
   --grey-3: #676767; 
+  --grey-4: #afafaf;
 
   --lightcyan: #65CDC4;
   --cyan: #45C3B8; /* Works with #333 */
@@ -31,9 +32,9 @@
   --warning: #ffdd57;
   --danger: #ff3860;
 
-  --white: #f0f0f0;
+  --white: #f2f2f2;
   --black: #0a0a0a;
-  --light: #f5f5f5;
+  --light: #c5c5c5;
   --dark: #363636;
 
   --light-overlay: rgba(255, 255, 255, 0.1);
@@ -45,7 +46,7 @@
 html { background-color: var(--dark); }
 
 body { 
-  color: var(--white);  
+  color: var(--light);  
   background-image: url(../images/theme/aobg2.jpg); 
   background-attachment: fixed; 
 }
@@ -64,7 +65,7 @@ body, button, input, select, textarea {
 }
 
 #maincontent > .container,
-#centerContainer > .container /* TinyPortal */ {
+#sp_center > .container:not(.pensieve-board-index) /* SimplePortal */ {
   padding: 1rem;
   background-color: var(--dark);
 }
@@ -93,7 +94,9 @@ code { color: var(--white); }
 
 hr { background-color: var(--darkcyan); }
 
-strong, table th { color: var(--light); }
+table th { color: var(--light); }
+
+strong { color: inherit; }
 
 fieldset {
   border-color: var(--grey-3);
@@ -134,7 +137,7 @@ fieldset {
 }
 
 .the-post-content {
-  color: #afafaf;
+  color: var(--light);
 }
 
 
@@ -271,7 +274,7 @@ a.has-text-danger:hover {
 .box {
   background: var(--dark-overlay);
   box-shadow:0 2px 3px rgba(10, 10, 10, .1), 0 0 0 1px rgba(10, 10, 10, .1);
-  color: var(--white);
+  color: var(--grey-4);
 }
 
 a.box:focus,
@@ -1405,7 +1408,7 @@ a.box:active {
 .table th {
   border: 1px solid transparent;
   border-width: 0 0 1px;
-  padding: 0.5em 0.75em;
+  padding: 0.25em 0.5em;
   vertical-align:top
 }
 
@@ -1420,10 +1423,6 @@ a.box:active {
 .table th {
   color: var(--light);
   text-align:left
-}
-
-.content table tr:hover {
-  background-color: var(--dark)
 }
 
 .content table thead td,
