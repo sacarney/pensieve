@@ -66,8 +66,15 @@ body, button, input, select, textarea {
 
 #maincontent > .container,
 #sp_center > .container:not(.pensieve-board-index) /* SimplePortal */ {
+  width: 100%;
+  min-width: 0;
   padding: 1rem;
   background-color: var(--dark);
+}
+
+.container > .container {
+  width: 100%;
+  min-width: 0;
 }
 
 .pensieve-login-container {
