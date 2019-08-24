@@ -488,6 +488,21 @@ function template_modify_board()
             </dl>
           </div>';
 
+    // ADVANCED SIGNATURE
+    if (!empty($context['signature_enabled']))
+      echo '
+          <div id="disable_signatures_div">
+            <dl class="settings">
+              <dt>
+                <strong>', $txt['mboards_disabled_signatures'], ':</strong><br />
+                <span class="smalltext">', $txt['mboards_disabled_signatures_desc'], '</span><br />
+              </dt>
+              <dd>
+                <input type="checkbox" name="disabled_signatures"', $context['board']['disabled_signatures'] ? ' checked="checked"' : '', ' class="input_check" />
+              </dd>
+            </dl>
+          </div>';
+
   if (!empty($context['board']['is_recycle']))
     echo '<div class="information">', $txt['mboards_recycle_disabled_delete'], '</div>';
 
