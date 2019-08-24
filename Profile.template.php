@@ -140,10 +140,20 @@ function template_summary()
         ';
         
         // Show the users signature.
+        /*
         if ($context['signature_enabled'] && !empty($context['member']['signature']))
         echo '
           <hr>
           <div class="content has-text-left">', $context['member']['signature'], '</div>';
+        */
+        
+        // Show the users signature. ADVANCED SIGNATURE
+        for ($i=0; $i<count($context['member']['signature']) && $i<$modSettings['max_numberofSignatures']; $i++){
+          if ($context['signature_enabled'] && !empty($context['member']['signature']))
+          echo '<hr>
+            <div class="content has-text-left">', $context['member']['signature'][$i], '
+            </div>';
+  }
   
 
       // Are there any custom profile fields for the summary?
@@ -1016,7 +1026,8 @@ function template_showPermissions()
   echo '
     <div class="catbg">
       <h2 class="title is-4 mb-4">
-        <img src="', $settings['images_url'], '/icons/profile_sm.gif" alt="" class="icon" />', $txt['showPermissions'], '
+        <span class="fa fa-user-circle"></span>
+        <span>', $txt['showPermissions'], '</span>
       </h2>
     </div>';
 
