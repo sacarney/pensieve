@@ -201,13 +201,13 @@ function template_FormList()
           {
             echo '
             <tr class="windowbg">
-              <td style="padding:4px;" >
+              <td>
                 <a href="' , $scripturl , '?action=form;n=' , $form['id'] ,'">' , $form['title'] , '</a>
               </td>
-              <td style="padding:4px;" >
+              <td>
                 <a href="' , $scripturl , '?board=' , $form['id_board'] ,'">' , $form['board'] , '</a>
               </td>
-              <td style="padding:4px;" >
+              <td>
                 <a href="' , $scripturl , '?action=form;n=' , $form['id'] ,'">' , $txt['view'] , '</a>
               </td>
             </tr>';
@@ -218,7 +218,7 @@ function template_FormList()
         {
           echo '
                   <tr class="windowbg">
-                    <td style="padding:4px;" colspan="3">
+                    <tdcolspan="3">
                       ' , $txt['CustomForm_list_noelements'] , '
                     </td>
                   </tr>';
@@ -448,16 +448,16 @@ function template_ThankYou()
 
           <table style="width:100%;background-color:#000000;" align="center">
             <tr class="windowbg">
-              <td style="padding:4px;" colspan="3" align="center">
+              <tdcolspan="3" align="center">
               <b> ' , $txt['CustomForm_thankyou'] , '</b>
               </td>
             </tr>
 
             <tr class="titlebg">
-              <td style="padding:4px;" style="width:45%;" align="center">
+              <tdstyle="width:45%;" align="center">
               <a href="'.$scripturl.'"> ' , $txt['CustomForm_forum'] , '</a>
               </td>
-              <td style="padding:4px;" style="width:45%;" align="center">
+              <tdstyle="width:45%;" align="center">
               <a href="'.$scripturl.'?action=form;">  ' , $txt['CustomForm_list'] , '</a>
               </td>
             </tr>'; 
