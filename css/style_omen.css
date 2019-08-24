@@ -72,7 +72,7 @@ body, button, input, select, textarea {
   background-color: var(--dark);
 }
 
-.container > .container {
+.container .container {
   width: 100%;
   min-width: 0;
 }
