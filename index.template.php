@@ -137,13 +137,17 @@ function template_html_above()
   echo '
   <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/subaccounts.css">';
 
-  // SIMPLEPORTAL - this theme as a custom CSS file to re-style SimplePortal
+  // SIMPLEPORTAL - this theme has a custom CSS file to re-style SimplePortal
   echo'
   <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/simpleportal.css">';
 
-  // FOOTNOTES - this theme as a custom CSS file to re-style Footnotes
+  // FOOTNOTES - this theme has a custom CSS file to re-style Footnotes
   echo'
   <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/footnotes.css">';
+
+  // TAGS - this theme has a custom CSS file to re-style Tagging System for Topics
+  echo'
+  <link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/tags.css">';
 
   // Here comes the JavaScript bits!
   echo '

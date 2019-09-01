@@ -305,9 +305,9 @@ function template_main()
       echo '
       <div class="container is-flex flex-wrap align-items-center mt-2 mb-2">
 
-        <h2 class="title is-6 mb-0 mr-2">', $txt['smftags_topic'], '</h2>';
+        <h2 class="title is-6 mb-0 mr-2 mb-1">', $txt['smftags_topic'], '</h2>';
 
-        echo'<ul class="tags mb-0">';
+        echo'<ul class="tags mb-0 pensieve-tags">';
 
         foreach ($context['topic_tags'] as $i => $tag)
         {
@@ -1043,6 +1043,13 @@ function template_main()
           <input class="button is-primary" type="submit" name="post" value="', $txt['post'], '" onclick="return submitThisOnce(this);" accesskey="s" tabindex="', $context['tabindex']++, '" class="button is-primary" />
           <input class="button" type="submit" name="preview" value="', $txt['preview'], '" onclick="return submitThisOnce(this);" accesskey="p" tabindex="', $context['tabindex']++, '" class="button is-primary" />';
 
+
+      // Add drafts
+      if (!empty($context['save_draft']))
+        echo '
+        <input type="hidden" name="drafts-save_as_draft" id="drafts-save_as_draft" value="0" />
+        <input type="submit" onclick="document.getElementById(\'drafts-save_as_draft\').value = \'1\';" value="', $txt['drafts'][14], '" class="button_submit" />';
+        
       if ($context['show_spellchecking'])
         echo '
             <input class="button" type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'postmodify\', \'message\');" tabindex="', $context['tabindex']++, '" class="button is-primary" />';

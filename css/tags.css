@@ -1,0 +1,9 @@
+/*
+ * Special overrides for the TAGS mod 
+ *
+ */
+
+
+.pensieve-tags .tags:last-child {
+  margin-bottom: 0;
+}
