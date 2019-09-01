@@ -10,6 +10,10 @@ table.footnotes {
   border-top: 1px solid var(--light-overlay);
 }
 
+table.footnotes .footnum {
+  width: 2rem;
+}
+
 table.footnotes .footnum,
 table.footnotes .footnote {
   padding: 0.25em 0.5em;

@@ -544,3 +544,7 @@ dl.settings dt a.help {
 .error {
   color: var(--danger);
 }
+
+.bbc_u {
+  text-decoration: underline;
+}
