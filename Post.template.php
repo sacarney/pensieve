@@ -383,7 +383,8 @@ function template_main()
         echo '
                   <li>
                     ', $txt['calendar_post_in'], '
-                    <select name="board">';
+                    <div class="select">
+                      <select name="board">';
         foreach ($context['event']['categories'] as $category)
         {
           echo '
@@ -396,6 +397,7 @@ function template_main()
         }
         echo '
                     </select>
+                  </div>
                   </li>';
       }
 
