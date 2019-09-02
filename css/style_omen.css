@@ -281,7 +281,7 @@ a.has-text-danger:hover {
 .box {
   background: var(--dark-overlay);
   box-shadow:0 2px 3px rgba(10, 10, 10, .1), 0 0 0 1px rgba(10, 10, 10, .1);
-  color: var(--grey-4);
+  color: var(--light);
 }
 
 a.box:focus,

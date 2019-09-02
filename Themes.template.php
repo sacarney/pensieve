@@ -623,6 +623,7 @@ function template_set_settings()
             echo '
                 <hr>';
           }
+
           // A checkbox?
           elseif ($setting['type'] == 'checkbox')
           {
@@ -633,9 +634,11 @@ function template_set_settings()
                 <div class="field-body">
                   <div class="field">
                   <label for="', $setting['id'], '">
-                    <input type="checkbox" name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" id="', $setting['id'], '"', !empty($setting['value']) ? ' checked="checked"' : '', ' value="1" class="input_check" />  ', $setting['label'], '
+                  <input type="hidden" name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" value="0" />
+                    <input type="checkbox" name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" id="', $setting['id'], '"', !empty($setting['value']) ? ' checked="checked"' : '', ' value="1" class="input_check" />  
+                    ', $setting['label'], '
                     </label>
-                    <input type="hidden" name="', !empty($setting['default']) ? 'default_' : '', 'options[', $setting['id'], ']" value="0" />
+                    
                   ';
                   if (isset($setting['description']))
                   echo '<div class="help">', $setting['description'], '</div>';
