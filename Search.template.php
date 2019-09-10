@@ -566,32 +566,33 @@ function template_results()
           <div>
             <h3>', $topic['board']['link'], ' / <a href="', $scripturl, '?topic=', $topic['id'], '.', $message['start'], ';topicseen#msg', $message['id'], '">', $message['subject_highlighted'], '</a>
             </h3>
-            <p class="is-size-7">', $txt['message'], ' ', $txt['by'], ' ', $message['member']['link'], ' ', $txt['on'], '', $message['time'],'</p>
+            <p class="is-size-7">', $txt['message'], ' ', $txt['by'], ' ', $message['member']['link'], ' ', $txt['on'], ' ', $message['time'],'</p>
           </div>
         </div>
         <hr class="mt-2">
 
         <div class="content">', $message['body_highlighted'], '</div>
-      </div>';
+
+        <hr>';
 
         if ($topic['can_reply'] || $topic['can_mark_notify'])
           echo '
             <div class="quickbuttons_wrap">
-              <ul class="reset smalltext quickbuttons">';
+              <ul class="is-flex">';
                 // If they *can* reply?
                 if ($topic['can_reply'])
                   echo '
-                        <li class="reply_button"><a href="', $scripturl . '?action=post;topic=' . $topic['id'] . '.' . $message['start'], '">', $txt['reply'], '</a></li>';
+                        <li class="reply_button"><a class="button is-small is-secondary mr-1" href="', $scripturl . '?action=post;topic=' . $topic['id'] . '.' . $message['start'], '">', $txt['reply'], '</a></li>';
 
                 // If they *can* quote?
                 if ($topic['can_quote'])
                   echo '
-                        <li class="quote_button"><a href="', $scripturl . '?action=post;topic=' . $topic['id'] . '.' . $message['start'] . ';quote=' . $message['id'] . '">', $txt['quote'], '</a></li>';
+                        <li class="quote_button"><a class="button is-small is-secondary mr-1" href="', $scripturl . '?action=post;topic=' . $topic['id'] . '.' . $message['start'] . ';quote=' . $message['id'] . '">', $txt['quote'], '</a></li>';
 
                 // Can we request notification of topics?
                 if ($topic['can_mark_notify'])
                   echo '
-                        <li class="notify_button"><a href="', $scripturl . '?action=notify;topic=' . $topic['id'] . '.' . $message['start'], '">', $txt['notify'], '</a></li>';
+                        <li class="notify_button"><a class="button is-small is-secondary" href="', $scripturl . '?action=notify;topic=' . $topic['id'] . '.' . $message['start'], '">', $txt['notify'], '</a></li>';
 
                 if ($topic['can_reply'] || $topic['can_mark_notify'])
                   echo '
@@ -599,6 +600,10 @@ function template_results()
             </div>';
 
       }
+      echo'
+      </div>';
+
+
     }
 
     // Pagination
