@@ -126,6 +126,11 @@ legend { padding: 0 1rem; }
   z-index: 50;
 }
 
+.pensieve-profile-bar-avatar img {
+  max-width: 1.75rem;
+  max-height: 1.75rem;
+}
+
 .breadcrumb ul {
   display: flex;
   flex-wrap: wrap;
@@ -547,4 +552,24 @@ dl.settings dt a.help {
 
 .bbc_u {
   text-decoration: underline;
+}
+
+/* Styles used by the auto suggest control.
+------------------------------------------------------- */
+.auto_suggest_div
+{
+  border: 1px solid #000;
+  position: absolute;
+  visibility: hidden;
+  background: var(--dark);
+}
+.auto_suggest_item
+{
+  background-color: var(--dark);
+}
+.auto_suggest_item_hover
+{
+  background-color: var(--darkcyan);
+  cursor: pointer;
+  color: #eee;
 }
