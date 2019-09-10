@@ -150,6 +150,7 @@ function template_control_richedit($editor_id, $smileyContainer = null, $bbcCont
                 sName: \'sel_face\',
                 oOptions: {
                   \'\': ', JavaScriptEscape($txt['font_face']), ',
+                  \'amaranth\': \'Amaranth\',
                   \'courier\': \'Courier\',
                   \'arial\': \'Arial\',
                   \'arial black\': \'Arial Black\',
@@ -189,21 +190,23 @@ function template_control_richedit($editor_id, $smileyContainer = null, $bbcCont
                 sName: \'sel_color\',
                 oOptions: {
                   \'\': ', JavaScriptEscape($txt['change_color']), ',
-                  \'black\': ', JavaScriptEscape($txt['black']), ',
-                  \'red\': ', JavaScriptEscape($txt['red']), ',
-                  \'yellow\': ', JavaScriptEscape($txt['yellow']), ',
+                  \'cyan\': ', JavaScriptEscape($txt['cyan']), ',
+                  \'darkcyan\': ', JavaScriptEscape($txt['darkcyan']), ',
+                  \'gray\': ', JavaScriptEscape($txt['gray']), ',
+                  \'crimson\': ', JavaScriptEscape($txt['crimson']), ',
+                  \'gold\': ', JavaScriptEscape($txt['gold']), ',
+                  \'royalblue\': ', JavaScriptEscape($txt['royalblue']), ',
+                  \'olivedrab\': ', JavaScriptEscape($txt['olivedrab']), ',
+                  \'white\': ', JavaScriptEscape($txt['white']), ',
                   \'pink\': ', JavaScriptEscape($txt['pink']), ',
-                  \'green\': ', JavaScriptEscape($txt['green']), ',
+                  \'red\': ', JavaScriptEscape($txt['red']), ',
                   \'orange\': ', JavaScriptEscape($txt['orange']), ',
-                  \'purple\': ', JavaScriptEscape($txt['purple']), ',
+                  \'yellow\': ', JavaScriptEscape($txt['yellow']), ',
+                  \'green\': ', JavaScriptEscape($txt['green']), ',
                   \'blue\': ', JavaScriptEscape($txt['blue']), ',
-                  \'beige\': ', JavaScriptEscape($txt['beige']), ',
+                  \'purple\': ', JavaScriptEscape($txt['purple']), ',
                   \'brown\': ', JavaScriptEscape($txt['brown']), ',
-                  \'teal\': ', JavaScriptEscape($txt['teal']), ',
-                  \'navy\': ', JavaScriptEscape($txt['navy']), ',
-                  \'maroon\': ', JavaScriptEscape($txt['maroon']), ',
-                  \'limegreen\': ', JavaScriptEscape($txt['lime_green']), ',
-                  \'white\': ', JavaScriptEscape($txt['white']), '
+                  \'black\': ', JavaScriptEscape($txt['black']), ',
                 }
               }';
         }

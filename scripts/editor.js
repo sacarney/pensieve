@@ -103,6 +103,7 @@ function smc_Editor(oOptions)
 
 	// All the fonts in the world.
 	this.aFontFaces = [
+		'Amaranth',
 		'Arial',
 		'Arial Black',
 		'Impact',
@@ -124,6 +125,7 @@ function smc_Editor(oOptions)
 		24,
 		36
 	];
+
 	// Color maps! (hex => name)
 	this.oFontColors = {
 		black: '#000000',
@@ -139,7 +141,13 @@ function smc_Editor(oOptions)
 		teal: '#008080',
 		navy: '#000080',
 		maroon: '#800000',
-		limegreen: '#32cd32'
+		limegreen: '#32cd32',
+		cyan: '#00ffff',
+		darkcyan: '#008b8b',
+		crimson: '#dc143c',
+		gold: '#ffd700',
+		royalblue: '#4169e1',
+		olivedrab: '#6b8e23',
 	}
 
 	this.sFormId = 'sFormId' in this.opt ? this.opt.sFormId : 'postmodify';
