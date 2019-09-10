@@ -955,37 +955,7 @@ function template_main()
     echo '
     <div id="moderationbuttons" class="mt-2 has-text-right-tablet" role="toolbar" aria-label="Moderator Toolbar">', template_button_strip($mod_buttons, 'bottom', array('id' => 'moderationbuttons_strip')), '</div>';
 
-    // Tagging System
-      echo '
-      <div class="is-flex flex-wrap align-items-center mt-2 mb-2">
-        <h2 class="title is-6 mb-0 mr-2">', $txt['smftags_topic'], '</h2>';
-        echo'<ul class="tags mb-0">';
-        foreach ($context['topic_tags'] as $i => $tag)
-        {
-          echo '
-            <li>
-              <div class="tags has-addons mr-2">
-                <a class="tag" href="' . $scripturl . '?action=tags;tagid=' . $tag['ID_TAG']  . '">' . $tag['tag'] . '</a>';
 
-                if(!$context['user']['is_guest'] && allowedTo('smftags_del'))
-                  echo'
-                    <a class="tag is-delete" href="' . $scripturl . '?action=tags;sa=deletetag;tagid=' . $tag['ID']  . '"></a>
-                      ';
-             echo'</div>
-             </li>';
-        }
-
-        echo'</ul>';
-
-        global $topic;
-        if(!$context['user']['is_guest'] && allowedTo('smftags_add'))
-        echo '
-        <a class="button is-small" href="' . $scripturl . '?action=tags;sa=addtag;topic=',$topic, '">' . $txt['smftags_addtag'] . '</a>';
-
-      echo '
-        </div>';
-    
-    // End Tagging System
 
   if ($context['can_reply'] && !empty($options['display_quick_reply']))
   {
