@@ -1511,7 +1511,6 @@ a.box:active {
   background-color: var(--grey-2);
   border-color: var(--darker-overlay);
   box-shadow:none;
-  color: var(--light-overlay)
 }
 
 .input[disabled]:-moz-placeholder,
