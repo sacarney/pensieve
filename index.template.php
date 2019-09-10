@@ -289,12 +289,12 @@ function template_body_above()
       echo'
       <div class="navbar is-light is-pensieve">
         <div class="container">
-          <div class="navbar-brand">
+          <div class="navbar-brand flex-wrap">
       ';
 
             // NAME AND AVATAR
             echo'
-              <a class="navbar-item" href="', $scripturl ,'?action=profile">';
+              <a class="navbar-item pensieve-profile-bar-avatar" href="', $scripturl ,'?action=profile">';
               // Avatar
               if (!empty($context['user']['avatar']))
                 echo '', $context['user']['avatar']['image'],'';
@@ -403,7 +403,7 @@ function theme_linktree($force_show = false)
   echo '
   <div class="section is-small">
     <div class="container">
-      <nav class="breadcrumb is-small" aria-label="breadcrumbs">
+      <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>';
 
   // Each tree item has a URL and name. Some may have extra_before and extra_after.
