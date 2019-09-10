@@ -17,28 +17,48 @@ function template_main()
 
   // Build the memberlist button array.
   $memberlist_buttons = array(
-    'view_all_members' => array('text' => 'view_all_members', 'image' => 'mlist.gif', 'lang' => true, 'url' => $scripturl . '?action=mlist' . ';sa=all', 'active' => true),
-    'mlist_search' => array('text' => 'mlist_search', 'image' => 'mlist.gif', 'lang' => true, 'url' => $scripturl . '?action=mlist;sa=search'),
+    'view_all_members' => array(
+      'text' => 'view_all_members', 
+      'image' => 'mlist.gif', 
+      'icon' => 'fa-users',
+      'lang' => true, 
+      'url' => $scripturl . '?action=mlist' . ';sa=all', 
+      'active' => true),
+    'mlist_search' => array(
+      'text' => 'mlist_search', 
+      'image' => 'mlist.gif',
+      'icon' => 'fa-search', 
+      'lang' => true, 
+      'url' => $scripturl . '?action=mlist;sa=search'),
   );
 
   echo '
-  <div class="main_section clearfix" id="memberlist">
-    <div id="modbuttons_top" class="modbuttons clearfix margintop">
-      <div class="floatleft middletext">
-        ', $txt['pages'], ': ', $context['page_index'], '
+  <div id="memberlist" class="container">
+    <div id="modbuttons_top" class="level mb-2">
+      <div class="level-left">';
+      // Pagination
+      echo '
+        <div class="mb-3">
+          <span class="is-muted is-size-6-5 is-uppercase">', $txt['pages'],': &nbsp;</span>
+          <span class="is-size-6-5 mr-3">', $context['page_index'], '</span>
+        </div>';
+
+        echo'
       </div>
-      ', template_button_strip($memberlist_buttons, 'bottom'), '
+      <div class="level-right">
+        ', template_button_strip($memberlist_buttons, 'bottom'), '
+      </div>
     </div>';
 
   echo '
-    <div id="mlist" class="tborder topic_table">
-      <h4 class="catbg headerpadding clearfix">
-        <span class="floatleft">', $txt['members_list'], '</span>';
+    <div id="mlist">
+      <h2 class="title is-5">
+        <span>', $txt['members_list'], ': </span>';
   if (!isset($context['old_search']))
     echo '
-        <span class="floatright">', $context['letter_links'], '</span>';
+        <span>', $context['letter_links'], '</span>';
   echo '
-      </h4>
+      </h2>
       <table class="table is-striped is-bordered is-fullwidth">
       <thead>
         <tr class="titlebg">';
@@ -107,7 +127,8 @@ function template_main()
     // Group and date.
     echo '
           <td class="windowbg" align="', $context['right_to_left'] ? 'right' : 'left', '">', empty($member['group']) ? $member['post_group'] : $member['group'], '</td>
-          <td align="center" class="windowbg">', $member['registered_date'], '</td>';
+          <td align="center" class="windowbg">', $member['registered_date'], '</td>
+          <td class="windowbg lefttext">', $member['last_post'], '</td>';
 
     if (!isset($context['disabled_fields']['posts']))
       echo '
@@ -118,6 +139,18 @@ function template_main()
 
     echo '
         </tr>';
+
+    if (!empty($member['subaccounts']) && !empty($context['subaccounts_online']))
+      {
+        $subaccountString = '';
+        foreach($member['subaccounts'] as $account)
+          $subaccountString .= ', <img style="margin-bottom: -2px;" src="' . $context['subaccounts_online'][$account['id']] . '" />&nbsp;<a href="' . $scripturl . '?action=profile;u=' . $account['id'] . '">' . $account['name'] . '</a>';
+        $subaccountString = substr($subaccountString,2);
+        echo '
+        <tr>
+          <td align="left" class="windowbg2" colspan="', $context['colspan'], '"><div class="smalltext align_left">', $txt['subaccounts'], ': ', $subaccountString, '</div></td>
+        </tr>';
+        }
     }
   }
   // No members?
@@ -134,8 +167,13 @@ function template_main()
     </div>';
 
   echo '
-    <div class="middletext clearfix">
-      <div class="floatleft">', $txt['pages'], ': ', $context['page_index'], '</div>';
+    <div class="middletext clearfix">';
+      // Pagination
+      echo '
+        <div class="mt-3">
+          <span class="is-muted is-size-6-5 is-uppercase">', $txt['pages'],': &nbsp;</span>
+          <span class="is-size-6-5 mr-3">', $context['page_index'], '</span>
+        </div>';
 
   // If it is displaying the result of a search show a "search again" link to edit their criteria.
   if (isset($context['old_search']))
