@@ -513,11 +513,11 @@ function template_button_strip($button_strip, $direction = 'top', $strip_options
     if (!isset($value['test']) || !empty($context[$value['test']]))
 
       $buttons[] = '
-      <a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button is-small ' . $value['class'] .' button_' . $key . (isset($value['active']) ? ' ' : ' ') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . ' title="' . $txt[$value['text']] . '">
+      <a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button is-small button_' . $key . (isset($value['active']) ? ' ' : ' ') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . ' title="' . $txt[$value['text']] . '">
         <span class="icon is-small m-0">
           <i class="fa '. $value['icon'] .'"></i>
         </span>
-        <span class="' . $value['hidden'] . ' is-hidden-touch ml-1">' . $txt[$value['text']] . '</span>
+        <span class="is-hidden-touch ml-1">' . $txt[$value['text']] . '</span>
       </a>
       ';
   }
