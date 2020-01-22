@@ -773,7 +773,7 @@ function template_main()
               }
 
               // Skip to next post
-              echo '<div><a href="#postid_', $nextpost ,'" class="invisible button is-small is-dark mr-1">Skip to next post</a></div>';
+              echo '<div><a href="#postid_', $nextpost ,'" class="invisible button is-small is-outline-dark mr-1">Skip to next post</a></div>';
 
               // Moderator Bar
 
