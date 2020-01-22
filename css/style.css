@@ -238,6 +238,12 @@ code, pre { display: block; }
 
 /* --- THE POST --- */
 
+.post:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+
 .the-post {
   display: flex;
   flex-direction: column;
