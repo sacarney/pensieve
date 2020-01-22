@@ -466,10 +466,14 @@ code, pre { display: block; }
 /* ACCESSIBILITY */
 /* ------------------------- */
 
-.skiplink {
+.skiplink .button {
   position: absolute;
-  left: calc(50% - 140px);
-  z-index: 1;
+  top: 0.5rem;
+  left: 0.5rem;
+}
+
+.skiplink .button:focus {
+  z-index: 999999;
 }
 
 .is-hovered .navbar-dropdown {

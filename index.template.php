@@ -231,7 +231,7 @@ function template_body_above()
   echo'
   <header>
     <div class="skiplink">
-      <a class="invisible button is-small is-dark" href="#maincontent">Skip to main content</a>
+      <a class="button is-small is-primary" href="#maincontent">Skip to main content</a>
     </div>
   ';
 
