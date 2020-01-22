@@ -52,7 +52,7 @@ function template_summary()
 
   // Display the basic information about the user
   echo '
-  <div class="columns is-multiline mt-2">
+  <div class="columns is-multiline mt-2 pensieve-profile-summary">
 
     <div class="column is-6">';
 
@@ -489,6 +489,7 @@ function template_showPosts()
   global $context, $settings, $options, $scripturl, $modSettings, $txt;
 
   echo '
+  <div class="pensieve-profile-showposts">
     <div class="cat_bar">
       <h3 class="title is-5 mb-4">
         ', (!isset($context['attachments']) && empty($context['is_topics']) ? $txt['showMessages'] : (!empty($context['is_topics']) ? $txt['showTopics'] : $txt['showAttachments'])), ' - ', $context['member']['name'], '
@@ -663,6 +664,8 @@ function template_showPosts()
     <nav class="pagination is-small mt-2">
       <span>', $txt['pages'], ': ', $context['page_index'], '</span>
     </nav>';
+
+  echo '</div>';
 }
 
 // Template for showing all the buddies of the current user.
@@ -671,9 +674,10 @@ function template_editBuddies()
   global $context, $settings, $options, $scripturl, $modSettings, $txt;
 
   echo '
-  <div class="cat_bar">
-    <h3 class="title is-5 mb-4">', $txt['editBuddies'], '</h3>
-  </div>
+  <div class="pensieve-profile-buddies">
+    <div class="cat_bar">
+      <h3 class="title is-5 mb-4">', $txt['editBuddies'], '</h3>
+    </div>
 
     <table class="table is-bordered is-striped" style="width: 100%">
       <tr>
@@ -687,52 +691,52 @@ function template_editBuddies()
         <th class="last_th" scope="col"></th>
       </tr>';
 
-  // If they don't have any buddies don't list them!
-  if (empty($context['buddies']))
-    echo '
-      <tr>
-        <td colspan="8" align="center"><strong>', $txt['no_buddies'], '</strong></td>
-      </tr>';
+    // If they don't have any buddies don't list them!
+    if (empty($context['buddies']))
+      echo '
+        <tr>
+          <td colspan="8" align="center"><strong>', $txt['no_buddies'], '</strong></td>
+        </tr>';
 
-  // Now loop through each buddy showing info on each.
-  $alternate = false;
-  foreach ($context['buddies'] as $buddy)
-  {
-    echo '
-      <tr>
-        <td>', $buddy['link'], '</td>
+    // Now loop through each buddy showing info on each.
+    $alternate = false;
+    foreach ($context['buddies'] as $buddy)
+    {
+      echo '
+        <tr>
+          <td>', $buddy['link'], '</td>
 
-        <td>';
-          // Online/Offline
+          <td>';
+            // Online/Offline
 
-          if ($buddy['online']['text'] === 'Online') {
-            echo'<div class="tag is-success">' . $buddy['online']['text'] . '</div>';
-          } else {
-            echo'<div class="tag is-light">' . $buddy['online']['text'] . '</div>';
-          } 
+            if ($buddy['online']['text'] === 'Online') {
+              echo'<div class="tag is-success">' . $buddy['online']['text'] . '</div>';
+            } else {
+              echo'<div class="tag is-light">' . $buddy['online']['text'] . '</div>';
+            } 
 
-        echo'
-        </td>
+          echo'
+          </td>
 
-        <td>', ($buddy['show_email'] == 'no' ? '' : '<a class="button" href="' . $scripturl . '?action=emailuser;sa=email;uid=' . $buddy['id'] . '" rel="nofollow"><span class="icon is-medium"><span class="fa fa-envelope-o"></span></span></a>'), '</td>
+          <td>', ($buddy['show_email'] == 'no' ? '' : '<a class="button" href="' . $scripturl . '?action=emailuser;sa=email;uid=' . $buddy['id'] . '" rel="nofollow"><span class="icon is-medium"><span class="fa fa-envelope-o"></span></span></a>'), '</td>
 
-        <td align="center">', $buddy['icq']['link'], '</td>
-        <td align="center">', $buddy['aim']['link'], '</td>
-        <td align="center">', $buddy['yim']['link'], '</td>
-        <td align="center">', $buddy['msn']['link'], '</td>
+          <td align="center">', $buddy['icq']['link'], '</td>
+          <td align="center">', $buddy['aim']['link'], '</td>
+          <td align="center">', $buddy['yim']['link'], '</td>
+          <td align="center">', $buddy['msn']['link'], '</td>
 
-        <td>
-          <a class="button is-danger is-small" href="', $scripturl, '?action=profile;area=lists;sa=buddies;u=', $context['id_member'], ';remove=', $buddy['id'], ';', $context['session_var'], '=', $context['session_id'], '">
-            <span class="icon is-medium">
-              <span class="fa fa-times"></span>
-            </span>
-            <span>Remove</span>
-          </a>
-        </td>
-      </tr>';
+          <td>
+            <a class="button is-danger is-small" href="', $scripturl, '?action=profile;area=lists;sa=buddies;u=', $context['id_member'], ';remove=', $buddy['id'], ';', $context['session_var'], '=', $context['session_id'], '">
+              <span class="icon is-medium">
+                <span class="fa fa-times"></span>
+              </span>
+              <span>Remove</span>
+            </a>
+          </td>
+        </tr>';
 
-    $alternate = !$alternate;
-  }
+      $alternate = !$alternate;
+    }
 
   echo '
     </table>';
@@ -756,20 +760,24 @@ function template_editBuddies()
       </div>
 
     </form>
+    </div>
 
-  <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/suggest.js?fin20"></script>
-  <script type="text/javascript"><!-- // --><![CDATA[
-    var oAddBuddySuggest = new smc_AutoSuggest({
-      sSelf: \'oAddBuddySuggest\',
-      sSessionId: \'', $context['session_id'], '\',
-      sSessionVar: \'', $context['session_var'], '\',
-      sSuggestId: \'new_buddy\',
-      sControlId: \'new_buddy\',
-      sSearchType: \'member\',
-      sTextDeleteItem: \'', $txt['autosuggest_delete_item'], '\',
-      bItemList: false
-    });
-  // ]]></script>';
+    <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/suggest.js?fin20"></script>
+    <script type="text/javascript"><!-- // --><![CDATA[
+      var oAddBuddySuggest = new smc_AutoSuggest({
+        sSelf: \'oAddBuddySuggest\',
+        sSessionId: \'', $context['session_id'], '\',
+        sSessionVar: \'', $context['session_var'], '\',
+        sSuggestId: \'new_buddy\',
+        sControlId: \'new_buddy\',
+        sSearchType: \'member\',
+        sTextDeleteItem: \'', $txt['autosuggest_delete_item'], '\',
+        bItemList: false
+      });
+    // ]]></script>
+    ';
+
+    echo '</div>';
 }
 
 // Template for showing the ignore list of the current user.
@@ -778,9 +786,10 @@ function template_editIgnoreList()
   global $context, $settings, $options, $scripturl, $modSettings, $txt;
 
   echo '
-  <div class="cat_bar">
-    <h3 class="title is-5 mb-4">', $txt['editIgnoreList'], '</h3>
-  </div>
+  <div class="pensieve-profile-ignore">
+    <div class="cat_bar">
+      <h3 class="title is-5 mb-4">', $txt['editIgnoreList'], '</h3>
+    </div>
 
     <table class="table is-bordered is-striped" style="width: 100%">
       <tr>
@@ -794,88 +803,90 @@ function template_editIgnoreList()
         <th class="last_th" scope="col"></th>
       </tr>';
 
-  // If they don't have anyone on their ignore list, don't list it!
-  if (empty($context['ignore_list']))
+    // If they don't have anyone on their ignore list, don't list it!
+    if (empty($context['ignore_list']))
+      echo '
+        <tr>
+          <td colspan="8">', $txt['no_ignore'], '</td>
+        </tr>';
+
+    // Now loop through each buddy showing info on each.
+    $alternate = false;
+    foreach ($context['ignore_list'] as $member)
+    {
+      echo '
+        <tr>
+          <td>', $member['link'], '</td>
+
+          <td>';
+            // Online/Offline
+
+            if ($member['online']['text'] === 'Online') {
+              echo'<div class="tag is-success">' . $member['online']['text'] . '</div>';
+            } else {
+              echo'<div class="tag is-light">' . $member['online']['text'] . '</div>';
+            } 
+
+          echo'
+          </td>
+
+          <td>', ($member['show_email'] == 'no' ? '' : '<a class="button" href="' . $scripturl . '?action=emailuser;sa=email;uid=' . $member['id'] . '" rel="nofollow"><span class="icon is-medium"><span class="fa fa-envelope-o"></span></span></a>'), '</td>
+
+          <td align="center">', $member['icq']['link'], '</td>
+          <td align="center">', $member['aim']['link'], '</td>
+          <td align="center">', $member['yim']['link'], '</td>
+          <td align="center">', $member['msn']['link'], '</td>
+
+          <td>
+            <a class="button is-danger is-small" href="', $scripturl, '?action=profile;u=', $context['id_member'], ';area=lists;sa=ignore;remove=', $member['id'], ';', $context['session_var'], '=', $context['session_id'], '">
+              <span class="icon is-medium">
+                <span class="fa fa-times"></span>
+              </span>
+              <span>Remove</span>
+            </a>
+          </td>
+        </tr>';
+
+      $alternate = !$alternate;
+    }
+
     echo '
-      <tr>
-        <td colspan="8">', $txt['no_ignore'], '</td>
-      </tr>';
+      </table>';
 
-  // Now loop through each buddy showing info on each.
-  $alternate = false;
-  foreach ($context['ignore_list'] as $member)
-  {
+    // Add a new enemy?
     echo '
-      <tr>
-        <td>', $member['link'], '</td>
+    <div class="box">
+      <form action="', $scripturl, '?action=profile;u=', $context['id_member'], ';area=lists;sa=ignore" method="post" accept-charset="', $context['character_set'], '">
 
-        <td>';
-          // Online/Offline
+        <h3 class="title is-5 mb-4">', $txt['ignore_add'], '</h3>
 
-          if ($member['online']['text'] === 'Online') {
-            echo'<div class="tag is-success">' . $member['online']['text'] . '</div>';
-          } else {
-            echo'<div class="tag is-light">' . $member['online']['text'] . '</div>';
-          } 
+        <label class="label" for="new_buddy">', $txt['who_member'], '</label>
 
-        echo'
-        </td>
-
-        <td>', ($member['show_email'] == 'no' ? '' : '<a class="button" href="' . $scripturl . '?action=emailuser;sa=email;uid=' . $member['id'] . '" rel="nofollow"><span class="icon is-medium"><span class="fa fa-envelope-o"></span></span></a>'), '</td>
-
-        <td align="center">', $member['icq']['link'], '</td>
-        <td align="center">', $member['aim']['link'], '</td>
-        <td align="center">', $member['yim']['link'], '</td>
-        <td align="center">', $member['msn']['link'], '</td>
-
-        <td>
-          <a class="button is-danger is-small" href="', $scripturl, '?action=profile;u=', $context['id_member'], ';area=lists;sa=ignore;remove=', $member['id'], ';', $context['session_var'], '=', $context['session_id'], '">
-            <span class="icon is-medium">
-              <span class="fa fa-times"></span>
-            </span>
-            <span>Remove</span>
-          </a>
-        </td>
-      </tr>';
-
-    $alternate = !$alternate;
-  }
-
-  echo '
-    </table>';
-
-  // Add a new enemy?
-  echo '
-  <div class="box">
-    <form action="', $scripturl, '?action=profile;u=', $context['id_member'], ';area=lists;sa=ignore" method="post" accept-charset="', $context['character_set'], '">
-
-      <h3 class="title is-5 mb-4">', $txt['ignore_add'], '</h3>
-
-      <label class="label" for="new_buddy">', $txt['who_member'], '</label>
-
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input" name="new_buddy" id="new_ignore" size="25">
+        <div class="field has-addons">
+          <div class="control">
+            <input class="input" name="new_buddy" id="new_ignore" size="25">
+          </div>
+          <div class="control">
+            <input type="submit" value="', $txt['ignore_add_button'], '" class="button is-primary">
+          </div>
         </div>
-        <div class="control">
-          <input type="submit" value="', $txt['ignore_add_button'], '" class="button is-primary">
-        </div>
-      </div>
-    </form>
-  </div>
-  <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/suggest.js?fin20"></script>
-  <script type="text/javascript"><!-- // --><![CDATA[
-    var oAddIgnoreSuggest = new smc_AutoSuggest({
-      sSelf: \'oAddIgnoreSuggest\',
-      sSessionId: \'', $context['session_id'], '\',
-      sSessionVar: \'', $context['session_var'], '\',
-      sSuggestId: \'new_ignore\',
-      sControlId: \'new_ignore\',
-      sSearchType: \'member\',
-      sTextDeleteItem: \'', $txt['autosuggest_delete_item'], '\',
-      bItemList: false
-    });
-  // ]]></script>';
+      </form>
+    </div>
+    <script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/suggest.js?fin20"></script>
+    <script type="text/javascript"><!-- // --><![CDATA[
+      var oAddIgnoreSuggest = new smc_AutoSuggest({
+        sSelf: \'oAddIgnoreSuggest\',
+        sSessionId: \'', $context['session_id'], '\',
+        sSessionVar: \'', $context['session_var'], '\',
+        sSuggestId: \'new_ignore\',
+        sControlId: \'new_ignore\',
+        sSearchType: \'member\',
+        sTextDeleteItem: \'', $txt['autosuggest_delete_item'], '\',
+        bItemList: false
+      });
+    // ]]></script>';
+
+    echo '</div>';
 }
 
 // This template shows an admin information on a users IP addresses used and errors attributed to them.
@@ -885,50 +896,53 @@ function template_trackActivity()
 
   // The first table shows IP information about the user.
   echo '
-  <div class="title_bar">
-    <h3 class="title is-5 mb-2">', $txt['view_ips_by'], ' ', $context['member']['name'], '</h3>
-  </div>';
+  <div class="pensieve-profile-trackactivity">
+    <div class="title_bar">
+      <h3 class="title is-5 mb-2">', $txt['view_ips_by'], ' ', $context['member']['name'], '</h3>
+    </div>';
 
-  // The last IP the user used.
-  echo '
-  <div>
-    <dl class="mb-4">
-      <dt><b>', $txt['most_recent_ip'], ':</b>
-        ', (empty($context['last_ip2']) ? '' : '<br />
-        <span class="smalltext">(<a href="' . $scripturl . '?action=helpadmin;help=whytwoip" onclick="return reqWin(this.href);">' . $txt['why_two_ip_address'] . '</a>)</span>'), '
-      </dt>
-      <dd class="mb-3">
-        <span><a href="', $scripturl, '?action=profile;area=tracking;sa=ip;searchip=', $context['last_ip'], ';u=', $context['member']['id'], '">', $context['last_ip'], '</a></span>';
+    // The last IP the user used.
+    echo '
+    <div>
+      <dl class="mb-4">
+        <dt><b>', $txt['most_recent_ip'], ':</b>
+          ', (empty($context['last_ip2']) ? '' : '<br />
+          <span class="smalltext">(<a href="' . $scripturl . '?action=helpadmin;help=whytwoip" onclick="return reqWin(this.href);">' . $txt['why_two_ip_address'] . '</a>)</span>'), '
+        </dt>
+        <dd class="mb-3">
+          <span><a href="', $scripturl, '?action=profile;area=tracking;sa=ip;searchip=', $context['last_ip'], ';u=', $context['member']['id'], '">', $context['last_ip'], '</a></span>';
 
-  // Second address detected?
-  if (!empty($context['last_ip2']))
-    echo ', <span><a href="', $scripturl, '?action=profile;area=tracking;sa=ip;searchip=', $context['last_ip2'], ';u=', $context['member']['id'], '">', $context['last_ip2'], '</a></span>';
+    // Second address detected?
+    if (!empty($context['last_ip2']))
+      echo ', <span><a href="', $scripturl, '?action=profile;area=tracking;sa=ip;searchip=', $context['last_ip2'], ';u=', $context['member']['id'], '">', $context['last_ip2'], '</a></span>';
 
-  echo '</dd>';
+    echo '</dd>';
 
-  // Lists of IP addresses used in messages / error messages.
-  echo '
-      <dt><b>', $txt['ips_in_messages'], ':</b></dt>
-      <dd class="mb-3">
-        ', (count($context['ips']) > 0 ? implode(', ', $context['ips']) : '(' . $txt['none'] . ')'), '
-      </dd>
-      <dt>', $txt['ips_in_errors'], ':</dt>
-      <dd class="mb-3">
-        ', (count($context['ips']) > 0 ? implode(', ', $context['error_ips']) : '(' . $txt['none'] . ')'), '
-      </dd>';
+    // Lists of IP addresses used in messages / error messages.
+    echo '
+        <dt><b>', $txt['ips_in_messages'], ':</b></dt>
+        <dd class="mb-3">
+          ', (count($context['ips']) > 0 ? implode(', ', $context['ips']) : '(' . $txt['none'] . ')'), '
+        </dd>
+        <dt>', $txt['ips_in_errors'], ':</dt>
+        <dd class="mb-3">
+          ', (count($context['ips']) > 0 ? implode(', ', $context['error_ips']) : '(' . $txt['none'] . ')'), '
+        </dd>';
 
-  // List any members that have used the same IP addresses as the current member.
-  echo '
-      <dt><b>', $txt['members_in_range'], ':</b></dt>
-      <dd class="mb-3">
-        ', (count($context['members_in_range']) > 0 ? implode(', ', $context['members_in_range']) : '(' . $txt['none'] . ')'), '
-      </dd>
-    </dl>
-  </div>
-  ';
+    // List any members that have used the same IP addresses as the current member.
+    echo '
+        <dt><b>', $txt['members_in_range'], ':</b></dt>
+        <dd class="mb-3">
+          ', (count($context['members_in_range']) > 0 ? implode(', ', $context['members_in_range']) : '(' . $txt['none'] . ')'), '
+        </dd>
+      </dl>
+    </div>
+    ';
 
   // Show the track user list.
   template_show_list('track_user_list');
+
+  echo '</div>';
 }
 
 // The template for trackIP, allowing the admin to see where/who a certain IP has been used.
@@ -939,49 +953,50 @@ function template_trackIP()
   // This function always defaults to the last IP used by a member but can be set to track any IP.
   // The first table in the template gives an input box to allow the admin to enter another IP to track.
   echo '
-  <div class="title_bar">
-    <h3 class="title is-5 mb-2">', $txt['trackIP'], '</h3>
-  </div>
-
-  <form action="', $context['base_url'], '" method="post" accept-charset="', $context['character_set'], '">
-    <label class="label" for="search_ip">', $txt['enter_ip'], '</label>
-    <div class="field has-addons">
-      <div class="control">
-        <input class="input" value="', $context['ip'], '" type="text" name="searchip" id="search_ip" size="25">
-      </div>
-      <div class="control">
-        <input value="', $txt['trackIP'], '" type="submit" class="button is-primary">
-      </div>
+  <div class="pensieve-profile-trackip">
+    <div class="title_bar">
+      <h3 class="title is-5 mb-2">', $txt['trackIP'], '</h3>
     </div>
 
-  </form>
-  ';
+    <form action="', $context['base_url'], '" method="post" accept-charset="', $context['character_set'], '">
+      <label class="label" for="search_ip">', $txt['enter_ip'], '</label>
+      <div class="field has-addons">
+        <div class="control">
+          <input class="input" value="', $context['ip'], '" type="text" name="searchip" id="search_ip" size="25">
+        </div>
+        <div class="control">
+          <input value="', $txt['trackIP'], '" type="submit" class="button is-primary">
+        </div>
+      </div>
 
-  // The table inbetween the first and second table shows links to the whois server for every region.
-  if ($context['single_ip'])
-  {
+    </form>
+    ';
+
+    // The table inbetween the first and second table shows links to the whois server for every region.
+    if ($context['single_ip'])
+    {
+      echo '
+      <hr>
+      <div class="title_bar">
+        <h3 class="title is-5 mb-2">', $txt['whois_title'], ' ', $context['ip'], '</h3>
+      </div>
+
+      <div class="box">';
+        foreach ($context['whois_servers'] as $server)
+          echo '
+            <a href="', $server['url'], '" target="_blank" class="new_win"', isset($context['auto_whois_server']) && $context['auto_whois_server']['name'] == $server['name'] ? ' style="font-weight: bold;"' : '', '>', $server['name'], '</a><br />';
+        echo '
+      </div>
+      ';
+    }
+
+    // The second table lists all the members who have been logged as using this IP address.
     echo '
     <hr>
     <div class="title_bar">
-      <h3 class="title is-5 mb-2">', $txt['whois_title'], ' ', $context['ip'], '</h3>
-    </div>
-
-    <div class="box">';
-      foreach ($context['whois_servers'] as $server)
-        echo '
-          <a href="', $server['url'], '" target="_blank" class="new_win"', isset($context['auto_whois_server']) && $context['auto_whois_server']['name'] == $server['name'] ? ' style="font-weight: bold;"' : '', '>', $server['name'], '</a><br />';
-      echo '
+      <h3 class="title is-5 mb-2">', $txt['members_from_ip'], ' ', $context['ip'], '</h3>
     </div>
     ';
-  }
-
-  // The second table lists all the members who have been logged as using this IP address.
-  echo '
-  <hr>
-  <div class="title_bar">
-    <h3 class="title is-5 mb-2">', $txt['members_from_ip'], ' ', $context['ip'], '</h3>
-  </div>
-  ';
 
   if (empty($context['ips']))
     echo '
@@ -1017,6 +1032,8 @@ function template_trackIP()
   echo '<br />';
 
   template_show_list('track_user_list');
+
+  echo '</div>';
 }
 
 function template_showPermissions()
@@ -1024,6 +1041,7 @@ function template_showPermissions()
   global $context, $settings, $options, $scripturl, $txt;
 
   echo '
+  <div class="pensieve-profile-showpermissions">
     <div class="catbg">
       <h2 class="title is-4 mb-4">
         <span class="fa fa-user-circle"></span>
@@ -1176,7 +1194,8 @@ function template_showPermissions()
       <p class="notification is-size-7">', $txt['showPermissions_none_board'], '</p>';
   echo '
       </div>
-    </div>';
+    </div>
+  </div>';
   }
 }
 
@@ -1187,49 +1206,50 @@ function template_statPanel()
 
   // First, show a few text statistics such as post/topic count.
   echo '
-  <div class="box mt-4">
-    <h2 class="title is-4 mb-4">', $txt['statPanel_generalStats'], ' - ', $context['member']['name'], '</h2>
-    <div>
-      <dl class="columns is-multiline is-gapless">
-        <dt class="column is-4 no-float has-text-white">', $txt['statPanel_total_time_online'], ':</dt>
-        <dd class="column is-8 no-float">', $context['time_logged_in'], '</dd>
-        <dt class="column is-4 no-float has-text-white">', $txt['statPanel_total_posts'], ':</dt>
-        <dd class="column is-8 no-float">', $context['num_posts'], ' ', $txt['statPanel_posts'], '</dd>
-        <dt class="column is-4 no-float has-text-white">', $txt['statPanel_total_topics'], ':</dt>
-        <dd class="column is-8 no-float">', $context['num_topics'], ' ', $txt['statPanel_topics'], '</dd>
-        <dt class="column is-4 no-float has-text-white">', $txt['statPanel_users_polls'], ':</dt>
-        <dd class="column is-8 no-float">', $context['num_polls'], ' ', $txt['statPanel_polls'], '</dd>
-        <dt class="column is-4 no-float has-text-white">', $txt['statPanel_users_votes'], ':</dt>
-        <dd class="column is-8 no-float">', $context['num_votes'], ' ', $txt['statPanel_votes'], '</dd>
-      </dl>
-    </div>
-  </div>';
+  <div class="pensieve-profile-statpanel">
+    <div class="box mt-4">
+      <h2 class="title is-4 mb-4">', $txt['statPanel_generalStats'], ' - ', $context['member']['name'], '</h2>
+      <div>
+        <dl class="columns is-multiline is-gapless">
+          <dt class="column is-4 no-float has-text-white">', $txt['statPanel_total_time_online'], ':</dt>
+          <dd class="column is-8 no-float">', $context['time_logged_in'], '</dd>
+          <dt class="column is-4 no-float has-text-white">', $txt['statPanel_total_posts'], ':</dt>
+          <dd class="column is-8 no-float">', $context['num_posts'], ' ', $txt['statPanel_posts'], '</dd>
+          <dt class="column is-4 no-float has-text-white">', $txt['statPanel_total_topics'], ':</dt>
+          <dd class="column is-8 no-float">', $context['num_topics'], ' ', $txt['statPanel_topics'], '</dd>
+          <dt class="column is-4 no-float has-text-white">', $txt['statPanel_users_polls'], ':</dt>
+          <dd class="column is-8 no-float">', $context['num_polls'], ' ', $txt['statPanel_polls'], '</dd>
+          <dt class="column is-4 no-float has-text-white">', $txt['statPanel_users_votes'], ':</dt>
+          <dd class="column is-8 no-float">', $context['num_votes'], ' ', $txt['statPanel_votes'], '</dd>
+        </dl>
+      </div>
+    </div>';
 
-  // This next section draws a graph showing what times of day they post the most.
-  echo '
-  <div class="box">
-    <h2 class="title is-4 mb-4">', $txt['statPanel_generalStats'], ' - ', $context['member']['name'], '</h2>
-   ';
-
-  // If they haven't post at all, don't draw the graph.
-  if (empty($context['posts_by_time']))
+    // This next section draws a graph showing what times of day they post the most.
     echo '
-      <span>', $txt['statPanel_noPosts'], '</span>';
-  
-  // Otherwise do!
-  else
-  {
-    echo '
-      <ul class="stats-graph is-size-7">';
+    <div class="box">
+      <h2 class="title is-4 mb-4">', $txt['statPanel_generalStats'], ' - ', $context['member']['name'], '</h2>
+     ';
 
-    // The labels.
-    foreach ($context['posts_by_time'] as $time_of_day)
+    // If they haven't post at all, don't draw the graph.
+    if (empty($context['posts_by_time']))
+      echo '
+        <span>', $txt['statPanel_noPosts'], '</span>';
+    
+    // Otherwise do!
+    else
     {
       echo '
-      <li>
-        <div class="stats-graph_bar" style="height: ', ((int) ($time_of_day['relative_percent'])), '%;"></div>
-        <span class="stats-graph_hour">', $time_of_day['hour_format'], '</span>
-      </li>';
+        <ul class="stats-graph is-size-7">';
+
+      // The labels.
+      foreach ($context['posts_by_time'] as $time_of_day)
+      {
+        echo '
+        <li>
+          <div class="stats-graph_bar" style="height: ', ((int) ($time_of_day['relative_percent'])), '%;"></div>
+          <span class="stats-graph_hour">', $time_of_day['hour_format'], '</span>
+        </li>';
 
       /*
       <li', $time_of_day['is_last'] ? ' class="last"' : '', '>
@@ -1314,7 +1334,8 @@ function template_statPanel()
           </div>
         </div>
       </div>
-    </div>';
+    </div>
+  </div>';
 }
 
 // Template for editing profile options.
