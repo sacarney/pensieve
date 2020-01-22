@@ -549,10 +549,10 @@ function template_main()
                         $shown = true;
                         echo '
                           <div class="card-content is-size-6-5 is-hidden-mobile">
-                            <ul class="is-flex">';
+                            <ul class="is-flex flex-wrap">';
                       }
                       echo '
-                            <li class="mr-2">', $custom['value'], '</li>';
+                            <li class="mr-2 mb-2">', $custom['value'], '</li>';
                     }
                     if ($shown)
                       echo '
