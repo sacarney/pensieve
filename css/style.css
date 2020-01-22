@@ -373,7 +373,7 @@ code, pre { display: block; }
 /* UTILITY */
 /* ------------------------- */
 
-.is-muted { opacity: 0.6; }
+.is-muted { opacity: 0.75; }
 
 .is-size-6-5 { font-size: 0.9rem !important; }
 
