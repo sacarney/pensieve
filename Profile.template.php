@@ -891,36 +891,36 @@ function template_trackActivity()
 
   // The last IP the user used.
   echo '
-  <div class="content">
-    <dl>
-      <dt>', $txt['most_recent_ip'], ':
+  <div>
+    <dl class="mb-4">
+      <dt><b>', $txt['most_recent_ip'], ':</b>
         ', (empty($context['last_ip2']) ? '' : '<br />
         <span class="smalltext">(<a href="' . $scripturl . '?action=helpadmin;help=whytwoip" onclick="return reqWin(this.href);">' . $txt['why_two_ip_address'] . '</a>)</span>'), '
       </dt>
-      <dd>
-        <a href="', $scripturl, '?action=profile;area=tracking;sa=ip;searchip=', $context['last_ip'], ';u=', $context['member']['id'], '">', $context['last_ip'], '</a>';
+      <dd class="mb-3">
+        <span><a href="', $scripturl, '?action=profile;area=tracking;sa=ip;searchip=', $context['last_ip'], ';u=', $context['member']['id'], '">', $context['last_ip'], '</a></span>';
 
   // Second address detected?
   if (!empty($context['last_ip2']))
-    echo ', <a href="', $scripturl, '?action=profile;area=tracking;sa=ip;searchip=', $context['last_ip2'], ';u=', $context['member']['id'], '">', $context['last_ip2'], '</a>';
+    echo ', <span><a href="', $scripturl, '?action=profile;area=tracking;sa=ip;searchip=', $context['last_ip2'], ';u=', $context['member']['id'], '">', $context['last_ip2'], '</a></span>';
 
   echo '</dd>';
 
   // Lists of IP addresses used in messages / error messages.
   echo '
-      <dt>', $txt['ips_in_messages'], ':</dt>
-      <dd>
+      <dt><b>', $txt['ips_in_messages'], ':</b></dt>
+      <dd class="mb-3">
         ', (count($context['ips']) > 0 ? implode(', ', $context['ips']) : '(' . $txt['none'] . ')'), '
       </dd>
       <dt>', $txt['ips_in_errors'], ':</dt>
-      <dd>
+      <dd class="mb-3">
         ', (count($context['ips']) > 0 ? implode(', ', $context['error_ips']) : '(' . $txt['none'] . ')'), '
       </dd>';
 
   // List any members that have used the same IP addresses as the current member.
   echo '
-      <dt>', $txt['members_in_range'], ':</dt>
-      <dd>
+      <dt><b>', $txt['members_in_range'], ':</b></dt>
+      <dd class="mb-3">
         ', (count($context['members_in_range']) > 0 ? implode(', ', $context['members_in_range']) : '(' . $txt['none'] . ')'), '
       </dd>
     </dl>
