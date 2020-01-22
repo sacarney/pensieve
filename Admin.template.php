@@ -2224,7 +2224,7 @@ function template_callback_question_answer_list()
     echo '
 
       <div class="is-flex">
-        <div class="field">
+        <div class="field mr-3">
           <label class="label">', $txt['setup_verification_question'], '</label>
           <div class="control">
             <input class="input" type="text" name="question[', $data['id'], ']" value="', $data['question'], '" size="50" class="verification_question" />
@@ -2245,13 +2245,13 @@ function template_callback_question_answer_list()
         <div class="field w-50 mr-2">
           <label class="label">', $txt['setup_verification_question'], '</label>
           <div class="control">
-            <input class="input" type="text" name="question[', $data['id'], ']" value="', $data['question'], '" size="50" class="verification_question" />
+            <input class="input" type="text" name="question[]" size="50" class="verification_question" />
           </div>
         </div>
         <div class="field w-50">
           <label class="label">', $txt['setup_verification_answer'], '</label>
           <div class="control">
-            <input class="input" type="text" name="answer[', $data['id'], ']" value="', $data['answer'], '" size="50" class="verification_answer" />
+            <input class="input" type="text" name="answer[]" size="50" class="verification_answer" />
           </div>
         </div>
       </div>';
