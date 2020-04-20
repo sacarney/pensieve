@@ -1452,7 +1452,11 @@ a.box:active {
 /* --- FORM --- */
 .input,
 .textarea,
-.input_text {
+.input_text,
+#admin_content input[type="text"],
+#admin_content input[type="password"],
+#admin_content select,
+#admin_content textarea {
   background-color: var(--grey-2);
   border-color: var(--light-overlay);
   color: var(--white);
@@ -1507,7 +1511,10 @@ a.box:active {
 
 .input[disabled],
 .select select[disabled],
-.textarea[disabled] {
+.textarea[disabled],
+#admin_content input[disabled],
+#admin_content select[disabled],
+#admin_content textarea[disabled] {
   background-color: var(--grey-2);
   border-color: var(--darker-overlay);
   box-shadow:none;
@@ -1903,6 +1910,7 @@ a.box:active {
 
 
 /* --- NOTIFICATION --- */
+.information,
 .notification {
   background-color: var(--light-overlay);
 }
