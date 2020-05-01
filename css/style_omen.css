@@ -3,13 +3,6 @@
  *
  */
 
- /*
- mobile up to 768px
- tablet between 769px and 979px
- desktop between 980px and 1179px
- widescreen above 1180px
-*/
-
 @import url('https://fonts.googleapis.com/css?family=Amaranth:400,700|PT+Serif:400,700|Roboto:400,500');
 
 :root  {
@@ -325,8 +318,8 @@ a.box:active {
 }
 
 .button.is-text {
-  background-color:transparent;
-  border-color:transparent;
+  background-color: transparent;
+  border-color: transparent;
   color: var(--white);
   text-decoration:underline
 }
@@ -347,20 +340,20 @@ a.box:active {
 
 .button.is-white {
   background-color: var(--white);
-  border-color:transparent;
+  border-color: transparent;
   color: var(--black)
 }
 
 .button.is-white.is-hovered,
 .button.is-white:hover {
   background-color: #f9f9f9;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--black)
 }
 
 .button.is-white.is-focused,
 .button.is-white:focus {
-  border-color:transparent;
+  border-color: transparent;
   color: var(--black)
 }
 
@@ -372,14 +365,14 @@ a.box:active {
 .button.is-white.is-active,
 .button.is-white:active {
   background-color: var(--light);
-  border-color:transparent;
+  border-color: transparent;
   color: var(--black)
 }
 
 .button.is-white[disabled] {
   background-color: var(--white);
-  border-color:transparent;
-  box-shadow:none
+  border-color: transparent;
+  box-shadow: none
 }
 
 .button.is-white.is-inverted {
@@ -393,16 +386,16 @@ a.box:active {
 
 .button.is-white.is-inverted[disabled] {
   background-color: var(--black);
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-white.is-loading:after {
-  border-color:transparent transparent var(--black) var(--black) !important;
+  border-color: transparent transparent var(--black) var(--black) !important;
 }
 
 .button.is-white.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
   color: var(--white)
 }
@@ -416,17 +409,17 @@ a.box:active {
 
 .button.is-black.is-loading:after,
 .button.is-white.is-outlined.is-loading:after {
-  border-color:transparent transparent var(--white) var(--white) !important;
+  border-color: transparent transparent var(--white) var(--white) !important;
 }
 
 .button.is-white.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
   color: var(--white)
 }
 
 .button.is-white.is-inverted.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--black);
   color: var(--black)
 }
@@ -438,28 +431,28 @@ a.box:active {
 }
 
 .button.is-white.is-inverted.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--black);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--black)
 }
 
 .button.is-black {
   background-color: var(--black);
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-black.is-hovered,
 .button.is-black:hover {
   background-color: #040404;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-black.is-focused,
 .button.is-black:focus {
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
@@ -471,7 +464,7 @@ a.box:active {
 .button.is-black.is-active,
 .button.is-black:active {
   background-color: var(--black);
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
@@ -490,13 +483,13 @@ a.box:active {
 
 .button.is-black.is-inverted[disabled] {
   background-color: var(--white);
-  border-color:transparent;
-  box-shadow:none;
+  border-color: transparent;
+  box-shadow: none;
   color: var(--black)
 }
 
 .button.is-black.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--black);
   color: var(--black)
 }
@@ -509,18 +502,18 @@ a.box:active {
 }
 
 .button.is-black.is-outlined.is-loading:after {
-  border-color:transparent transparent var(--black) var(--black) !important;
+  border-color: transparent transparent var(--black) var(--black) !important;
 }
 
 .button.is-black.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--black);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--black)
 }
 
 .button.is-black.is-inverted.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
   color: var(--white)
 }
@@ -532,28 +525,28 @@ a.box:active {
 }
 
 .button.is-black.is-inverted.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--white)
 }
 
 .button.is-light {
   background-color: var(--light);
-  border-color:transparent;
+  border-color: transparent;
   color: var(--dark)
 }
 
 .button.is-light.is-hovered,
 .button.is-light:hover {
   background-color: #efefef;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--dark)
 }
 
 .button.is-light.is-focused,
 .button.is-light:focus {
-  border-color:transparent;
+  border-color: transparent;
   color: var(--dark)
 }
 
@@ -565,14 +558,14 @@ a.box:active {
 .button.is-light.is-active,
 .button.is-light:active {
   background-color: #e8e8e8;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--dark)
 }
 
 .button.is-light[disabled] {
   background-color: var(--light);
-  border-color:transparent;
-  box-shadow:none
+  border-color: transparent;
+  box-shadow: none
 }
 
 .button.is-light.is-inverted {
@@ -586,17 +579,17 @@ a.box:active {
 
 .button.is-light.is-inverted[disabled] {
   background-color: var(--dark);
-  border-color:transparent;
-  box-shadow:none;
+  border-color: transparent;
+  box-shadow: none;
   color: var(--light)
 }
 
 .button.is-light.is-loading:after {
-  border-color:transparent transparent var(--dark) var(--dark) !important;
+  border-color: transparent transparent var(--dark) var(--dark) !important;
 }
 
 .button.is-light.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--light);
   color: var(--light)
 }
@@ -610,18 +603,18 @@ a.box:active {
 
 .button.is-dark.is-loading:after,
 .button.is-light.is-outlined.is-loading:after {
-  border-color:transparent transparent var(--light) var(--light) !important;
+  border-color: transparent transparent var(--light) var(--light) !important;
 }
 
 .button.is-light.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--light);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--light)
 }
 
 .button.is-light.is-inverted.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--dark);
   color: var(--dark)
 }
@@ -633,28 +626,28 @@ a.box:active {
 }
 
 .button.is-light.is-inverted.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--dark);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--dark)
 }
 
 .button.is-dark {
   background-color: var(--dark);
-  border-color:transparent;
+  border-color: transparent;
   color: var(--light)
 }
 
 .button.is-dark.is-hovered,
 .button.is-dark:hover {
   background-color: #2f2f2f;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--light)
 }
 
 .button.is-dark.is-focused,
 .button.is-dark:focus {
-  border-color:transparent;
+  border-color: transparent;
   color: var(--light)
 }
 
@@ -666,14 +659,14 @@ a.box:active {
 .button.is-dark.is-active,
 .button.is-dark:active {
   background-color: #292929;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--light)
 }
 
 .button.is-dark[disabled] {
   background-color: var(--dark);
-  border-color:transparent;
-  box-shadow:none
+  border-color: transparent;
+  box-shadow: none
 }
 
 .button.is-dark.is-inverted {
@@ -687,13 +680,13 @@ a.box:active {
 
 .button.is-dark.is-inverted[disabled] {
   background-color: var(--light);
-  border-color:transparent;
-  box-shadow:none;
+  border-color: transparent;
+  box-shadow: none;
   color: var(--dark)
 }
 
 .button.is-dark.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--dark);
   color: var(--dark)
 }
@@ -706,18 +699,18 @@ a.box:active {
 }
 
 .button.is-dark.is-outlined.is-loading:after {
-  border-color:transparent transparent var(--dark) var(--dark) !important;
+  border-color: transparent transparent var(--dark) var(--dark) !important;
 }
 
 .button.is-dark.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--dark);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--dark)
 }
 
 .button.is-dark.is-inverted.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--light);
   color: var(--light)
 }
@@ -729,28 +722,28 @@ a.box:active {
 }
 
 .button.is-dark.is-inverted.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--light);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--light)
 }
 
 .button.is-primary {
   background-color:var(--primary);
-  border-color:transparent;
+  border-color: transparent;
   color: var(--black);
 }
 
 .button.is-primary.is-hovered,
 .button.is-primary:hover {
   background-color: var(--darkcyan);
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white);
 }
 
 .button.is-primary.is-focused,
 .button.is-primary:focus {
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
@@ -762,14 +755,14 @@ a.box:active {
 .button.is-primary.is-active,
 .button.is-primary:active {
   background-color: #258fc1;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-primary[disabled] {
   background-color:var(--primary);
-  border-color:transparent;
-  box-shadow:none
+  border-color: transparent;
+  box-shadow: none
 }
 
 .button.is-primary.is-inverted {
@@ -783,8 +776,8 @@ a.box:active {
 
 .button.is-primary.is-inverted[disabled] {
   background-color: var(--white);
-  border-color:transparent;
-  box-shadow:none;
+  border-color: transparent;
+  box-shadow: none;
   color:var(--primary)
 }
 
@@ -792,11 +785,11 @@ a.box:active {
 .button.is-link.is-loading:after,
 .button.is-primary.is-loading:after,
 .button.is-success.is-loading:after {
-  border-color:transparent transparent var(--white) var(--white) !important;
+  border-color: transparent transparent var(--white) var(--white) !important;
 }
 
 .button.is-primary.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color:var(--primary);
   color:var(--primary)
 }
@@ -809,18 +802,18 @@ a.box:active {
 }
 
 .button.is-primary.is-outlined.is-loading:after {
-  border-color:transparent transparent var(--primary) var(--primary) !important;
+  border-color: transparent transparent var(--primary) var(--primary) !important;
 }
 
 .button.is-primary.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color:var(--primary);
-  box-shadow:none;
+  box-shadow: none;
   color:var(--primary)
 }
 
 .button.is-primary.is-inverted.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
   color: var(--white)
 }
@@ -832,28 +825,28 @@ a.box:active {
 }
 
 .button.is-primary.is-inverted.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--white)
 }
 
 .button.is-link {
   background-color: var(--primary);
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-link.is-hovered,
 .button.is-link:hover {
   background-color: #276be0;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-link.is-focused,
 .button.is-link:focus {
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
@@ -865,14 +858,14 @@ a.box:active {
 .button.is-link.is-active,
 .button.is-link:active {
   background-color: #1f65db;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-link[disabled] {
   background-color: var(--primary);
-  border-color:transparent;
-  box-shadow:none
+  border-color: transparent;
+  box-shadow: none
 }
 
 .button.is-link.is-inverted {
@@ -886,13 +879,13 @@ a.box:active {
 
 .button.is-link.is-inverted[disabled] {
   background-color: var(--white);
-  border-color:transparent;
-  box-shadow:none;
+  border-color: transparent;
+  box-shadow: none;
   color: var(--primary)
 }
 
 .button.is-link.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--primary);
   color: var(--primary)
 }
@@ -905,18 +898,18 @@ a.box:active {
 }
 
 .button.is-link.is-outlined.is-loading:after {
-  border-color:transparent transparent var(--primary) var(--primary) !important;
+  border-color: transparent transparent var(--primary) var(--primary) !important;
 }
 
 .button.is-link.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--primary);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--primary)
 }
 
 .button.is-link.is-inverted.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
   color: var(--white)
 }
@@ -928,28 +921,28 @@ a.box:active {
 }
 
 .button.is-link.is-inverted.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--white)
 }
 
 .button.is-info {
   background-color: var(--info);
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-info.is-hovered,
 .button.is-info:hover {
   background-color: #1496ed;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-info.is-focused,
 .button.is-info:focus {
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
@@ -961,14 +954,14 @@ a.box:active {
 .button.is-info.is-active,
 .button.is-info:active {
   background-color: #118fe4;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-info[disabled] {
   background-color: var(--info);
-  border-color:transparent;
-  box-shadow:none
+  border-color: transparent;
+  box-shadow: none
 }
 
 .button.is-info.is-inverted {
@@ -982,13 +975,13 @@ a.box:active {
 
 .button.is-info.is-inverted[disabled] {
   background-color: var(--white);
-  border-color:transparent;
-  box-shadow:none;
+  border-color: transparent;
+  box-shadow: none;
   color: var(--info)
 }
 
 .button.is-info.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--info);
   color: var(--info)
 }
@@ -1001,18 +994,18 @@ a.box:active {
 }
 
 .button.is-info.is-outlined.is-loading:after {
-  border-color:transparent transparent var(--info) var(--info) !important;
+  border-color: transparent transparent var(--info) var(--info) !important;
 }
 
 .button.is-info.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--info);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--info)
 }
 
 .button.is-info.is-inverted.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
   color: var(--white)
 }
@@ -1024,28 +1017,28 @@ a.box:active {
 }
 
 .button.is-info.is-inverted.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--white)
 }
 
 .button.is-success {
   background-color: var(--success);
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-success.is-hovered,
 .button.is-success:hover {
   background-color: #22c65b;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-success.is-focused,
 .button.is-success:focus {
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
@@ -1057,14 +1050,14 @@ a.box:active {
 .button.is-success.is-active,
 .button.is-success:active {
   background-color: #20bc56;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-success[disabled] {
   background-color: var(--success);
-  border-color:transparent;
-  box-shadow:none
+  border-color: transparent;
+  box-shadow: none
 }
 
 .button.is-success.is-inverted {
@@ -1078,13 +1071,13 @@ a.box:active {
 
 .button.is-success.is-inverted[disabled] {
   background-color: var(--white);
-  border-color:transparent;
-  box-shadow:none;
+  border-color: transparent;
+  box-shadow: none;
   color: var(--success)
 }
 
 .button.is-success.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--success);
   color: var(--success)
 }
@@ -1097,18 +1090,18 @@ a.box:active {
 }
 
 .button.is-success.is-outlined.is-loading:after {
-  border-color:transparent transparent var(--success) var(--success) !important;
+  border-color: transparent transparent var(--success) var(--success) !important;
 }
 
 .button.is-success.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--success);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--success)
 }
 
 .button.is-success.is-inverted.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
   color: var(--white)
 }
@@ -1120,28 +1113,28 @@ a.box:active {
 }
 
 .button.is-success.is-inverted.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--white)
 }
 
 .button.is-warning {
   background-color: var(--warning);
-  border-color:transparent;
+  border-color: transparent;
   color:rgba(0, 0, 0, .7)
 }
 
 .button.is-warning.is-hovered,
 .button.is-warning:hover {
   background-color: #ffdb4a;
-  border-color:transparent;
+  border-color: transparent;
   color:rgba(0, 0, 0, .7)
 }
 
 .button.is-warning.is-focused,
 .button.is-warning:focus {
-  border-color:transparent;
+  border-color: transparent;
   color:rgba(0, 0, 0, .7)
 }
 
@@ -1153,14 +1146,14 @@ a.box:active {
 .button.is-warning.is-active,
 .button.is-warning:active {
   background-color: #ffd83d;
-  border-color:transparent;
+  border-color: transparent;
   color:rgba(0, 0, 0, .7)
 }
 
 .button.is-warning[disabled] {
   background-color: var(--warning);
-  border-color:transparent;
-  box-shadow:none
+  border-color: transparent;
+  box-shadow: none
 }
 
 .button.is-warning.is-inverted {
@@ -1174,17 +1167,17 @@ a.box:active {
 
 .button.is-warning.is-inverted[disabled] {
   background-color:rgba(0, 0, 0, .7);
-  border-color:transparent;
-  box-shadow:none;
+  border-color: transparent;
+  box-shadow: none;
   color: var(--warning)
 }
 
 .button.is-warning.is-loading:after {
-  border-color:transparent transparent rgba(0, 0, 0, .7) rgba(0, 0, 0, .7) !important;
+  border-color: transparent transparent rgba(0, 0, 0, .7) rgba(0, 0, 0, .7) !important;
 }
 
 .button.is-warning.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--warning);
   color: var(--warning)
 }
@@ -1197,18 +1190,18 @@ a.box:active {
 }
 
 .button.is-warning.is-outlined.is-loading:after {
-  border-color:transparent transparent var(--warning) var(--warning) !important;
+  border-color: transparent transparent var(--warning) var(--warning) !important;
 }
 
 .button.is-warning.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--warning);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--warning)
 }
 
 .button.is-warning.is-inverted.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color:rgba(0, 0, 0, .7);
   color:rgba(0, 0, 0, .7)
 }
@@ -1220,28 +1213,28 @@ a.box:active {
 }
 
 .button.is-warning.is-inverted.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color:rgba(0, 0, 0, .7);
-  box-shadow:none;
+  box-shadow: none;
   color:rgba(0, 0, 0, .7)
 }
 
 .button.is-danger {
   background-color: var(--danger);
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-danger.is-hovered,
 .button.is-danger:hover {
   background-color: #ff2b56;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-danger.is-focused,
 .button.is-danger:focus {
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
@@ -1253,14 +1246,14 @@ a.box:active {
 .button.is-danger.is-active,
 .button.is-danger:active {
   background-color: #ff1f4b;
-  border-color:transparent;
+  border-color: transparent;
   color: var(--white)
 }
 
 .button.is-danger[disabled] {
   background-color: var(--danger);
-  border-color:transparent;
-  box-shadow:none
+  border-color: transparent;
+  box-shadow: none
 }
 
 .button.is-danger.is-inverted {
@@ -1274,17 +1267,17 @@ a.box:active {
 
 .button.is-danger.is-inverted[disabled] {
   background-color: var(--white);
-  border-color:transparent;
-  box-shadow:none;
+  border-color: transparent;
+  box-shadow: none;
   color: var(--danger)
 }
 
 .button.is-danger.is-loading:after {
-  border-color:transparent transparent var(--white) var(--white) !important;
+  border-color: transparent transparent var(--white) var(--white) !important;
 }
 
 .button.is-danger.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--danger);
   color: var(--danger)
 }
@@ -1297,18 +1290,18 @@ a.box:active {
 }
 
 .button.is-danger.is-outlined.is-loading:after {
-  border-color:transparent transparent var(--danger) var(--danger) !important;
+  border-color: transparent transparent var(--danger) var(--danger) !important;
 }
 
 .button.is-danger.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--danger);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--danger)
 }
 
 .button.is-danger.is-inverted.is-outlined {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
   color: var(--white)
 }
@@ -1320,9 +1313,9 @@ a.box:active {
 }
 
 .button.is-danger.is-inverted.is-outlined[disabled] {
-  background-color:transparent;
+  background-color: transparent;
   border-color: var(--white);
-  box-shadow:none;
+  box-shadow: none;
   color: var(--white)
 }
 
@@ -1330,7 +1323,7 @@ a.box:active {
 .button[disabled] {
   background-color: var(--white);
   border-color: #dbdbdb;
-  box-shadow:none;
+  box-shadow: none;
   opacity:.5;
   color: var(--grey-1);
 }
@@ -1339,8 +1332,8 @@ a.box:active {
   background-color: var(--light);
   border-color: #dbdbdb;
   color: #7a7a7a;
-  box-shadow:none;
-  pointer-events:none
+  box-shadow: none;
+  pointer-events: none
 }
 
 .button_submit {
@@ -1510,7 +1503,7 @@ a.box:active {
 .textarea[disabled] {
   background-color: var(--grey-2);
   border-color: var(--darker-overlay);
-  box-shadow:none;
+  box-shadow: none;
 }
 
 .input[disabled]:-moz-placeholder,
@@ -2778,7 +2771,7 @@ a.navbar-link:hover {
   }
 
   .navbar-burger {
-    display:none
+    display: none
   }
 
   .navbar.is-light .navbar-burger {
