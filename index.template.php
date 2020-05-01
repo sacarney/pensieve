@@ -74,7 +74,7 @@ function template_init()
   $settings['require_theme_strings'] = true;
 
   /* Define theme variants. */
-  $settings['theme_variants'] = array('default', 'omen', 'gold');
+  $settings['theme_variants'] = array('default', 'omen', 'gold', 'verdant');
 
   // SUBACCOUNTS
   $context['subaccount_dropdown'] = '';
