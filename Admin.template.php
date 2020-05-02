@@ -2132,7 +2132,7 @@ function template_repair_boards()
   }
 }
 
-// @TODO SUBACCOUNTS SEttings
+// @TODO SUBACCOUNTS Settings
 function template_callback_subaccount_group_settings()
 {
   global $txt, $context;
