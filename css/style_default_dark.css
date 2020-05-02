@@ -66,17 +66,12 @@ body, button, input, select, textarea {
   font-family: "Roboto", sans-serif; /* YOUR THEME  - Optional */
 }
 
-.content {
- xfont-family: "PT Serif";
-}
-
 .title {
   font-family: "Amaranth";
   font-weight: 500;
 }
 
-#maincontent > .container,
-#sp_center > .container:not(.pensieve-board-index) /* SimplePortal */ {
+#maincontent > .container {
   width: 100%;
   min-width: 0;
   padding: 1rem;
@@ -162,132 +157,76 @@ fieldset {
 }
 
 /* --- TEXT COLORS -- */
+/* These are re-colors of Bulma's utility classes, should you need them. */
+/* https://bulma.io/documentation/modifiers/color-helpers/ */
 
-.has-text-white {
-  color: var(--white) !important;
-}
+.has-text-white { color: var(--white) !important; }
 
 a.has-text-white:focus,
-a.has-text-white:hover {
-  color: #e6e6e6 !important;
-}
+a.has-text-white:hover { color: #e6e6e6 !important; }
 
-.has-text-black {
-  color: var(--black) !important;
-}
+.has-text-black { color: var(--black) !important; }
 
 a.has-text-black:focus,
-a.has-text-black:hover {
-  color: var(--black) !important;
-}
+a.has-text-black:hover { color: var(--black) !important; }
 
-.has-text-light {
-  color: var(--light) !important;
-}
+.has-text-light { color: var(--light) !important; }
 
 a.has-text-light:focus,
-a.has-text-light:hover {
-  color: #dcdcdc !important;
-}
+a.has-text-light:hover { color: #dcdcdc !important; }
 
-.has-text-dark {
-  color: var(--dark) !important;
-}
+.has-text-dark { color: var(--dark) !important; }
 
 a.has-text-dark:focus,
-a.has-text-dark:hover {
-  color: #1c1c1c !important;
-}
+a.has-text-dark:hover { color: #1c1c1c !important; }
 
-.has-text-primary {
-  color: var(--primary) !important;
-}
+.has-text-primary { color: var(--primary) !important; }
 
 a.has-text-primary:focus,
-a.has-text-primary:hover {
-  color: #2180ac !important;
-}
+a.has-text-primary:hover { color: #2180ac !important; }
 
-.has-text-link {
-  color: var(--primary) !important;
-}
+.has-text-link { color: var(--primary) !important; }
 
 a.has-text-link:focus,
-a.has-text-link:hover {
-  color: #1c5ac5 !important;
-}
+a.has-text-link:hover { color: #1c5ac5 !important; }
 
-.has-text-info {
-  color: var(--info) !important;
-}
+.has-text-info { color: var(--info) !important; }
 
 a.has-text-info:focus,
-a.has-text-info:hover {
-  color: #0f81cc !important;
-}
+a.has-text-info:hover { color: #0f81cc !important; }
 
-.has-text-success {
-  color: var(--success) !important;
-}
+.has-text-success { color: var(--success) !important; }
 
 a.has-text-success:focus,
-a.has-text-success:hover {
-  color: #1ca64c !important;
-}
+a.has-text-success:hover { color: #1ca64c !important; }
 
-.has-text-warning {
-  color: var(--warning) !important;
-}
+.has-text-warning { color: var(--warning) !important; }
 
 a.has-text-warning:focus,
-a.has-text-warning:hover {
-  color: #ffd324 !important;
-}
+a.has-text-warning:hover { color: #ffd324 !important; }
 
-.has-text-danger {
-  color: var(--danger) !important;
-}
+.has-text-danger { color: var(--danger) !important; }
 
 a.has-text-danger:focus,
-a.has-text-danger:hover {
-  color: #ff0537 !important;
-}
+a.has-text-danger:hover { color: #ff0537 !important; }
 
-.has-text-black-bis {
-  color: #121212 !important;
-}
+.has-text-black-bis { color: #121212 !important; }
 
-.has-text-black-ter {
-  color: #242424 !important;
-}
+.has-text-black-ter { color: #242424 !important; }
 
-.has-text-grey-darker {
-  color: var(--dark) !important;
-}
+.has-text-grey-darker { color: var(--dark) !important; }
 
-.has-text-grey-dark {
-  color: var(--grey-2) !important;
-}
+.has-text-grey-dark { color: var(--grey-2) !important; }
 
-.has-text-grey {
-  color: #7a7a7a !important;
-}
+.has-text-grey { color: #7a7a7a !important; }
 
-.has-text-grey-light {
-  color: #b5b5b5 !important;
-}
+.has-text-grey-light { color: #b5b5b5 !important; }
 
-.has-text-grey-lighter {
-  color: #dbdbdb !important;
-}
+.has-text-grey-lighter { color: #dbdbdb !important; }
 
-.has-text-white-ter {
-  color: var(--light) !important;
-}
+.has-text-white-ter { color: var(--light) !important; }
 
-.has-text-white-bis {
-  color: #fafafa !important;
-}
+.has-text-white-bis { color: #fafafa !important; }
 
 /* --- BOX --- */
 
@@ -307,7 +246,10 @@ a.box:active {
 }
 
 /* --- BUTTON --- */
+/* These are re-colors of Bulma's button classes, should you need them. */
+/* https://bulma.io/documentation/elements/button/ */
 
+/* Default */
 .button {
   background-color: var(--grey-2);
   border-color: var(--grey-3);
@@ -337,320 +279,15 @@ a.box:active {
   color: #b5b5b5
 }
 
-.button.is-text {
-  background-color: transparent;
-  border-color: transparent;
-  color: var(--white);
-  text-decoration:underline
-}
-
-.button.is-text.is-focused,
-.button.is-text.is-hovered,
-.button.is-text:focus,
-.button.is-text:hover {
-  background-color: var(--dark);
-  color: var(--light)
-}
-
-.button.is-text.is-active,
-.button.is-text:active {
-  background-color: #292929;
-  color: var(--light)
-}
-
-.button.is-white {
+.button[disabled] {
   background-color: var(--white);
-  border-color: transparent;
-  color: var(--black)
-}
-
-.button.is-white.is-hovered,
-.button.is-white:hover {
-  background-color: #f9f9f9;
-  border-color: transparent;
-  color: var(--black)
-}
-
-.button.is-white.is-focused,
-.button.is-white:focus {
-  border-color: transparent;
-  color: var(--black)
-}
-
-.button.is-white.is-focused:not(:active),
-.button.is-white:focus:not(:active) {
-  box-shadow:0 0 0 .125em rgba(255, 255, 255, .25)
-}
-
-.button.is-white.is-active,
-.button.is-white:active {
-  background-color: var(--light);
-  border-color: transparent;
-  color: var(--black)
-}
-
-.button.is-white[disabled] {
-  background-color: var(--white);
-  border-color: transparent;
-  box-shadow: none
-}
-
-.button.is-white.is-inverted {
-  background-color: var(--black);
-  color: var(--white)
-}
-
-.button.is-white.is-inverted:hover {
-  background-color: var(--black)
-}
-
-.button.is-white.is-inverted[disabled] {
-  background-color: var(--black);
-  border-color: transparent;
-  color: var(--white)
-}
-
-.button.is-white.is-loading:after {
-  border-color: transparent transparent var(--black) var(--black) !important;
-}
-
-.button.is-white.is-outlined {
-  background-color: transparent;
-  border-color: var(--white);
-  color: var(--white)
-}
-
-.button.is-white.is-outlined:focus,
-.button.is-white.is-outlined:hover {
-  background-color: var(--white);
-  border-color: var(--white);
-  color: var(--black)
-}
-
-.button.is-black.is-loading:after,
-.button.is-white.is-outlined.is-loading:after {
-  border-color: transparent transparent var(--white) var(--white) !important;
-}
-
-.button.is-white.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--white);
-  color: var(--white)
-}
-
-.button.is-white.is-inverted.is-outlined {
-  background-color: transparent;
-  border-color: var(--black);
-  color: var(--black)
-}
-
-.button.is-white.is-inverted.is-outlined:focus,
-.button.is-white.is-inverted.is-outlined:hover {
-  background-color: var(--black);
-  color: var(--white)
-}
-
-.button.is-white.is-inverted.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--black);
+  border-color: #dbdbdb;
   box-shadow: none;
-  color: var(--black)
+  opacity:.5;
+  color: var(--grey-1);
 }
 
-.button.is-black {
-  background-color: var(--black);
-  border-color: transparent;
-  color: var(--white)
-}
-
-.button.is-black.is-hovered,
-.button.is-black:hover {
-  background-color: #040404;
-  border-color: transparent;
-  color: var(--white)
-}
-
-.button.is-black.is-focused,
-.button.is-black:focus {
-  border-color: transparent;
-  color: var(--white)
-}
-
-.button.is-black.is-focused:not(:active),
-.button.is-black:focus:not(:active) {
-  box-shadow:0 0 0 .125em rgba(10, 10, 10, .25)
-}
-
-.button.is-black.is-active,
-.button.is-black:active {
-  background-color: var(--black);
-  border-color: transparent;
-  color: var(--white)
-}
-
-.button.is-black[disabled] {
-  background-color: var(--black);
-}
-
-.button.is-black.is-inverted {
-  background-color: var(--white);
-  color: var(--black)
-}
-
-.button.is-black.is-inverted:hover {
-  background-color: var(--light)
-}
-
-.button.is-black.is-inverted[disabled] {
-  background-color: var(--white);
-  border-color: transparent;
-  box-shadow: none;
-  color: var(--black)
-}
-
-.button.is-black.is-outlined {
-  background-color: transparent;
-  border-color: var(--black);
-  color: var(--black)
-}
-
-.button.is-black.is-outlined:focus,
-.button.is-black.is-outlined:hover {
-  background-color: var(--black);
-  border-color: var(--black);
-  color: var(--white)
-}
-
-.button.is-black.is-outlined.is-loading:after {
-  border-color: transparent transparent var(--black) var(--black) !important;
-}
-
-.button.is-black.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--black);
-  box-shadow: none;
-  color: var(--black)
-}
-
-.button.is-black.is-inverted.is-outlined {
-  background-color: transparent;
-  border-color: var(--white);
-  color: var(--white)
-}
-
-.button.is-black.is-inverted.is-outlined:focus,
-.button.is-black.is-inverted.is-outlined:hover {
-  background-color: var(--white);
-  color: var(--black)
-}
-
-.button.is-black.is-inverted.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--white);
-  box-shadow: none;
-  color: var(--white)
-}
-
-.button.is-light {
-  background-color: var(--light);
-  border-color: transparent;
-  color: var(--dark)
-}
-
-.button.is-light.is-hovered,
-.button.is-light:hover {
-  background-color: #efefef;
-  border-color: transparent;
-  color: var(--dark)
-}
-
-.button.is-light.is-focused,
-.button.is-light:focus {
-  border-color: transparent;
-  color: var(--dark)
-}
-
-.button.is-light.is-focused:not(:active),
-.button.is-light:focus:not(:active) {
-  box-shadow:0 0 0 .125em rgba(245, 245, 245, .25)
-}
-
-.button.is-light.is-active,
-.button.is-light:active {
-  background-color: #e8e8e8;
-  border-color: transparent;
-  color: var(--dark)
-}
-
-.button.is-light[disabled] {
-  background-color: var(--light);
-  border-color: transparent;
-  box-shadow: none
-}
-
-.button.is-light.is-inverted {
-  background-color: var(--dark);
-  color: var(--light)
-}
-
-.button.is-light.is-inverted:hover {
-  background-color: #292929
-}
-
-.button.is-light.is-inverted[disabled] {
-  background-color: var(--dark);
-  border-color: transparent;
-  box-shadow: none;
-  color: var(--light)
-}
-
-.button.is-light.is-loading:after {
-  border-color: transparent transparent var(--dark) var(--dark) !important;
-}
-
-.button.is-light.is-outlined {
-  background-color: transparent;
-  border-color: var(--light);
-  color: var(--light)
-}
-
-.button.is-light.is-outlined:focus,
-.button.is-light.is-outlined:hover {
-  background-color: var(--light);
-  border-color: var(--light);
-  color: var(--dark)
-}
-
-.button.is-dark.is-loading:after,
-.button.is-light.is-outlined.is-loading:after {
-  border-color: transparent transparent var(--light) var(--light) !important;
-}
-
-.button.is-light.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--light);
-  box-shadow: none;
-  color: var(--light)
-}
-
-.button.is-light.is-inverted.is-outlined {
-  background-color: transparent;
-  border-color: var(--dark);
-  color: var(--dark)
-}
-
-.button.is-light.is-inverted.is-outlined:focus,
-.button.is-light.is-inverted.is-outlined:hover {
-  background-color: var(--dark);
-  color: var(--light)
-}
-
-.button.is-light.is-inverted.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--dark);
-  box-shadow: none;
-  color: var(--dark)
-}
+/* Dark */
 
 .button.is-dark {
   background-color: var(--dark);
@@ -689,22 +326,6 @@ a.box:active {
   box-shadow: none
 }
 
-.button.is-dark.is-inverted {
-  background-color: var(--light);
-  color: var(--dark)
-}
-
-.button.is-dark.is-inverted:hover {
-  background-color: #e8e8e8
-}
-
-.button.is-dark.is-inverted[disabled] {
-  background-color: var(--light);
-  border-color: transparent;
-  box-shadow: none;
-  color: var(--dark)
-}
-
 .button.is-dark.is-outlined {
   background-color: transparent;
   border-color: var(--dark);
@@ -729,25 +350,7 @@ a.box:active {
   color: var(--dark)
 }
 
-.button.is-dark.is-inverted.is-outlined {
-  background-color: transparent;
-  border-color: var(--light);
-  color: var(--light)
-}
-
-.button.is-dark.is-inverted.is-outlined:focus,
-.button.is-dark.is-inverted.is-outlined:hover {
-  background-color: var(--light);
-  color: var(--dark)
-}
-
-.button.is-dark.is-inverted.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--light);
-  box-shadow: none;
-  color: var(--light)
-}
-
+/* Primary */
 .button.is-primary {
   background-color:var(--primary);
   border-color: transparent;
@@ -790,17 +393,6 @@ a.box:active {
   color:var(--primary)
 }
 
-.button.is-primary.is-inverted:hover {
-  background-color: var(--light)
-}
-
-.button.is-primary.is-inverted[disabled] {
-  background-color: var(--white);
-  border-color: transparent;
-  box-shadow: none;
-  color:var(--primary)
-}
-
 .button.is-info.is-loading:after,
 .button.is-link.is-loading:after,
 .button.is-primary.is-loading:after,
@@ -832,216 +424,7 @@ a.box:active {
   color:var(--primary)
 }
 
-.button.is-primary.is-inverted.is-outlined {
-  background-color: transparent;
-  border-color: var(--white);
-  color: var(--white)
-}
-
-.button.is-primary.is-inverted.is-outlined:focus,
-.button.is-primary.is-inverted.is-outlined:hover {
-  background-color: var(--white);
-  color:var(--primary)
-}
-
-.button.is-primary.is-inverted.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--white);
-  box-shadow: none;
-  color: var(--white)
-}
-
-.button.is-link {
-  background-color: var(--primary);
-  border-color: transparent;
-  color: var(--white)
-}
-
-.button.is-link.is-hovered,
-.button.is-link:hover {
-  background-color: #276be0;
-  border-color: transparent;
-  color: var(--white)
-}
-
-.button.is-link.is-focused,
-.button.is-link:focus {
-  border-color: transparent;
-  color: var(--white)
-}
-
-.button.is-link.is-focused:not(:active),
-.button.is-link:focus:not(:active) {
-  box-shadow:0 0 0 .125em rgba(50, 115, 226, .25)
-}
-
-.button.is-link.is-active,
-.button.is-link:active {
-  background-color: #1f65db;
-  border-color: transparent;
-  color: var(--white)
-}
-
-.button.is-link[disabled] {
-  background-color: var(--primary);
-  border-color: transparent;
-  box-shadow: none
-}
-
-.button.is-link.is-inverted {
-  background-color: var(--white);
-  color: var(--primary)
-}
-
-.button.is-link.is-inverted:hover {
-  background-color: var(--light)
-}
-
-.button.is-link.is-inverted[disabled] {
-  background-color: var(--white);
-  border-color: transparent;
-  box-shadow: none;
-  color: var(--primary)
-}
-
-.button.is-link.is-outlined {
-  background-color: transparent;
-  border-color: var(--primary);
-  color: var(--primary)
-}
-
-.button.is-link.is-outlined:focus,
-.button.is-link.is-outlined:hover {
-  background-color: var(--primary);
-  border-color: var(--primary);
-  color: var(--white)
-}
-
-.button.is-link.is-outlined.is-loading:after {
-  border-color: transparent transparent var(--primary) var(--primary) !important;
-}
-
-.button.is-link.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--primary);
-  box-shadow: none;
-  color: var(--primary)
-}
-
-.button.is-link.is-inverted.is-outlined {
-  background-color: transparent;
-  border-color: var(--white);
-  color: var(--white)
-}
-
-.button.is-link.is-inverted.is-outlined:focus,
-.button.is-link.is-inverted.is-outlined:hover {
-  background-color: var(--white);
-  color: var(--primary)
-}
-
-.button.is-link.is-inverted.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--white);
-  box-shadow: none;
-  color: var(--white)
-}
-
-.button.is-info {
-  background-color: var(--info);
-  border-color: transparent;
-  color: var(--white)
-}
-
-.button.is-info.is-hovered,
-.button.is-info:hover {
-  background-color: #1496ed;
-  border-color: transparent;
-  color: var(--white)
-}
-
-.button.is-info.is-focused,
-.button.is-info:focus {
-  border-color: transparent;
-  color: var(--white)
-}
-
-.button.is-info.is-focused:not(:active),
-.button.is-info:focus:not(:active) {
-  box-shadow:0 0 0 .125em rgba(32, 156, 238, .25)
-}
-
-.button.is-info.is-active,
-.button.is-info:active {
-  background-color: #118fe4;
-  border-color: transparent;
-  color: var(--white)
-}
-
-.button.is-info[disabled] {
-  background-color: var(--info);
-  border-color: transparent;
-  box-shadow: none
-}
-
-.button.is-info.is-inverted {
-  background-color: var(--white);
-  color: var(--info)
-}
-
-.button.is-info.is-inverted:hover {
-  background-color: var(--light)
-}
-
-.button.is-info.is-inverted[disabled] {
-  background-color: var(--white);
-  border-color: transparent;
-  box-shadow: none;
-  color: var(--info)
-}
-
-.button.is-info.is-outlined {
-  background-color: transparent;
-  border-color: var(--info);
-  color: var(--info)
-}
-
-.button.is-info.is-outlined:focus,
-.button.is-info.is-outlined:hover {
-  background-color: var(--info);
-  border-color: var(--info);
-  color: var(--white)
-}
-
-.button.is-info.is-outlined.is-loading:after {
-  border-color: transparent transparent var(--info) var(--info) !important;
-}
-
-.button.is-info.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--info);
-  box-shadow: none;
-  color: var(--info)
-}
-
-.button.is-info.is-inverted.is-outlined {
-  background-color: transparent;
-  border-color: var(--white);
-  color: var(--white)
-}
-
-.button.is-info.is-inverted.is-outlined:focus,
-.button.is-info.is-inverted.is-outlined:hover {
-  background-color: var(--white);
-  color: var(--info)
-}
-
-.button.is-info.is-inverted.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--white);
-  box-shadow: none;
-  color: var(--white)
-}
+/* Success - Green */
 
 .button.is-success {
   background-color: var(--success);
@@ -1080,21 +463,6 @@ a.box:active {
   box-shadow: none
 }
 
-.button.is-success.is-inverted {
-  background-color: var(--white);
-  color: var(--success)
-}
-
-.button.is-success.is-inverted:hover {
-  background-color: var(--light)
-}
-
-.button.is-success.is-inverted[disabled] {
-  background-color: var(--white);
-  border-color: transparent;
-  box-shadow: none;
-  color: var(--success)
-}
 
 .button.is-success.is-outlined {
   background-color: transparent;
@@ -1120,124 +488,7 @@ a.box:active {
   color: var(--success)
 }
 
-.button.is-success.is-inverted.is-outlined {
-  background-color: transparent;
-  border-color: var(--white);
-  color: var(--white)
-}
-
-.button.is-success.is-inverted.is-outlined:focus,
-.button.is-success.is-inverted.is-outlined:hover {
-  background-color: var(--white);
-  color: var(--success)
-}
-
-.button.is-success.is-inverted.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--white);
-  box-shadow: none;
-  color: var(--white)
-}
-
-.button.is-warning {
-  background-color: var(--warning);
-  border-color: transparent;
-  color:rgba(0, 0, 0, .7)
-}
-
-.button.is-warning.is-hovered,
-.button.is-warning:hover {
-  background-color: #ffdb4a;
-  border-color: transparent;
-  color:rgba(0, 0, 0, .7)
-}
-
-.button.is-warning.is-focused,
-.button.is-warning:focus {
-  border-color: transparent;
-  color:rgba(0, 0, 0, .7)
-}
-
-.button.is-warning.is-focused:not(:active),
-.button.is-warning:focus:not(:active) {
-  box-shadow:0 0 0 .125em rgba(255, 221, 87, .25)
-}
-
-.button.is-warning.is-active,
-.button.is-warning:active {
-  background-color: #ffd83d;
-  border-color: transparent;
-  color:rgba(0, 0, 0, .7)
-}
-
-.button.is-warning[disabled] {
-  background-color: var(--warning);
-  border-color: transparent;
-  box-shadow: none
-}
-
-.button.is-warning.is-inverted {
-  color: var(--warning)
-}
-
-.button.is-warning.is-inverted,
-.button.is-warning.is-inverted:hover {
-  background-color:rgba(0, 0, 0, .7)
-}
-
-.button.is-warning.is-inverted[disabled] {
-  background-color:rgba(0, 0, 0, .7);
-  border-color: transparent;
-  box-shadow: none;
-  color: var(--warning)
-}
-
-.button.is-warning.is-loading:after {
-  border-color: transparent transparent rgba(0, 0, 0, .7) rgba(0, 0, 0, .7) !important;
-}
-
-.button.is-warning.is-outlined {
-  background-color: transparent;
-  border-color: var(--warning);
-  color: var(--warning)
-}
-
-.button.is-warning.is-outlined:focus,
-.button.is-warning.is-outlined:hover {
-  background-color: var(--warning);
-  border-color: var(--warning);
-  color:rgba(0, 0, 0, .7)
-}
-
-.button.is-warning.is-outlined.is-loading:after {
-  border-color: transparent transparent var(--warning) var(--warning) !important;
-}
-
-.button.is-warning.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--warning);
-  box-shadow: none;
-  color: var(--warning)
-}
-
-.button.is-warning.is-inverted.is-outlined {
-  background-color: transparent;
-  border-color:rgba(0, 0, 0, .7);
-  color:rgba(0, 0, 0, .7)
-}
-
-.button.is-warning.is-inverted.is-outlined:focus,
-.button.is-warning.is-inverted.is-outlined:hover {
-  background-color:rgba(0, 0, 0, .7);
-  color: var(--warning)
-}
-
-.button.is-warning.is-inverted.is-outlined[disabled] {
-  background-color: transparent;
-  border-color:rgba(0, 0, 0, .7);
-  box-shadow: none;
-  color:rgba(0, 0, 0, .7)
-}
+/* Danger */
 
 .button.is-danger {
   background-color: var(--danger);
@@ -1276,22 +527,6 @@ a.box:active {
   box-shadow: none
 }
 
-.button.is-danger.is-inverted {
-  background-color: var(--white);
-  color: var(--danger)
-}
-
-.button.is-danger.is-inverted:hover {
-  background-color: var(--light)
-}
-
-.button.is-danger.is-inverted[disabled] {
-  background-color: var(--white);
-  border-color: transparent;
-  box-shadow: none;
-  color: var(--danger)
-}
-
 .button.is-danger.is-loading:after {
   border-color: transparent transparent var(--white) var(--white) !important;
 }
@@ -1320,41 +555,7 @@ a.box:active {
   color: var(--danger)
 }
 
-.button.is-danger.is-inverted.is-outlined {
-  background-color: transparent;
-  border-color: var(--white);
-  color: var(--white)
-}
-
-.button.is-danger.is-inverted.is-outlined:focus,
-.button.is-danger.is-inverted.is-outlined:hover {
-  background-color: var(--white);
-  color: var(--danger)
-}
-
-.button.is-danger.is-inverted.is-outlined[disabled] {
-  background-color: transparent;
-  border-color: var(--white);
-  box-shadow: none;
-  color: var(--white)
-}
-
-
-.button[disabled] {
-  background-color: var(--white);
-  border-color: #dbdbdb;
-  box-shadow: none;
-  opacity:.5;
-  color: var(--grey-1);
-}
-
-.button.is-static {
-  background-color: var(--light);
-  border-color: #dbdbdb;
-  color: #7a7a7a;
-  box-shadow: none;
-  pointer-events: none
-}
+/* Duplicates */
 
 .button_submit {
   /* Duplicates .button.is-primary */
@@ -1401,7 +602,6 @@ a.box:active {
   color: var(--white);
 }
   
-
 
 /* --- CONTENT --- */
 
@@ -1463,6 +663,8 @@ a.box:active {
 
 
 /* --- FORM --- */
+/* To make the theme dark, we have to basically override every bulma rule */
+
 .input,
 .textarea,
 .input_text,
@@ -1552,167 +754,6 @@ a.box:active {
 .select select[disabled]:-ms-input-placeholder,
 .textarea[disabled]:-ms-input-placeholder {
   color:rgba(255, 255, 255, .3)
-}
-
-.input.is-white,
-.textarea.is-white {
-  border-color: var(--white)
-}
-
-.input.is-white.is-active,
-.input.is-white.is-focused,
-.input.is-white:active,
-.input.is-white:focus,
-.textarea.is-white.is-active,
-.textarea.is-white.is-focused,
-.textarea.is-white:active,
-.textarea.is-white:focus {
-  box-shadow:0 0 0 .125em rgba(255, 255, 255, .25)
-}
-
-.input.is-black,
-.textarea.is-black {
-  border-color: var(--black)
-}
-
-.input.is-black.is-active,
-.input.is-black.is-focused,
-.input.is-black:active,
-.input.is-black:focus,
-.textarea.is-black.is-active,
-.textarea.is-black.is-focused,
-.textarea.is-black:active,
-.textarea.is-black:focus {
-  box-shadow:0 0 0 .125em rgba(10, 10, 10, .25)
-}
-
-.input.is-light,
-.textarea.is-light {
-  border-color: var(--light)
-}
-
-.input.is-light.is-active,
-.input.is-light.is-focused,
-.input.is-light:active,
-.input.is-light:focus,
-.textarea.is-light.is-active,
-.textarea.is-light.is-focused,
-.textarea.is-light:active,
-.textarea.is-light:focus {
-  box-shadow:0 0 0 .125em rgba(245, 245, 245, .25)
-}
-
-.input.is-dark,
-.select select[disabled]:hover,
-.textarea.is-dark {
-  border-color: var(--dark)
-}
-
-.input.is-dark.is-active,
-.input.is-dark.is-focused,
-.input.is-dark:active,
-.input.is-dark:focus,
-.textarea.is-dark.is-active,
-.textarea.is-dark.is-focused,
-.textarea.is-dark:active,
-.textarea.is-dark:focus {
-  box-shadow:0 0 0 .125em rgba(54, 54, 54, .25)
-}
-
-.input.is-primary,
-.textarea.is-primary {
-  border-color:var(--primary)
-}
-
-.input.is-primary.is-active,
-.input.is-primary.is-focused,
-.input.is-primary:active,
-.input.is-primary:focus,
-.textarea.is-primary.is-active,
-.textarea.is-primary.is-focused,
-.textarea.is-primary:active,
-.textarea.is-primary:focus {
-  box-shadow:0 0 0 .125em rgba(42, 159, 214, .25)
-}
-
-.input.is-link,
-.textarea.is-link {
-  border-color: var(--primary)
-}
-
-.input.is-link.is-active,
-.input.is-link.is-focused,
-.input.is-link:active,
-.input.is-link:focus,
-.textarea.is-link.is-active,
-.textarea.is-link.is-focused,
-.textarea.is-link:active,
-.textarea.is-link:focus {
-  box-shadow:0 0 0 .125em rgba(50, 115, 226, .25)
-}
-
-.input.is-info,
-.textarea.is-info {
-  border-color: var(--info)
-}
-
-.input.is-info.is-active,
-.input.is-info.is-focused,
-.input.is-info:active,
-.input.is-info:focus,
-.textarea.is-info.is-active,
-.textarea.is-info.is-focused,
-.textarea.is-info:active,
-.textarea.is-info:focus {
-  box-shadow:0 0 0 .125em rgba(32, 156, 238, .25)
-}
-
-.input.is-success,
-.textarea.is-success {
-  border-color: var(--success)
-}
-
-.input.is-success.is-active,
-.input.is-success.is-focused,
-.input.is-success:active,
-.input.is-success:focus,
-.textarea.is-success.is-active,
-.textarea.is-success.is-focused,
-.textarea.is-success:active,
-.textarea.is-success:focus {
-  box-shadow:0 0 0 .125em rgba(35, 209, 96, .25)
-}
-
-.input.is-warning,
-.textarea.is-warning {
-  border-color: var(--warning)
-}
-
-.input.is-warning.is-active,
-.input.is-warning.is-focused,
-.input.is-warning:active,
-.input.is-warning:focus,
-.textarea.is-warning.is-active,
-.textarea.is-warning.is-focused,
-.textarea.is-warning:active,
-.textarea.is-warning:focus {
-  box-shadow:0 0 0 .125em rgba(255, 221, 87, .25)
-}
-
-.input.is-danger,
-.textarea.is-danger {
-  border-color: var(--danger)
-}
-
-.input.is-danger.is-active,
-.input.is-danger.is-focused,
-.input.is-danger:active,
-.input.is-danger:focus,
-.textarea.is-danger.is-active,
-.textarea.is-danger.is-focused,
-.textarea.is-danger:active,
-.textarea.is-danger:focus {
-  box-shadow:0 0 0 .125em rgba(255, 56, 96, .25)
 }
 
 .checkbox:hover,
