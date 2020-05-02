@@ -7,23 +7,24 @@
 
 :root  {
 
-  --grey-1: #272b30; /* darkest */
-  --grey-2: #444;
-  --grey-3: #676767; 
-  --grey-4: #afafaf;
-
   --lightcyan: #65CDC4;
   --cyan: #45C3B8; /* Works with #333 */
   --darkcyan: #008080; /* Works with var(--white) */
   --darkercyan: #017575;
 
-  --primary: var(--cyan);
-  --primary-hover: var(--lightcyan);
-  --link: #3273dc;
-  --info: #209cee;
-  --success: #23d160;
-  --warning: #ffdd57;
-  --danger: #ff3860;
+  /* YOUR THEME COLORS*/
+
+  --light-theme-color: var(--lightcyan);
+  --medium-theme-color: var(--cyan);
+  --dark-theme-color: var(--darkcyan);
+  --darker-theme-color: var(--darkercyan);
+
+  /* BASE COLORS */
+
+  --grey-1: #272b30;
+  --grey-2: #444444;
+  --grey-3: #676767; 
+  --grey-4: #afafaf;
 
   --white: #f2f2f2;
   --black: #0a0a0a;
@@ -33,8 +34,18 @@
   --light-overlay: rgba(255, 255, 255, 0.1);
   --dark-overlay: rgba(0, 0, 0, 0.1);
   --darker-overlay: rgba(0, 0, 0, 0.5);
-}
 
+  /* Recolors Bulma's default colors to work against dark */
+  --link: #3273dc;
+  --info: #209cee;
+  --success: #23d160;
+  --warning: #ffdd57;
+  --danger: #ff3860;
+
+  --primary: var(--medium-theme-color); /* YOUR THEME */
+  --primary-hover: var(--light-theme-color); /* YOUR THEME */
+  --primary-dark: var(--dark-theme-color); /* YOUR THEME */
+}
 
 html { background-color: var(--dark); }
 
@@ -48,17 +59,13 @@ body, button, input, select, textarea {
   font-family: "Roboto", sans-serif;
 }
 
-.content {
- xfont-family: "PT Serif";
-}
-
 .title {
   font-family: "Amaranth";
   font-weight: 500;
 }
 
 #maincontent > .container,
-#sp_center > .container:not(.pensieve-board-index) /* SimplePortal */ {
+#sp_center > .container:not(.pensieve-board-index) /* MOD: SimplePortal */ {
   width: 100%;
   min-width: 0;
   padding: 1rem;
