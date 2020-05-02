@@ -28,6 +28,7 @@ widescreen above 1180px
 
 :root {
   --primary: #00d1b2;
+  --primary-dark: #00c4a7;
   --link: #3273dc;
   --info: #209cee;
   --success: #23d160;
@@ -85,19 +86,13 @@ ul.permission_groups {
 fieldset { 
   margin-bottom: 1rem;
   padding: 1rem; 
-  border: 1px solid var(--light-overlay); 
+  border: 1px solid transparent; 
 }
 
-legend { padding: 0 1rem; }
+legend { padding: 0 1rem; font-weight: bold; }
 
 @media screen and (min-width: 769px), print {
   .field-label { flex-grow: 2; }
-}
-
-.cat_bar .title,
-.title_bar .titlebg {
-  padding: 0.5em 0.75em;
-  background: var(--light-overlay);
 }
 
 .section.is-small ~ .section.is-small {
@@ -107,11 +102,6 @@ legend { padding: 0 1rem; }
 .button { transition: all 300ms ease; }
 
 .content a { text-decoration: underline; }
-
-#smfAnnouncements dl {
-  max-height: 300px;
-  overflow-x: scroll;
-}
 
 .field-label.is-narrow {
   flex-grow: 1;
@@ -540,16 +530,21 @@ code, pre { display: block; }
 /* SMF */
 /* ------------------------- */
 
+/* --- GENERAL --- */
+
+.cat_bar .title,
+.title_bar .titlebg {
+  padding: 0.5em 0.75em;
+}
+
 h3.catbg {
   display: flex;
   /* .title .is-5 .mb-4 */
   margin-bottom: 1rem !important;
   padding: 0.5rem 0.75rem;
-  color: var(--white);
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1.125;
-  background: var(--light-overlay);
 }
 
 h3.titlebg {
@@ -557,11 +552,9 @@ h3.titlebg {
   /* .title .is-6 .mb-4 */
   margin-bottom: 1rem !important;
   padding: 0.5rem 0.75rem;
-  color: var(--white);
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.125;
-  background: var(--light-overlay);
 }
 
 .catbg .help,
@@ -575,13 +568,22 @@ h3.titlebg {
   width: 1rem;
 }
 
+.catbg .floatleft,
+.titlebg .floatleft {
+  display: flex;
+}
+
+#smfAnnouncements dl {
+  max-height: 300px;
+  overflow-x: scroll;
+}
+
 .description {
   /* .notification .is-size-7 */
   position: relative;
   margin-bottom: 1.5rem;
   padding: 1.25rem 2.5rem 1.25rem 1.5rem;
   border-radius: 4px;
-  background-color: var(--light-overlay);
 }
 
 .information {
@@ -593,11 +595,16 @@ h3.titlebg {
   background-color: var(--light-overlay);
 }
 
+.floatleftpadding {
+  margin-bottom: 1rem;
+}
+
 dl.settings dt {
   display: flex;
   align-items: flex-start;
   width: 300px;
   margin-bottom: 0.5rem;
+  flex-wrap: wrap;
 }
 
 dl.settings dt a.help {
@@ -620,6 +627,7 @@ dl.settings dd {
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-gap: 1rem;
+    align-items: flex-start;
   }
 
   dl.settings dd {
@@ -631,6 +639,15 @@ dl.settings dd.alert {
   grid-column: span 2;
 }
 
+ul.theme_options {
+  list-style: none;
+  margin-left: 0;
+}
+
+li.theme_option {
+  margin-bottom: 0.5rem;
+}
+
 .error {
   color: var(--danger);
 }
@@ -639,12 +656,18 @@ dl.settings dd.alert {
   text-decoration: underline;
 }
 
-/* --- Admin form fields --- */
+.fperm {
+  margin-left: auto;
+}
+
+/* --- Form Input Types --- */
+
 #admin_content input[type="text"],
 #admin_content input[type="password"],
 #admin_content textarea,
 #admin_content select,
-#admin_content button {
+#admin_content button,
+#admin_content input[type="submit"] {
   align-items: center;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -659,6 +682,14 @@ dl.settings dd.alert {
   padding-top: calc(0.375em - 1px);
   position: relative;
   vertical-align: top;
+}
+
+#admin_content textarea {
+  width: 100%;
+  background-color: var(--white);
+  color: var(--black);
+  border-color: #dbdbdb;
+  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
 }
 
 #admin_content input[disabled],
@@ -684,6 +715,63 @@ dl.settings dd.alert {
 
 #admin_content input[type="checkbox"] + label {
   margin-left: 0.5rem;
+}
+
+/* --- Buttons --- */
+
+#admin_content input[type="submit"] {
+  /* Duplicates button is-primary */
+  background-color: white;
+  border-color: #dbdbdb;
+  border-width: 1px;
+  color: #363636;
+  cursor: pointer;
+  justify-content: center;
+  padding-bottom: calc(0.375em - 1px);
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+  padding-top: calc(0.375em - 1px);
+  text-align: center;
+  white-space: nowrap;
+
+  /* .button.is-primary */
+  background-color: var(--primary);
+  border-color: transparent;
+  color: var(--white);
+}
+
+  #admin_content input[type="submit"]:hover,
+  #admin_content input[type="submit"]:focus {
+    background-color: var(--primary-dark);
+  }
+
+/* --- Tables --- */
+/* Mimics .table.is-bordered */
+
+#admin_content .table_grid {
+  margin-bottom: 1.5rem;
+}
+
+#admin_content .table_grid td,
+#admin_content .table_grid th {
+  border: 1px solid #dbdbdb;
+  border-width: 1 1 1px;
+  padding: 0.5em 0.75em;
+  vertical-align: top;
+}
+
+#admin_content .table_grid th {
+  text-align: left;
+}
+
+#admin_content .table_grid td,
+#admin_content .table_grid th {
+  border-width: 1px;
+}
+
+#admin_content .table_grid tr:last-child td,
+#admin_content .table_grid tr:last-child th {
+  border-bottom-width: 1px;
 }
 
 /* Styles used by the auto suggest control.

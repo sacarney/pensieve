@@ -246,11 +246,7 @@ function template_credits()
   echo '
   <h3>
     <span>
-      <a href="', $scripturl, '?action=helpadmin;help=latest_support" onclick="return reqWin(this.href);">
-        <span class="icon is-medium">
-          <span class="fa fa-question-circle"></span>
-        </span>
-      </a>
+      <a href="', $scripturl, '?action=helpadmin;help=latest_support" onclick="return reqWin(this.href);"><span class="fa fa-question-circle"></span></a>
       <span>', $txt['support_latest'], '</span>
     </span>
   </h3>
@@ -2011,7 +2007,7 @@ function template_callback_question_answer_list()
       newInput.type = "text";
       newInput.className = "input_text";
       newInput.size = "50";
-      newInput.setAttribute("class", "verification_question");
+      newInput.setAttribute("class", "input_text verification_question");
       newDT.appendChild(newInput);
 
       newDD = document.createElement("dd");
@@ -2020,7 +2016,7 @@ function template_callback_question_answer_list()
       newInput.type = "text";
       newInput.className = "input_text";
       newInput.size = "50";
-      newInput.setAttribute("class", "verification_answer");
+      newInput.setAttribute("class", "input_text verification_answer");
       newDD.appendChild(newInput);
 
       placeHolder.parentNode.insertBefore(newDT, placeHolder);
