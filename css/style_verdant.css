@@ -1,23 +1,20 @@
 /*
- * Custom colors for the Omen variant.
+ * Custom colors for the Verdant variant. It's based closely on the Omen variant
  *
  */
 
-@import url('https://fonts.googleapis.com/css?family=Amaranth:400,700|PT+Serif:400,700|Roboto:400,500');
+/* YOUR THEME - You can import a font if you want */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;700&family=Roboto:ital,wght@0,500;0,700;1,400&display=swap');
+
 
 :root  {
 
-  --lightcyan: #65CDC4;
-  --cyan: #45C3B8; /* Works with #333 */
-  --darkcyan: #008080; /* Works with var(--white) */
-  --darkercyan: #017575;
-
   /* YOUR THEME COLORS*/
 
-  --light-theme-color: var(--lightcyan);
-  --medium-theme-color: var(--cyan);
-  --dark-theme-color: var(--darkcyan);
-  --darker-theme-color: var(--darkercyan);
+  --light-theme-color: #dceca9; /* Light lime */
+  --medium-theme-color: #92c46d; /* Dark green */
+  --dark-theme-color: #788696; /* Medium slate */
+  --darker-theme-color: #017575; /* Light slate */
 
   /* BASE COLORS */
 
@@ -30,10 +27,15 @@
   --black: #0a0a0a;
   --light: #c5c5c5;
   --dark: #363636;
+  --darker: #2a2a2a;
 
   --light-overlay: rgba(255, 255, 255, 0.1);
   --dark-overlay: rgba(0, 0, 0, 0.1);
   --darker-overlay: rgba(0, 0, 0, 0.5);
+
+  --primary: var(--medium-theme-color); /* YOUR THEME */
+  --primary-hover: var(--light-theme-color); /* YOUR THEME */
+  --primary-dark: var(--dark-theme-color); /* YOUR THEME */
 
   /* Recolors Bulma's default colors to work against dark */
   --link: #3273dc;
@@ -41,31 +43,27 @@
   --success: #23d160;
   --warning: #ffdd57;
   --danger: #ff3860;
-
-  --primary: var(--medium-theme-color); /* YOUR THEME */
-  --primary-hover: var(--light-theme-color); /* YOUR THEME */
-  --primary-dark: var(--dark-theme-color); /* YOUR THEME */
 }
 
 html { background-color: var(--dark); }
 
 body { 
   color: var(--light);  
-  background-image: url(../images/theme/aobg2.jpg); 
-  background-attachment: fixed; 
+  /* YOUR THEME */
+  /*background-image: url(../images/theme/aobg2.jpg);  Optional */
+  /*background-attachment: fixed;  Optional */
 }
 
 body, button, input, select, textarea {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", sans-serif; /* YOUR THEME  - Optional */
 }
 
 .title {
-  font-family: "Amaranth";
+  font-family: "Roboto Slab", serif;
   font-weight: 500;
 }
 
-#maincontent > .container,
-#sp_center > .container:not(.pensieve-board-index) /* MOD: SimplePortal */ {
+#maincontent > .container {
   width: 100%;
   min-width: 0;
   padding: 1rem;
@@ -91,6 +89,9 @@ a { color: var(--primary); }
 
 a:hover { color: var(--primary-hover); }
 
+a[style*="color"]:hover,
+a[style*="color"]:focus { color: var(--primary-hover) !important; }
+
 code, pre { 
   color: var(--white);
   background-color: var(--light-overlay); 
@@ -99,7 +100,7 @@ code, pre {
 
 code { color: var(--white); }
 
-hr { background-color: var(--darkcyan); }
+hr { background-color: var(--dark-theme-color); }
 
 table th { color: var(--light); }
 
@@ -146,7 +147,6 @@ fieldset {
 .the-post-content {
   color: var(--light);
 }
-
 
 /* --- TEXT COLORS -- */
 
@@ -743,7 +743,7 @@ a.box:active {
 
 .button.is-primary.is-hovered,
 .button.is-primary:hover {
-  background-color: var(--darkcyan);
+  background-color: var(--darker-theme-color);
   border-color: transparent;
   color: var(--white);
 }
@@ -2565,6 +2565,13 @@ a.dropdown-item.is-active {
   background-color: var(--dark);
 }
 
+
+.navbar-link:not(.is-arrowless)::after {
+  border-color: var(--primary);
+  margin-top: -0.375em;
+  right: 1.125em;
+}
+
 /* .navbar.is-light */
 .navbar.is-light {
   background-color: var(--grey-2);
@@ -2983,11 +2990,11 @@ label.panel-block:hover {
 }
 
 .hero.is-primary .title {
-  color: var(--white);
+  color: var(--black);
 }
 
 .hero.is-primary .subtitle {
-  color: rgba(255, 255, 255, .9);
+  color: var(--black);
 }
 
 .hero.is-primary .subtitle a:not(.button),

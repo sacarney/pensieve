@@ -121,7 +121,7 @@ function template_generic_menu_dropdown_above()
 
   echo '
   <div id="admin_menu">
-    <nav class="navbar is-ao" role="navigation" aria-label="admin navigation">
+    <nav class="navbar" role="navigation" aria-label="admin navigation">
       <div class="container">
           <button class="button navbar-burger" data-target="adminMenu">
             <span></span>
