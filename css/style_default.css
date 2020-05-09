@@ -93,3 +93,12 @@ h3.titlebg {
 fieldset { 
   border: 1px solid var(--dark-overlay); 
 }
+
+#admin_content input[type="text"], 
+#admin_content input[type="password"], 
+#admin_content textarea, 
+#admin_content select, 
+#admin_content button, 
+#admin_content input[type="submit"] {
+  border-color: var(--grey);
+}

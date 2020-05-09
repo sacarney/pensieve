@@ -547,6 +547,10 @@ h3.catbg {
   line-height: 1.125;
 }
 
+.title_bar .title {
+  display: flex;
+}
+
 h3.titlebg {
   display: flex;
   /* .title .is-6 .mb-4 */
@@ -660,6 +664,23 @@ li.theme_option {
   margin-left: auto;
 }
 
+.flow_hidden {
+  display: flex;
+}
+
+.flow_hidden .floatright {
+  margin-left: auto;
+}
+
+.settings .righttext {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.padding {
+  padding: 1rem 0;
+}
+
 /* --- Form Input Types --- */
 
 #admin_content input[type="text"],
@@ -717,6 +738,10 @@ li.theme_option {
   margin-left: 0.5rem;
 }
 
+input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
 /* --- Buttons --- */
 
 #admin_content input[type="submit"] {
@@ -772,6 +797,85 @@ li.theme_option {
 #admin_content .table_grid tr:last-child td,
 #admin_content .table_grid tr:last-child th {
   border-bottom-width: 1px;
+}
+
+/* --- ManageBoards --- */
+/* This class is added on line 60 ManageBoards.template.php */
+
+.pensieve_manage-boards_category {
+  margin-bottom: 1rem;
+}
+
+.pensieve_manage-boards_category ul {
+  list-style-type: none;
+  margin-top: 0;
+  margin-left: 0;
+}
+
+.pensieve_manage-boards_category li {
+  display: flex;
+  padding: 0.5rem 0.5rem;
+  line-height: 1;
+}
+
+.pensieve_manage-boards_category .floatright {
+  margin-left: auto;
+}
+
+/* --- ManagePermissions --- */
+
+.perm_boards.flow_hidden {
+  display: block;
+}
+
+.perm_board {
+  margin-right: 1rem;
+}
+
+.perm_board a {
+  text-decoration: none;
+}
+
+/* --- Register --- */
+
+dl.register_form dt {
+  display: flex;
+  align-items: flex-start;
+  width: 300px;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+dl.register_form dt a.help {
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+
+dl.register_form dt a.help img {
+  height: 1rem;
+  width: 1rem;
+}
+
+dl.register_form dd {
+  margin-left: 0;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 800px) {
+  dl.register_form {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 1rem;
+    align-items: flex-start;
+  }
+
+  dl.register_form dd {
+    margin-bottom: 0;
+  }
+}
+
+dt strong + .smalltext {
+  width: 100%;
 }
 
 /* Styles used by the auto suggest control.
