@@ -10,6 +10,8 @@
  * @version 2.0
  */
 
+// PENSIEVE -- Modification on line 60 to make styling easier
+
 // Template for listing all the current categories and boards.
 function template_main()
 {
@@ -18,8 +20,8 @@ function template_main()
   // Table header.
   echo '
   <div id="manage_boards">
-    <div class="cat_bar">
-      <h3 class="catbg">', $txt['boardsEdit'], '</h3>
+    <div class="title_bar">
+      <h3 class="titlebg">', $txt['boardsEdit'], '</h3>
     </div>';
 
   if (!empty($context['move_board']))
@@ -31,75 +33,78 @@ function template_main()
   // No categories so show a label.
   if (empty($context['categories']))
     echo '
-    <div>
-      ', $txt['mboards_no_cats'], '
+    <div class="windowbg">
+      <span class="topslice"><span></span></span>
+      <div class="content centertext">
+        ', $txt['mboards_no_cats'], '
+      </div>
+      <span class="botslice"><span></span></span>
     </div>';
 
   // Loop through every category, listing the boards in each as we go.
   foreach ($context['categories'] as $category)
   {
-    echo '<div class="box mb-4">';
     // Link to modify the category.
     echo '
-      <h3 class="title is-6">
-        <a href="' . $scripturl . '?action=admin;area=manageboards;sa=cat;cat=' . $category['id'] . '">', $category['name'], '</a> <a href="' . $scripturl . '?action=admin;area=manageboards;sa=cat;cat=' . $category['id'] . '">', $txt['catModify'], '</a>
-        </h3>';
+      <div class="cat_bar">
+        <h3 class="catbg">
+          <a href="' . $scripturl . '?action=admin;area=manageboards;sa=cat;cat=' . $category['id'] . '">', $category['name'], '</a> <a href="' . $scripturl . '?action=admin;area=manageboards;sa=cat;cat=' . $category['id'] . '"> ', $txt['catModify'], '</a>
+        </h3>
+      </div>';
 
     // Boards table header.
     echo '
     <form action="', $scripturl, '?action=admin;area=manageboards;sa=newboard;cat=', $category['id'], '" method="post" accept-charset="', $context['character_set'], '">
-      
-      <ul class="mb-4" id="category_', $category['id'], '">';
+      <div class="windowbg">
+        <span class="topslice"><span></span></span>
+        <div class="content pensieve_manage-boards_category">
+          <ul id="category_', $category['id'], '" style="float:left; width:100%;">';
 
-        if (!empty($category['move_link']))
-          echo '
-            <li>
-              <a href="', $category['move_link']['href'], '" title="', $category['move_link']['label'], '">
-                <img src="', $settings['images_url'], '/smiley_select_spot.gif" alt="', $category['move_link']['label'], '" />
-              </a>
+    if (!empty($category['move_link']))
+      echo '
+            <li><a href="', $category['move_link']['href'], '" title="', $category['move_link']['label'], '"><img src="', $settings['images_url'], '/smiley_select_spot.gif" alt="', $category['move_link']['label'], '" /></a></li>';
+
+    $alternate = false;
+
+    // List through every board in the category, printing its name and link to modify the board.
+    foreach ($category['boards'] as $board)
+    {
+      $alternate = !$alternate;
+
+      echo '
+            <li', !empty($modSettings['recycle_board']) && !empty($modSettings['recycle_enable']) && $modSettings['recycle_board'] == $board['id'] ? ' id="recycle_board"' : ' ', ' class="windowbg', $alternate ? '' : '2', '" style="padding-' . ($context['right_to_left'] ? 'right' : 'left') . ': ', 5 + 30 * $board['child_level'], 'px;', $board['move'] ? 'color: red;' : '', '"><span class="floatleft"><a href="', $scripturl, '?board=', $board['id'], '">', $board['name'], '</a>', !empty($modSettings['recycle_board']) && !empty($modSettings['recycle_enable']) && $modSettings['recycle_board'] == $board['id'] ? '<a href="' . $scripturl . '?action=admin;area=manageboards;sa=settings"> <img src="' . $settings['images_url'] . '/post/recycled.gif" alt="' . $txt['recycle_board'] . '" /></a></span>' : '</span>', '
+              <span class="floatright">', $context['can_manage_permissions'] ? '<span class="modify_boards"><a href="' . $scripturl . '?action=admin;area=permissions;sa=index;pid=' . $board['permission_profile'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '">' . $txt['mboards_permissions'] . '</a></span>' : '', '
+              <span class="modify_boards"><a href="', $scripturl, '?action=admin;area=manageboards;move=', $board['id'], '">', $txt['mboards_move'], '</a></span>
+              <span class="modify_boards"><a href="', $scripturl, '?action=admin;area=manageboards;sa=board;boardid=', $board['id'], '">', $txt['mboards_modify'], '</a></span></span><br style="clear: right;" />
             </li>';
 
-        $alternate = false;
+      if (!empty($board['move_links']))
+      {
+        $alternate = !$alternate;
 
-        // List through every board in the category, printing its name and link to modify the board.
-        foreach ($category['boards'] as $board)
-        {
-          $alternate = !$alternate;
+        echo '
+            <li class="windowbg', $alternate ? '' : '2', '" style="padding-', $context['right_to_left'] ? 'right' : 'left', ': ', 5 + 30 * $board['move_links'][0]['child_level'], 'px;">';
 
+        foreach ($board['move_links'] as $link)
           echo '
-            <li', !empty($modSettings['recycle_board']) && !empty($modSettings['recycle_enable']) && $modSettings['recycle_board'] == $board['id'] ? ' id="recycle_board"' : ' ', ' class="mb-1 ', $alternate ? '' : 'background-overlay-dark', '" style="padding-' . ($context['right_to_left'] ? 'right' : 'left') . ': ', 5 + 30 * $board['child_level'], 'px;', $board['move'] ? 'color: red;' : '', '">
-              <div class="is-flex-tablet">
-                <a class="mr-auto is-block" href="', $scripturl, '?board=', $board['id'], '">', $board['name'], '</a>', !empty($modSettings['recycle_board']) && !empty($modSettings['recycle_enable']) && $modSettings['recycle_board'] == $board['id'] ? '<a class="button is-small" href="' . $scripturl . '?action=admin;area=manageboards;sa=settings"> <span class="fa fa-refresh"></span> </a></span>' : '</span>', '
-                  <span>', $context['can_manage_permissions'] ? '<a class="button is-small is-inline-block ml-1" href="' . $scripturl . '?action=admin;area=permissions;sa=index;pid=' . $board['permission_profile'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '">' . $txt['mboards_permissions'] . '</a></span>' : '', '
-                  <span><a class="button is-small ml-1 is-inline-block" href="', $scripturl, '?action=admin;area=manageboards;move=', $board['id'], '">', $txt['mboards_move'], '</a></span>
-                  <span><a class="button is-small ml-1 is-inline-block" href="', $scripturl, '?action=admin;area=manageboards;sa=board;boardid=', $board['id'], '">', $txt['mboards_modify'], '</a></span>
-                </li>';
+              <a href="', $link['href'], '" class="move_links" title="', $link['label'], '"><img src="', $settings['images_url'], '/board_select_spot', $link['child_level'] > 0 ? '_child' : '', '.gif" alt="', $link['label'], '" style="padding: 0px; margin: 0px;" /></a>';
 
-          if (!empty($board['move_links']))
-          {
-            $alternate = !$alternate;
-
-            echo '
-                <li class="windowbg', $alternate ? '' : '2', '" style="padding-', $context['right_to_left'] ? 'right' : 'left', ': ', 5 + 30 * $board['move_links'][0]['child_level'], 'px;">';
-
-            foreach ($board['move_links'] as $link)
-              echo '
-                  <a href="', $link['href'], '" class="move_links" title="', $link['label'], '"><img src="', $settings['images_url'], '/board_select_spot', $link['child_level'] > 0 ? '_child' : '', '.gif" alt="', $link['label'], '" style="padding: 0px; margin: 0px;" /></a>';
-
-            echo '
-                </li>';
-          }
-        }
+        echo '
+            </li>';
+      }
+    }
 
     // Button to add a new board.
     echo '
-      </ul>
-      <div>
-        <input type="submit" value="', $txt['mboards_new_board'], '" class="button is-small" />
-        <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+          </ul>
+          <div class="righttext">
+            <input type="submit" value="', $txt['mboards_new_board'], '" class="button_submit" />
+            <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+          </div>
+        </div>
+        <span class="botslice"><span></span></span>
       </div>
-    </div>
-  </form>';
+    </form>';
   }
   echo '
   </div>
@@ -120,64 +125,55 @@ function template_modify_category()
           <h3 class="catbg">
           ', isset($context['category']['is_new']) ? $txt['mboards_new_cat_name'] : $txt['catEdit'], '
           </h3>
-        </div>';
-
-        // If this isn't the only category, let the user choose where this category should be positioned down the board index.
-        if (count($context['category_order']) > 1)
-        {
-          echo '
-          <div class="field is-horizontal">
-            <div class="field-label">
-              <label class="label">', $txt['order'], '</label>
-            </div>
-            <div class="field-body">
-              <div class="field">
-                <div class="select">
-                  <select name="cat_order">';
-                  // Print every existing category into a select box.
-                  foreach ($context['category_order'] as $order)
-                    echo '
-                    <option', $order['selected'] ? ' selected="selected"' : '', ' value="', $order['id'], '">', $order['name'], '</option>';
-                  echo '
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>';
-        }
-
-        echo'
-        <div class="field is-horizontal">
-          <div class="field-label">
-            <label class="label">', $txt['full_name'], '</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <input type="text" name="cat_name" value="', $context['category']['editable_name'], '" size="30" tabindex="', $context['tabindex']++, '" class="input_text" />
-              <span class="help">', $txt['name_on_display'], '</span>
-            </div>
-          </div>
         </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label">
-            <label class="label">' . $txt['collapse_enable'] . '</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
+        <div class="windowbg">
+          <span class="topslice"><span></span></span>
+          <div class="content">
+            <dl class="settings">';
+  // If this isn't the only category, let the user choose where this category should be positioned down the board index.
+  if (count($context['category_order']) > 1)
+  {
+    echo '
+            <dt><strong>', $txt['order'], ':</strong></dt>
+            <dd>
+              <select name="cat_order">';
+    // Print every existing category into a select box.
+    foreach ($context['category_order'] as $order)
+      echo '
+                <option', $order['selected'] ? ' selected="selected"' : '', ' value="', $order['id'], '">', $order['name'], '</option>';
+    echo '
+              </select>
+            </dd>';
+  }
+  // Allow the user to edit the category name and/or choose whether you can collapse the category.
+  echo '
+            <dt>
+              <strong>', $txt['full_name'], ':</strong><br />
+              <span class="smalltext">', $txt['name_on_display'], '</span>
+            </dt>
+            <dd>
+              <input type="text" name="cat_name" value="', $context['category']['editable_name'], '" size="30" tabindex="', $context['tabindex']++, '" class="input_text" />
+            </dd>
+            <dt>
+              <strong>' . $txt['collapse_enable'] . '</strong><br />
+              <span class="smalltext">' . $txt['collapse_desc'] . '</span>
+            </dt>
+            <dd>
               <input type="checkbox" name="collapse"', $context['category']['can_collapse'] ? ' checked="checked"' : '', ' tabindex="', $context['tabindex']++, '" class="input_check" />
-              <span class="help">' . $txt['collapse_desc'] . '</span>
-            </div>
-          </div>
-        </div>';
+            </dd>';
+
+  // Table footer.
+  echo '
+          </dl>
+          <div class="righttext">';
 
   if (isset($context['category']['is_new']))
     echo '
-            <input type="submit" name="add" value="', $txt['mboards_add_cat_button'], '" onclick="return !isEmptyText(this.form.cat_name);" tabindex="', $context['tabindex']++, '" class="button is-small" />';
+            <input type="submit" name="add" value="', $txt['mboards_add_cat_button'], '" onclick="return !isEmptyText(this.form.cat_name);" tabindex="', $context['tabindex']++, '" class="button_submit" />';
   else
     echo '
-            <input type="submit" name="edit" value="', $txt['modify'], '" onclick="return !isEmptyText(this.form.cat_name);" tabindex="', $context['tabindex']++, '" class="button is-small" />
-            <input type="submit" name="delete" value="', $txt['mboards_delete_cat'], '" onclick="return confirm(\'', $txt['catConfirm'], '\');" class="button is-small" />';
+            <input type="submit" name="edit" value="', $txt['modify'], '" onclick="return !isEmptyText(this.form.cat_name);" tabindex="', $context['tabindex']++, '" class="button_submit" />
+            <input type="submit" name="delete" value="', $txt['mboards_delete_cat'], '" onclick="return confirm(\'', $txt['catConfirm'], '\');" class="button_submit" />';
   echo '
             <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />';
 
@@ -484,21 +480,6 @@ function template_modify_board()
               </dt>
               <dd>
                 <input type="checkbox" name="override_theme"', $context['board']['override_theme'] ? ' checked="checked"' : '', ' class="input_check" />
-              </dd>
-            </dl>
-          </div>';
-
-    // ADVANCED SIGNATURE
-    if (!empty($context['signature_enabled']))
-      echo '
-          <div id="disable_signatures_div">
-            <dl class="settings">
-              <dt>
-                <strong>', $txt['mboards_disabled_signatures'], ':</strong><br />
-                <span class="smalltext">', $txt['mboards_disabled_signatures_desc'], '</span><br />
-              </dt>
-              <dd>
-                <input type="checkbox" name="disabled_signatures"', $context['board']['disabled_signatures'] ? ' checked="checked"' : '', ' class="input_check" />
               </dd>
             </dl>
           </div>';
