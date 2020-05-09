@@ -30,6 +30,24 @@
   --dark-overlay: rgba(0, 0, 0, 0.1);
 }
 
+.cat_bar .title,
+.title_bar .titlebg {
+  background: var(--light-overlay);
+}
+
+h3.catbg {
+  background: var(--light-overlay);
+}
+
+h3.titlebg {
+  background: var(--light-overlay);
+}
+
+.description,
+.information {
+  background-color: var(--light-overlay);
+}
+
 .previous-next-buttons a {
   background-color: white;
   border-color: var(--grey);
@@ -69,6 +87,18 @@
  */
 
 .input_text {
-  border-color: var(--grey);
+  border-color: var(--grey) !important;
 }
 
+fieldset { 
+  border: 1px solid var(--dark-overlay); 
+}
+
+#admin_content input[type="text"], 
+#admin_content input[type="password"], 
+#admin_content textarea, 
+#admin_content select, 
+#admin_content button, 
+#admin_content input[type="submit"] {
+  border-color: var(--grey);
+}

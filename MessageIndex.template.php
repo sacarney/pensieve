@@ -56,7 +56,7 @@ function template_main()
       // Build each board
       foreach ($context['boards'] as $board) {
         echo '
-        <div class="card-content " id="category_', $category['id'], '_boards">
+        <div class="card-content " id="board_', $board['id'], '">
           <div class="columns is-mobile">
           ';
 
