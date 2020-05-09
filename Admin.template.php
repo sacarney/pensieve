@@ -11,6 +11,7 @@
  */
 
 // This is the administration center home.
+// PENSIEVE -- MODIFIED
 function template_admin()
 {
   global $context, $settings, $options, $scripturl, $txt, $modSettings;
@@ -207,57 +208,82 @@ function template_admin()
 }
 
 // Show some support information and credits to those who helped make this.
+// PENSIEVE -- Same as default
 function template_credits()
 {
   global $context, $settings, $options, $scripturl, $txt;
 
   // Show the user version information from their server.
   echo '
-  <!-- Credits -->
-  <h2 class="title is-4 mb-4">', $txt['support_title'], '</h2>
-  
-  <div class="content">
 
-    <h3>', $txt['support_versions'], ':</h3>
-    <ul>
-      <li>', $txt['support_versions_forum'], ':
-    <em id="yourVersion" style="white-space: nowrap;">', $context['forum_version'], '</em>', $context['can_admin'] ? ' <a href="' . $scripturl . '?action=admin;area=maintain;sa=routine;activity=version">' . $txt['version_check_more'] . '</a>' : '', '</li>
-      <li>', $txt['support_versions_current'], ':
-    <em id="smfVersion" style="white-space: nowrap;">??</em></li>
-    ';
+  <div id="admincenter">
+    <div class="cat_bar">
+      <h3 class="catbg">
+        ', $txt['support_title'], '
+      </h3>
+    </div>
+    <div class="windowbg">
+      <span class="topslice"><span></span></span>
+      <div class="content">
+        <strong>', $txt['support_versions'], ':</strong><br />
+          ', $txt['support_versions_forum'], ':
+        <em id="yourVersion" style="white-space: nowrap;">', $context['forum_version'], '</em>', $context['can_admin'] ? ' <a href="' . $scripturl . '?action=admin;area=maintain;sa=routine;activity=version">' . $txt['version_check_more'] . '</a>' : '', '<br />
+          ', $txt['support_versions_current'], ':
+        <em id="smfVersion" style="white-space: nowrap;">??</em><br />';
 
   // Display all the variables we have server information for.
   foreach ($context['current_versions'] as $version)
-    echo '<li>', $version['title'], ':<em>', $version['version'], '</em></li>';
+    echo '
+          ', $version['title'], ':
+        <em>', $version['version'], '</em><br />';
 
   echo '
-    </ul>
+      </div>
+      <span class="botslice"><span></span></span>
+    </div>
   ';
 
   // Point the admin to common support resources.
   echo '
-  <h3>', $txt['support_resources'], '</h3>
-
-  <p>', $txt['support_resources_p1'], '</p>
-  <p>', $txt['support_resources_p2'], '</p>
-  ';
+    <div class="cat_bar">
+      <h3 class="catbg">
+        ', $txt['support_resources'], '
+      </h3>
+    </div>
+    <div class="windowbg2">
+      <span class="topslice"><span></span></span>
+      <div class="content">
+        <p>', $txt['support_resources_p1'], '</p>
+        <p>', $txt['support_resources_p2'], '</p>
+      </div>
+      <span class="botslice"><span></span></span>
+    </div>';
 
   // Display latest support questions from simplemachines.org.
   echo '
-  <h3>
-    <span>
-      <a href="', $scripturl, '?action=helpadmin;help=latest_support" onclick="return reqWin(this.href);"><span class="fa fa-question-circle"></span></a>
-      <span>', $txt['support_latest'], '</span>
-    </span>
-  </h3>
-
-  <div id="latestSupport">', $txt['support_latest_fetch'], '</div>
-  ';
+    <div class="cat_bar">
+      <h3 class="catbg">
+        <span class="ie6_header floatleft"><a href="', $scripturl, '?action=helpadmin;help=latest_support" onclick="return reqWin(this.href);" class="help"><img src="', $settings['images_url'], '/helptopics.gif" class="icon" alt="', $txt['help'], '" /></a> ', $txt['support_latest'], '</span>
+      </h3>
+    </div>
+    <div class="windowbg2">
+      <span class="topslice"><span></span></span>
+      <div class="content">
+        <div id="latestSupport">', $txt['support_latest_fetch'], '</div>
+      </div>
+      <span class="botslice"><span></span></span>
+    </div>';
 
   // The most important part - the credits :P.
   echo '
-  <h3>', $txt['admin_credits'], '</h3>
-  ';
+    <div class="cat_bar">
+      <h3 class="catbg">
+        ', $txt['admin_credits'], '
+      </h3>
+    </div>
+    <div class="windowbg">
+      <span class="topslice"><span></span></span>
+      <div class="content">';
 
   foreach ($context['credits'] as $section)
   {
@@ -265,15 +291,23 @@ function template_credits()
       echo '
         <p>', $section['pretext'], '</p>';
 
+    echo '
+        <dl>';
+
     foreach ($section['groups'] as $group)
     {
       if (isset($group['title']))
         echo '
-          <h4>', $group['title'], '</h4>';
+          <dt>
+            <strong>', $group['title'], ':</strong>
+          </dt>';
 
       echo '
-          <p>', implode(', ', $group['members']), '</p>';
+          <dd>', implode(', ', $group['members']), '</dd>';
     }
+
+    echo '
+        </dl>';
 
     if (isset($section['posttext']))
       echo '
@@ -281,8 +315,11 @@ function template_credits()
   }
 
   echo '
+      </div>
+      <span class="botslice"><span></span></span>
+    </div>
   </div>
-  ';
+  <br class="clear" />';
 
   // This makes all the support information available to the support script...
   echo '
@@ -341,29 +378,29 @@ function template_credits()
 }
 
 // Displays information about file versions installed, and compares them to current version.
+// PENSIEVE -- Same as default
 function template_view_versions()
 {
   global $context, $settings, $options, $scripturl, $txt;
 
   echo '
-  <!-- View versions -->
-  <div>
-    <div>
-      <h2 class="title is-4 mb-4">
+  <div id="admincenter">
+    <div class="cat_bar">
+      <h3 class="catbg">
         ', $txt['admin_version_check'], '
-      </h2>
+      </h3>
     </div>
-    <div class="notification">', $txt['version_check_desc'], '</div>
-      <table width="100%" class="table is-bordered is-striped is-narrow">
+    <div class="information">', $txt['version_check_desc'], '</div>
+      <table width="100%" class="table_grid">
         <thead>
-          <tr>
+          <tr class="catbg" align="left">
             <th class="first_th" scope="col" width="50%">
               <strong>', $txt['admin_smffile'], '</strong>
             </th>
             <th scope="col" width="25%">
               <strong>', $txt['dvc_your'], '</strong>
             </th>
-            <th scope="col"" width="25%">
+            <th class="last_th" scope="col"" width="25%">
               <strong>', $txt['dvc_current'], '</strong>
             </th>
           </tr>
@@ -373,13 +410,13 @@ function template_view_versions()
   // The current version of the core SMF package.
   echo '
           <tr>
-            <td>
+            <td class="windowbg">
               ', $txt['admin_smfpackage'], '
             </td>
-            <td>
+            <td class="windowbg">
               <em id="yourSMF">', $context['forum_version'], '</em>
             </td>
-            <td>
+            <td class="windowbg">
               <em id="currentSMF">??</em>
             </td>
           </tr>';
@@ -387,33 +424,33 @@ function template_view_versions()
   // Now list all the source file versions, starting with the overall version (if all match!).
   echo '
           <tr>
-            <td>
+            <td class="windowbg">
               <a href="#" id="Sources-link">', $txt['dvc_sources'], '</a>
             </td>
-            <td>
+            <td class="windowbg">
               <em id="yourSources">??</em>
             </td>
-            <td>
+            <td class="windowbg">
               <em id="currentSources">??</em>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <table id="Sources" width="100%" class="table is-bordered is-striped is-narrow">
+      <table id="Sources" width="100%" class="table_grid">
       <tbody>';
 
   // Loop through every source file displaying its version - using javascript.
   foreach ($context['file_versions'] as $filename => $version)
     echo '
         <tr>
-          <td  width="50%" style="padding-left: 3ex;">
+          <td class="windowbg2" width="50%" style="padding-left: 3ex;">
             ', $filename, '
           </td>
-          <td  width="25%">
+          <td class="windowbg2" width="25%">
             <em id="yourSources', $filename, '">', $version, '</em>
           </td>
-          <td  width="25%">
+          <td class="windowbg2" width="25%">
             <em id="currentSources', $filename, '">??</em>
           </td>
         </tr>';
@@ -423,35 +460,35 @@ function template_view_versions()
       </tbody>
       </table>
 
-      <table width="100%" class="table is-bordered is-striped is-narrow">
+      <table width="100%" class="table_grid">
         <tbody>
           <tr>
-            <td  width="50%">
+            <td class="windowbg" width="50%">
               <a href="#" id="Default-link">', $txt['dvc_default'], '</a>
             </td>
-            <td  width="25%">
+            <td class="windowbg" width="25%">
               <em id="yourDefault">??</em>
             </td>
-            <td  width="25%">
+            <td class="windowbg" width="25%">
               <em id="currentDefault">??</em>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <table id="Default" width="100%" class="table is-bordered is-striped is-narrow">
+      <table id="Default" width="100%" class="table_grid">
         <tbody>';
 
   foreach ($context['default_template_versions'] as $filename => $version)
     echo '
           <tr>
-            <td  width="50%" style="padding-left: 3ex;">
+            <td class="windowbg2" width="50%" style="padding-left: 3ex;">
               ', $filename, '
             </td>
-            <td  width="25%">
+            <td class="windowbg2" width="25%">
               <em id="yourDefault', $filename, '">', $version, '</em>
             </td>
-            <td  width="25%">
+            <td class="windowbg2" width="25%">
               <em id="currentDefault', $filename, '">??</em>
             </td>
           </tr>';
@@ -461,23 +498,23 @@ function template_view_versions()
         </tbody>
       </table>
 
-      <table width="100%" class="table is-bordered is-striped is-narrow">
+      <table width="100%" class="table_grid">
         <tbody>
           <tr>
-            <td  width="50%">
+            <td class="windowbg" width="50%">
               <a href="#" id="Languages-link">', $txt['dvc_languages'], '</a>
             </td>
-            <td  width="25%">
+            <td class="windowbg" width="25%">
               <em id="yourLanguages">??</em>
             </td>
-            <td  width="25%">
+            <td class="windowbg" width="25%">
               <em id="currentLanguages">??</em>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <table id="Languages" width="100%" class="table is-bordered is-striped is-narrow">
+      <table id="Languages" width="100%" class="table_grid">
         <tbody>';
 
   foreach ($context['default_language_versions'] as $language => $files)
@@ -485,13 +522,13 @@ function template_view_versions()
     foreach ($files as $filename => $version)
       echo '
           <tr>
-            <td  width="50%" style="padding-left: 3ex;">
+            <td class="windowbg2" width="50%" style="padding-left: 3ex;">
               ', $filename, '.<em>', $language, '</em>.php
             </td>
-            <td  width="25%">
+            <td class="windowbg2" width="25%">
               <em id="your', $filename, '.', $language, '">', $version, '</em>
             </td>
-            <td  width="25%">
+            <td class="windowbg2" width="25%">
               <em id="current', $filename, '.', $language, '">??</em>
             </td>
           </tr>';
@@ -505,35 +542,35 @@ function template_view_versions()
   if (!empty($context['template_versions']))
   {
     echo '
-      <table width="100%" class="table is-bordered is-striped is-narrow">
+      <table width="100%" class="table_grid">
         <tbody>
           <tr>
-            <td  width="50%">
+            <td class="windowbg" width="50%">
               <a href="#" id="Templates-link">', $txt['dvc_templates'], '</a>
             </td>
-            <td  width="25%">
+            <td class="windowbg" width="25%">
               <em id="yourTemplates">??</em>
             </td>
-            <td  width="25%">
+            <td class="windowbg" width="25%">
               <em id="currentTemplates">??</em>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <table id="Templates" width="100%" class="table is-bordered is-striped is-narrow">
+      <table id="Templates" width="100%" class="table_grid">
         <tbody>';
 
     foreach ($context['template_versions'] as $filename => $version)
       echo '
           <tr>
-            <td  width="50%" style="padding-left: 3ex;">
+            <td class="windowbg2" width="50%" style="padding-left: 3ex;">
               ', $filename, '
             </td>
-            <td  width="25%">
+            <td class="windowbg2" width="25%">
               <em id="yourTemplates', $filename, '">', $version, '</em>
             </td>
-            <td  width="25%">
+            <td class="windowbg2" width="25%">
               <em id="currentTemplates', $filename, '">??</em>
             </td>
           </tr>';
@@ -545,7 +582,7 @@ function template_view_versions()
 
   echo '
     </div>
-  ';
+  <br class="clear" />';
 
   /* Below is the hefty javascript for this. Upon opening the page it checks the current file versions with ones
      held at simplemachines.org and works out if they are up to date.  If they aren't it colors that files number
@@ -568,6 +605,7 @@ function template_view_versions()
         }
       });
     // ]]></script>';
+
 }
 
 // Form for stopping people using naughty words, etc.
@@ -1335,6 +1373,7 @@ function template_admin_search_results()
 }
 
 // Turn on and off certain key features.
+// PENSIEVE -- MODIFIED
 function template_core_features()
 {
   global $context, $txt, $settings, $options, $scripturl;
