@@ -98,7 +98,7 @@ function template_email_members()
 
   echo '
   <div id="admincenter">
-    <form action="', $scripturl, '?action=admin;area=news;sa=mailingcompose" method="post" class="flow_hidden" accept-charset="', $context['character_set'], '">
+    <form action="', $scripturl, '?action=admin;area=news;sa=mailingcompose" method="post" accept-charset="', $context['character_set'], '">
       <div class="cat_bar">
         <h3 class="catbg">', $txt['admin_newsletters'], '</h3>
       </div>
