@@ -107,7 +107,7 @@ function template_main()
 
   <div class="container">
 
-    <form action="', $scripturl, '?action=', $context['destination'], ';', empty($context['current_board']) ? '' : 'board=' . $context['current_board'], '" method="post" accept-charset="', $context['character_set'], '" name="postmodify" id="postmodify" class="flow_hidden" onsubmit="', ($context['becomes_approved'] ? '' : 'alert(\'' . $txt['js_post_will_require_approval'] . '\');'), 'submitonce(this);smc_saveEntities(\'postmodify\', [\'subject\', \'', $context['post_box_name'], '\', \'guestname\', \'evtitle\', \'question\'], \'options\');" enctype="multipart/form-data">';
+    <form action="', $scripturl, '?action=', $context['destination'], ';', empty($context['current_board']) ? '' : 'board=' . $context['current_board'], '" method="post" accept-charset="', $context['character_set'], '" name="postmodify" id="postmodify" class="" onsubmit="', ($context['becomes_approved'] ? '' : 'alert(\'' . $txt['js_post_will_require_approval'] . '\');'), 'submitonce(this);smc_saveEntities(\'postmodify\', [\'subject\', \'', $context['post_box_name'], '\', \'guestname\', \'evtitle\', \'question\'], \'options\');" enctype="multipart/form-data">';
 
   // If the user wants to see how their message looks - the preview section is where it's at!
   // DRAFTS component
@@ -978,7 +978,7 @@ function template_main()
   {
     echo '
     <div class="container">
-      <div id="recent" class="flow_hidden main_section">
+      <div id="recent" class="main_section">
         <div class="cat_bar">
           <h2 class="title is-5 mt-4 mb-4">', $txt['topic_summary'], '</h2>
         </div>
