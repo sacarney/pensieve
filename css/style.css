@@ -533,7 +533,8 @@ code, pre { display: block; }
 /* --- GENERAL --- */
 
 .cat_bar .title,
-.title_bar .titlebg {
+.title_bar .titlebg,
+.catbg {
   padding: 0.5em 0.75em;
 }
 
@@ -730,16 +731,19 @@ li.theme_option {
   max-width: 100%;
 }
 
-#admin_content textarea[rows] {
-  height: initial;
-}
-
 #admin_content input[type="checkbox"] + label {
+  width: calc(100% - 2rem);
   margin-left: 0.5rem;
 }
 
 input[type="radio"] {
   margin-right: 0.5rem;
+}
+
+dt input[type="checkbox"], 
+dt input[type="radio"] {
+  position: relative;
+  top: 0.45em;
 }
 
 /* --- Buttons --- */

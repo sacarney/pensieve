@@ -1266,6 +1266,11 @@ a.box:active {
   color: var(--white);
 }
 
+.catbg,
+.cat_bar .title,
+.title_bar .titlebg {
+  background: var(--dark-overlay);
+}
 
 /* --- TAGS --- */
 
