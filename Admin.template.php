@@ -25,25 +25,22 @@ function template_admin()
     echo '
     <object id="quick_search">
         <form action="', $scripturl, '?action=admin;area=search" method="post" accept-charset="', $context['character_set'], '" class="p-0 is-size-6-5 mb-4">
-          <div class="field is-horizontal">
-            <div class="field-body">
-              <div class="field flex-grow-0">
-                <div class="control">
-                  <input type="text" name="search_term" value="', $txt['admin_search'], '" onclick="if (this.value == \'', $txt['admin_search'], '\') this.value = \'\';" class="input is-small" placeholder="Quick Search" />
-                </div>
+          <div class="field has-addons">
+            <div class="control">
+              <input type="text" name="search_term" value="', $txt['admin_search'], '" onclick="if (this.value == \'', $txt['admin_search'], '\') this.value = \'\';" class="input" placeholder="Quick Search" />
+            </div>
+            <div class="control">
+              <div class="select">
+                <select name="search_type">
+                  <option value="internal"', (empty($context['admin_preferences']['sb']) || $context['admin_preferences']['sb'] == 'internal' ? ' selected="selected"' : ''), '>', $txt['admin_search_type_internal'], '</option>
+                  <option value="member"', (!empty($context['admin_preferences']['sb']) && $context['admin_preferences']['sb'] == 'member' ? ' selected="selected"' : ''), '>', $txt['admin_search_type_member'], '</option>
+                  <option value="online"', (!empty($context['admin_preferences']['sb']) && $context['admin_preferences']['sb'] == 'online' ? ' selected="selected"' : ''), '>', $txt['admin_search_type_online'], '</option>
+                </select>
               </div>
-              <div class="field flex-grow-0">
-                <div class="select is-small">
-                  <select name="search_type">
-                    <option value="internal"', (empty($context['admin_preferences']['sb']) || $context['admin_preferences']['sb'] == 'internal' ? ' selected="selected"' : ''), '>', $txt['admin_search_type_internal'], '</option>
-                    <option value="member"', (!empty($context['admin_preferences']['sb']) && $context['admin_preferences']['sb'] == 'member' ? ' selected="selected"' : ''), '>', $txt['admin_search_type_member'], '</option>
-                    <option value="online"', (!empty($context['admin_preferences']['sb']) && $context['admin_preferences']['sb'] == 'online' ? ' selected="selected"' : ''), '>', $txt['admin_search_type_online'], '</option>
-                  </select>
-                </div>
-              </div>
-              <div class="field">
-                <input type="submit" name="search_go" id="search_go" value="', $txt['admin_search_go'], '" class="button is-small is-primary" />
-              </div>
+            </div>
+            <div class="control">
+              <input type="submit" name="search_go" id="search_go" value="', $txt['admin_search_go'], '" class="button is-primary" />
+            </div>
         </form>
     </object>';
 
@@ -1304,21 +1301,20 @@ function template_admin_search_results()
   global $context, $txt, $settings, $options, $scripturl;
 
   echo '
-    <div class="cat_bar">
-      <h3 class="catbg">
-        <object id="quick_search">
-          <form action="', $scripturl, '?action=admin;area=search" method="post" accept-charset="', $context['character_set'], '" class="floatright">
-            <input type="text" name="search_term" value="', $context['search_term'], '" class="input_text" />
-            <input type="hidden" name="search_type" value="', $context['search_type'], '" />
-            <input type="submit" name="search_go" value="', $txt['admin_search_results_again'], '" class="button_submit" />
-          </form>
-        </object>
-        <span class="ie6_header floatleft"><img src="' . $settings['images_url'] . '/buttons/search.gif" alt="" />&nbsp;', sprintf($txt['admin_search_results_desc'], $context['search_term']), '</span>
-      </h3>
-    </div>
-  <div class="windowbg nopadding">
-    <span class="topslice"><span></span></span>
-    <div class="content">';
+  <object id="quick_search">
+    <form action="', $scripturl, '?action=admin;area=search" method="post" accept-charset="', $context['character_set'], '" class="p-0 is-size-6-5 mb-4">
+      <div class="field has-addons">
+        <div class="control">
+          <input type="text" name="search_term" value="', $context['search_term'], '" class="input" />
+        </div>
+        <div class="control">
+          <input type="hidden" name="search_type" value="', $context['search_type'], '" />
+          <input type="submit" name="search_go" value="', $txt['admin_search_results_again'], '" class="button is-primary" />
+        </div>
+    </form>
+  </object>
+  <div>', sprintf($txt['admin_search_results_desc'], $context['search_term']), '</div>
+  <div class="content">';
 
   if (empty($context['search_results']))
   {
