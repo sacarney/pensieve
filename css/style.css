@@ -691,15 +691,15 @@ li.theme_option {
 #admin_content input[type="submit"] {
   align-items: center;
   border: 1px solid transparent;
-  border-radius: 4px;
+  xborder-radius: 4px;
   display: inline-flex;
   font-size: 1rem;
   height: 2.25em;
   justify-content: flex-start;
   line-height: 1.5;
   padding-bottom: calc(0.375em - 1px);
-  padding-left: calc(0.625em - 1px);
-  padding-right: calc(0.625em - 1px);
+  xpadding-left: calc(0.625em - 1px);
+  xpadding-right: calc(0.625em - 1px);
   padding-top: calc(0.375em - 1px);
   position: relative;
   vertical-align: top;
