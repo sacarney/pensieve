@@ -4,7 +4,7 @@
  */
 
 /* YOUR THEME - You can import a font if you want */
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;700&family=Roboto:ital,wght@0,500;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Roboto&display=swap');
 
 
 :root  {
@@ -59,7 +59,7 @@ body, button, input, select, textarea {
 }
 
 .title {
-  font-family: "Roboto Slab", serif;
+  font-family: "Bree Serif", serif;
   font-weight: 500;
 }
 
@@ -67,7 +67,8 @@ body, button, input, select, textarea {
   width: 100%;
   min-width: 0;
   padding: 1rem;
-  background-color: var(--dark);
+  /*background-color: var(--dark);*/
+  background-color: rgba(54, 54, 54, 0.9);
 }
 
 .container .container {
@@ -1373,7 +1374,8 @@ a.box:active {
   /* color */
   background-color: var(--grey-2);
   border-color: var(--grey-3);
-  color: var(--white);
+  color: var(--black) !important;
+  font-family: "Bree Serif";
   
 }
 
@@ -2216,6 +2218,18 @@ a.box:active {
 .cat_bar .title,
 .title_bar .titlebg {
   background: var(--dark-overlay);
+  border-left: 3px solid var(--primary);
+}
+
+.subtitle {
+  color: var(--light);
+  font-weight:400;
+  line-height:1.25;
+}
+
+.subtitle strong {
+  color: var(--light);
+  font-weight:600;
 }
 
 /* --- TAGS --- */
@@ -2291,29 +2305,14 @@ a.box:active {
   background-color: #1c1c1c
 }
 
-
-/* --- TITLES --- */
-
-.subtitle {
-  color: var(--light);
-  font-weight:400;
-  line-height:1.25;
-}
-
-.subtitle strong {
-  color: var(--light);
-  font-weight:600;
-}
-
-
 /* --- BREADCRUMB --- */
 
 .breadcrumb a {
-  color: var(--primary);
+  color: var(--dark);
 }
 
 .breadcrumb a:hover {
-  color: var(--primary-hover);
+  color: var(--black);
 }
 
 .breadcrumb li.is-active a {
@@ -2563,7 +2562,6 @@ a.dropdown-item.is-active {
   color: rgba(0, 0, 0, .7);
 }
 
-
 /* --- NAVBAR -- */
 
 .navbar {
@@ -2592,7 +2590,7 @@ a.dropdown-item.is-active {
 .navbar.is-light .navbar-brand .navbar-link:hover,
 .navbar.is-light .navbar-brand>a.navbar-item.is-active,
 .navbar.is-light .navbar-brand>a.navbar-item:hover {
-  background-color: var(--grey-2);
+  background-color: var(--grey-3);
   color: var(--white);
 }
 
@@ -3033,6 +3031,10 @@ label.panel-block:hover {
 
 .label {
   color: #dbdbdb;
+}
+
+.description {
+  background: var(--light-overlay);
 }
 
 /* --- NOTIFICATION --- */
