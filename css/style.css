@@ -533,8 +533,7 @@ code, pre { display: block; }
 /* --- GENERAL --- */
 
 .cat_bar .title,
-.title_bar .titlebg,
-.catbg {
+.title_bar .titlebg {
   padding: 0.5em 0.75em;
 }
 
@@ -610,6 +609,10 @@ dl.settings dt {
   width: 300px;
   margin-bottom: 0.5rem;
   flex-wrap: wrap;
+}
+
+dl.settings dt > span {
+  width: calc(100% - 2rem);
 }
 
 dl.settings dt a.help {
