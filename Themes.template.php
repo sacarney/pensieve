@@ -662,7 +662,7 @@ function template_pick()
   global $context, $settings, $options, $scripturl, $txt;
 
   echo '
-  <div id="pick_theme">
+  <div class="container" id="pick_theme">
     <form action="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';', $context['session_var'], '=', $context['session_id'], '" method="post" accept-charset="', $context['character_set'], '">';
 
   // Just go through each theme and show its information - thumbnail, etc.
@@ -671,40 +671,47 @@ function template_pick()
     echo '
       <div class="cat_bar">
         <h3 class="catbg">
-          <a href="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';th=', $theme['id'], ';', $context['session_var'], '=', $context['session_id'], '">', $theme['name'], (!empty($theme['variants']) ? ';vrt=' . $theme['selected_variant'] : ''), '</a>
+          <a href="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';th=', $theme['id'], ';', $context['session_var'], '=', $context['session_id'], '">', $theme['name'], (!empty($theme['variants']) ? ' | ' . $theme['selected_variant'] : ''), '</a>
         </h3>
       </div>
-      <div class="', $theme['selected'] ? 'windowbg' : 'windowbg2', '">
-        <span class="topslice"><span></span></span>
-        <div class="flow_hidden content">
-          <div class="floatright"><a href="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';theme=', $theme['id'], ';', $context['session_var'], '=', $context['session_id'], '" id="theme_thumb_preview_', $theme['id'], '" title="', $txt['theme_preview'], '"><img src="', $theme['thumbnail_href'], '" id="theme_thumb_', $theme['id'], '" alt="" class="padding" /></a></div>
+      <div class="', $theme['selected'] ? 'windowbg' : 'windowbg2', ' columns">
+        <div class="column is-narrow">
+          <a href="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';theme=', $theme['id'], ';', $context['session_var'], '=', $context['session_id'], '" id="theme_thumb_preview_', $theme['id'], '" title="', $txt['theme_preview'], '">
+            <img src="', $theme['thumbnail_href'], '" id="theme_thumb_', $theme['id'], '" alt="" class="padding" />
+          </a>
+        </div>
+        <div class="column">
           <p>', $theme['description'], '</p>';
 
-    if (!empty($theme['variants']))
-    {
-      echo '
-          <label for="variant', $theme['id'], '"><strong>', $theme['pick_label'], '</strong></label>:
-          <select id="variant', $theme['id'], '" name="vrt[', $theme['id'], ']" onchange="changeVariant', $theme['id'], '(this.value);">';
+          if (!empty($theme['variants']))
+          {
+            echo '
+              <div class="field">
+                <label class="label" for="variant', $theme['id'], '"><strong>', $theme['pick_label'], '</strong></label>
+                <div class="control">
+                  <div class="select">
+                    <select id="variant', $theme['id'], '" name="vrt[', $theme['id'], ']" onchange="changeVariant', $theme['id'], '(this.value);">';
 
-      foreach ($theme['variants'] as $key => $variant)
-      {
-        echo '
-            <option value="', $key, '" ', $theme['selected_variant'] == $key ? 'selected="selected"' : '', '>', $variant['label'], '</option>';
-      }
-      echo '
-          </select>
-          <noscript>
-            <input type="submit" name="save[', $theme['id'], ']" value="', $txt['save'], '" class="button_submit" />
-          </noscript>';
-    }
+            foreach ($theme['variants'] as $key => $variant)
+            {
+              echo '
+                  <option value="', $key, '" ', $theme['selected_variant'] == $key ? 'selected="selected"' : '', '>', $variant['label'], '</option>';
+            }
+            echo '
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <noscript>
+                <input type="submit" name="save[', $theme['id'], ']" value="', $txt['save'], '" class="button_submit" />
+              </noscript>';
+          }
 
-    echo '
-          <br />
+          echo '
           <p>
             <em class="smalltext">', $theme['num_users'], ' ', ($theme['num_users'] == 1 ? $txt['theme_user'] : $txt['theme_users']), '</em>
           </p>
-          <br />
-          <ul class="reset">
+          <ul>
             <li>
               <a href="', $scripturl, '?action=theme;sa=pick;u=', $context['current_member'], ';th=', $theme['id'], ';', $context['session_var'], '=', $context['session_id'], (!empty($theme['variants']) ? ';vrt=' . $theme['selected_variant'] : ''), '" id="theme_use_', $theme['id'], '">[', $txt['theme_set'], ']</a>
             </li>
@@ -713,7 +720,6 @@ function template_pick()
             </li>
           </ul>
         </div>
-        <span class="botslice"><span></span></span>
       </div>';
 
     if (!empty($theme['variants']))
