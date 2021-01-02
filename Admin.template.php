@@ -790,7 +790,7 @@ function template_show_settings()
 
   echo '
   <div id="admincenter">
-    <form action="', $context['post_url'], '" method="post" accept-charset="', $context['character_set'], '"', !empty($context['force_form_onsubmit']) ? ' onsubmit="' . $context['force_form_onsubmit'] . '"' : '', '>';
+    <form action="', $context['post_url'], '"' . (isset($context['CBBC_multipart']) ? ' enctype="multipart/form-data"' : '') . ' method="post" accept-charset="', $context['character_set'], '"', !empty($context['force_form_onsubmit']) ? ' onsubmit="' . $context['force_form_onsubmit'] . '"' : '', '>';
 
   // Is there a custom title?
   if (isset($context['settings_title']))
@@ -1382,14 +1382,18 @@ function template_core_features()
       var itemValueHandle = document.getElementById("feature_" + itemID);
       itemValueHandle.value = itemValueHandle.value == 1 ? 0 : 1;
 
-      
-
       // Change the image, alternative text and the title.
       document.getElementById("switch_" + itemID).src = \'', $settings['images_url'], '/admin/switch_\' + (itemValueHandle.value == 1 ? \'on\' : \'off\') + \'.png\';
       document.getElementById("switch_" + itemID).alt = itemValueHandle.value == 1 ? \'', $txt['core_settings_switch_off'], '\' : \'', $txt['core_settings_switch_on'], '\';
-      document.getElementById("switch_" + itemID).title = itemValueHandle.value == 1 ? \'', $txt['core_settings_switch_off'], '\' : \'', $txt['core_settings_switch_on'], '\';
+      document.getElementById("switch_" + itemID).title = itemValueHandle.value == 1 ? \'', $txt['core_settings_switch_off'], '\' : \'', $txt['core_settings_switch_on'], '\';';
 
+  if (!empty($context['show_privacy_policy_warning']))
+    echo '
+      if (itemID == "gdpr" && itemValueHandle.value == 1) {
+        alert("' . $txt['core_settings_privacy_policy_warning'] . '");
+      }';
 
+  echo '
       // Don\'t reload.
       return false;
     }
