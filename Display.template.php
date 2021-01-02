@@ -1012,13 +1012,6 @@ function template_main()
         <div class="mt-2">
           <input class="button is-primary" type="submit" name="post" value="', $txt['post'], '" onclick="return submitThisOnce(this);" accesskey="s" tabindex="', $context['tabindex']++, '" class="button is-primary" />
           <input class="button" type="submit" name="preview" value="', $txt['preview'], '" onclick="return submitThisOnce(this);" accesskey="p" tabindex="', $context['tabindex']++, '" class="button is-primary" />';
-
-
-      // Add drafts
-      if (!empty($context['save_draft']))
-        echo '
-        <input type="hidden" name="drafts-save_as_draft" id="drafts-save_as_draft" value="0" />
-        <input type="submit" onclick="document.getElementById(\'drafts-save_as_draft\').value = \'1\';" value="', $txt['drafts'][14], '" class="button_submit" />';
         
       if ($context['show_spellchecking'])
         echo '
@@ -1180,14 +1173,11 @@ function template_main()
 
   echo '
         // ]]></script>';
-
-    
-
-      echo'</div>';
-    // Show the lower breadcrumbs.
-    
-    
-  theme_linktree();
+      echo'</div></div>';
+		
+		// Show the lower breadcrumbs.
+		
+    theme_linktree();
 }
 
 ?>
