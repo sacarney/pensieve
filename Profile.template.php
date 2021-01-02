@@ -140,22 +140,12 @@ function template_summary()
         ';
         
         // Show the users signature.
-        /*
+        
         if ($context['signature_enabled'] && !empty($context['member']['signature']))
         echo '
           <hr>
           <div class="content has-text-left">', $context['member']['signature'], '</div>';
-        */
-        
-        // Show the users signature. ADVANCED SIGNATURE
-        for ($i=0; $i<count($context['member']['signature']) && $i<$modSettings['max_numberofSignatures']; $i++){
-          if ($context['signature_enabled'] && !empty($context['member']['signature']))
-          echo '<hr>
-            <div class="content has-text-left">', $context['member']['signature'][$i], '
-            </div>';
-  }
-  
-
+    
       // Are there any custom profile fields for the summary?
     if (!empty($context['custom_fields']))
     { 
@@ -287,7 +277,7 @@ function template_summary()
           <div class="is-flex justify-content-between">
             <div>', $txt['subaccount_posts'], '</div>
             <div>
-              <div>', $context['member']['subaccountsposts'], '<br>
+              <div>', $context['member']['subaccounts_posts'], '<br>
               <span class="is-muted is-size-7 is-uppercase">(', $context['member']['subaccounts_posts_per_day'], ' ', $txt['posts_per_day'], ')</span>
               </div>
             </div>
@@ -2867,49 +2857,40 @@ function template_profile_birthdate()
 // Show the signature editing box?
 function template_profile_signature_modify()
 {
-  /* INCLUDES ADVANCED SIGNAUTRES */
-  global $txt, $context, $settings, $modSettings;
+
+  global $txt, $context, $settings;
 
   echo '
+  <div class="field is-horizontal">
+    <div class="field-label has-text-left">
+      <label class="label">', $txt['signature'], '</label>';
 
-  <input type="hidden" name="signature" value="1">';
+      if ($context['show_spellchecking'])
+        echo '
+        <input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'creator\', \'signature\');" class="button" />';
 
-  for ($i = 0; $i < $modSettings['max_numberofSignatures']; $i++) {
-    echo'
-      <div class="field is-horizontal">
-        <div class="field-label has-text-left">
-          <label class="label">', sprintf($txt['signature_numb'], $i + 1), '</label>';
-          // Spell check button
-          if ($context['show_spellchecking'])
-          echo '
-            <input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'creator\', \'signature\');" class="button" />';
-        echo'
-        </div>
+      echo '
+      </div>
 
-        <div class="field-body">
-          <div class="field">
-            <p class="help mb-2">', $txt['sig_info'], '</p>
-            <div class="control">';
-            /* <textarea class="textarea" onkeyup="calcCharLeft();" name="signature" rows="5" cols="50">', $context['member']['signature'], '</textarea> */
-              echo'
-              <textarea class="textarea" onkeyup="calcCharLeft_', $i , '();" name="signature[', $i , ']" rows="5" cols="50">', isset($context['member']['signature'][$i]) ? $context['member']['signature'][$i] : '' , '</textarea>
-            </div>';
-
-            // If there is a limit at all!
-            if (!empty($context['signature_limits']['max_length']))
+      <div class="field-body">
+        <div class="field">
+          <p class="help mb-2">', $txt['sig_info'], '</p>
+          <textarea class="editor textarea" onkeyup="calcCharLeft();" name="signature" rows="5" cols="50">', $context['member']['signature'], '</textarea>';
+      
+          // If there is a limit at all!
+          if (!empty($context['signature_limits']['max_length']))
             echo '
             <p class="help">', sprintf($txt['max_sig_characters'], $context['signature_limits']['max_length']), ' <span id="signatureLeft">', $context['signature_limits']['max_length'], '</span></p>';
 
-            // Signature warning
-            if ($context['signature_warning'])
+          // Signature warning
+          if ($context['signature_warning'])
             echo '
-             <p class="help">', $context['signature_warning'], '</p>';
+            <p class="help">', $context['signature_warning'], '</p>';
 
-            echo'
+          echo'
           </div>
         </div>
       </div>';
-      }
 
   // Load the spell checker?
   if ($context['show_spellchecking'])
