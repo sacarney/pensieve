@@ -742,4 +742,78 @@ function template_edit_reserved_words()
     <br class="clear" />';
 }
 
+// Form for editing the privacy policy shown to people registering to the forum.
+function template_edit_privacy_policy()
+{
+  global $context, $settings, $options, $scripturl, $txt;
+
+  // Just a big box to edit the text file ;).
+  echo '
+    <div class="cat_bar">
+      <h3 class="catbg">', $txt['privacy_policy'], '</h3>
+    </div>';
+
+  echo '
+    <div class="windowbg2" id="privacy_policy">
+      <span class="topslice"><span></span></span>
+      <div class="content">';
+
+  // Is there more than one language to choose from?
+  if (count($context['editable_policies']) > 1)
+  {
+    echo '
+        <div class="information">
+          <form action="', $scripturl, '?action=admin;area=regcenter" id="change_policy" method="post" accept-charset="', $context['character_set'], '" style="display: inline;">
+            <strong>', $txt['admin_agreement_select_language'], ':</strong>&nbsp;
+            <select name="policy_lang" onchange="document.getElementById(\'change_policy\').submit();" tabindex="', $context['tabindex']++, '">';
+
+    foreach ($context['editable_policies'] as $lang => $name)
+      echo '
+              <option value="', $lang, '" ', $context['current_policy_lang'] == $lang ? 'selected="selected"' : '', '>', $name, '</option>';
+
+    echo '
+            </select>
+            <div class="righttext">
+              <input type="hidden" name="sa" value="policy" />
+              <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+              <input type="submit" name="change" value="', $txt['admin_agreement_select_language_change'], '" tabindex="', $context['tabindex']++, '" class="button_submit" />
+            </div>
+          </form>
+        </div>';
+  }
+
+  echo '
+        <form action="', $scripturl, '?action=admin;area=regcenter" method="post" accept-charset="', $context['character_set'], '">';
+
+  // Show the actual policy in an oversized text box.
+  echo '
+          <p class="policy">
+            <textarea cols="70" rows="20" name="policy" id="agreement">', $context['policy'], '</textarea>
+          </p>
+          <div class="information">
+            <span>', $context['policy_info'], '</span>
+          </div>
+          <div class="righttext">', empty($context['force_gdpr']) ? '
+            <label for="minor_edit"><input type="checkbox" value="" id="minor_edit" name="minor_edit" tabindex="' . $context['tabindex']++ . '" class="input_check" /> ' . $txt['admin_agreement_minor_edit'] . '</label>' : '', '
+            <input type="submit" value="', $txt['save'], '" tabindex="', $context['tabindex']++, '" class="button_submit" onclick="return resetPolicyConfirm()" />
+            <input type="hidden" name="policy_lang" value="', $context['current_policy_lang'], '" />
+            <input type="hidden" name="sa" value="policy" />
+            <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+            <script>
+              function resetPolicyConfirm()
+              {
+                if (document.getElementById("minor_edit").checked)
+                  return true;
+                else if (document.getElementById(\'agreement\').value != ' . JavaScriptEscape(un_htmlspecialchars($context['policy'])) . ')
+                  return confirm(' . JavaScriptEscape($txt['reset_privacy_policy_desc']) . ');
+              }
+            </script>
+          </div>
+        </form>
+      </div>
+      <span class="botslice"><span></span></span>
+    </div>
+    <br class="clear" />';
+}
+
 ?>
