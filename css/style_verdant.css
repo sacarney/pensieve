@@ -50,8 +50,8 @@ html { background-color: var(--dark); }
 body { 
   color: var(--light);  
   /* YOUR THEME */
-  /*background-image: url(../images/theme/aobg2.jpg);  Optional */
-  /*background-attachment: fixed;  Optional */
+  background-image: url(../images/theme/bg2.png);
+  background-attachment: fixed;
 }
 
 body, button, input, select, textarea {
@@ -61,6 +61,11 @@ body, button, input, select, textarea {
 .title {
   font-family: "Bree Serif", serif;
   font-weight: 500;
+}
+
+.hero.is-primary {
+  background-image: url(../images/theme/everweyr-banner.png);
+  background-size: cover;
 }
 
 #maincontent > .container {
@@ -1389,8 +1394,6 @@ a.box:active {
   border-color: var(--primary);
   color: var(--white);
 }
-  
-
 
 /* --- CONTENT --- */
 
@@ -1409,6 +1412,12 @@ a.box:active {
   background-color: var(--grey-2);
   border-left: none;
   padding: 1.25em 1.5em
+}
+
+.content table {
+  width: 100%;
+  color: var(--white);
+  background-color: var(--dark);
 }
 
 .content table td,

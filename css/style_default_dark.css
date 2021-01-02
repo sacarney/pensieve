@@ -622,6 +622,12 @@ a.box:active {
   padding: 1.25em 1.5em
 }
 
+.content table {
+  width: 100%;
+  color: var(--white);
+  background-color: var(--dark);
+}
+
 .content table td,
 .content table th,
 .table td,

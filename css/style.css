@@ -734,6 +734,10 @@ li.theme_option {
   max-width: 100%;
 }
 
+#admin_content textarea[rows] {
+  height: initial;
+}
+
 #admin_content input[type="checkbox"] + label {
   width: calc(100% - 2rem);
   margin-left: 0.5rem;
@@ -903,4 +907,15 @@ dt strong + .smalltext {
   background-color: var(--darkcyan);
   cursor: pointer;
   color: #eee;
+}
+
+/* ------------------------- */
+/* MISC */
+/* ------------------------- */
+
+/* Class added in Register.template.php */
+.registration-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
