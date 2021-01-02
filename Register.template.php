@@ -20,15 +20,23 @@ function template_registration_agreement()
 
     <form action="', $scripturl, '?action=register" method="post" accept-charset="', $context['character_set'], '" id="registration">
 
-    <div class="content">
-      <h1>', $txt['registration_agreement'], '</h1>
+    <div class="content">';
+    
+    if (!empty($context['agreement']))
+      echo '
+      <h2>', $txt['registration_agreement'], '</h2>
       <p>', $context['agreement'], '</p>
     ';
+
+    if (!empty($context['policy']))
+      echo'
+      <h1>', $txt['privacy_policy'], '</h2>
+      <p>', $context['policy'],'</p>';
 
   // Age restriction in effect?
   if ($context['show_coppa'])
     echo '
-      <div class="field is-grouped">
+      <div class="field">
         <p class="control">
           <input type="submit" name="accept_agreement" value="', $context['coppa_agree_above'], '" class="button is-primary" />
         </p>
@@ -114,18 +122,18 @@ function template_registration_form()
   if (!empty($context['registration_errors']))
   {
     echo '
-    <div class="message is-danger">
-      <div class="message-body">
-        <span>', $txt['registration_errors_occurred'], '</span>
-        <ul class="reset">';
-
-        // Cycle through each error and display an error message.
-        foreach ($context['registration_errors'] as $error)
+    <div class="container">
+      <div class="message is-danger">
+        <div class="message-body">
+          <span>', $txt['registration_errors_occurred'], '</span>
+          <ul class="reset">';
+            // Cycle through each error and display an error message.
+            foreach ($context['registration_errors'] as $error)
+            echo '
+            <li>', $error, '</li>';
         echo '
-        <li>', $error, '</li>';
-
-      echo '
-        </ul>
+          </ul>
+        </div>
       </div>
     </div>';
   }
@@ -143,17 +151,19 @@ function template_registration_form()
             <p class="card-header-title">', $txt['registration_form'], '</p>
           </div>
 
-        <div class="card-content">
-          <div class="field">
-            <label class="label" for="smf_autov_username">', $txt['username'], '</label>
-            <div class="control">
-              <input type="text" name="user" id="smf_autov_username" size="30" tabindex="', $context['tabindex']++, '" maxlength="25" value="', isset($context['username']) ? $context['username'] : '', '" class="input input" />
+          <div class="card-content">
+            <div class="field">
+              <div class="registration-label">
+                <label class="label" for="smf_autov_username">', $txt['username'], '</label>
                 <span id="smf_autov_username_div" style="display: none;">
                   <a id="smf_autov_username_link" href="#">
                     <img id="smf_autov_username_img" src="', $settings['images_url'], '/icons/field_check.gif" alt="*" />
                   </a>
                 </span>
-            </div>
+              </div>
+              <div class="control">
+                <input type="text" name="user" id="smf_autov_username" size="30" tabindex="', $context['tabindex']++, '" maxlength="25" value="', isset($context['username']) ? $context['username'] : '', '" class="input input" />  
+              </div>
           </div>
 
           <div class="field">
@@ -196,22 +206,26 @@ function template_registration_form()
 
         echo '
           <div class="field">
-            <label class="label" for="smf_autov_pwmain">', $txt['choose_pass'], '</label>
+            <div class="registration-label">
+              <label class="label" for="smf_autov_pwmain">', $txt['choose_pass'], '</label>
+              <span id="smf_autov_pwmain_div" style="display: none;">
+                  <img id="smf_autov_pwmain_img" src="', $settings['images_url'], '/icons/field_invalid.gif" alt="*" />
+              </span>
+            </div>
             <div class="control">
               <input type="password" name="passwrd1" id="smf_autov_pwmain" size="30" tabindex="', $context['tabindex']++, '" class="input_password input" />
-              <span id="smf_autov_pwmain_div" style="display: none;">
-                <img id="smf_autov_pwmain_img" src="', $settings['images_url'], '/icons/field_invalid.gif" alt="*" />
-              </span>
             </div>
           </div>
 
           <div class="field">
-            <label class="label" for="smf_autov_pwverify">', $txt['verify_pass'], '</label>
+            <div class="registration-label">
+              <label class="label" for="smf_autov_pwverify">', $txt['verify_pass'], '</label>
+              <span id="smf_autov_pwverify_div" style="display: none;">
+                  <img id="smf_autov_pwverify_img" src="', $settings['images_url'], '/icons/field_valid.gif" alt="*" />
+                </span>
+            </div>
             <div class="control">
               <input type="password" name="passwrd2" id="smf_autov_pwverify" size="30" tabindex="', $context['tabindex']++, '" class="input_password input" />
-              <span id="smf_autov_pwverify_div" style="display: none;">
-                <img id="smf_autov_pwverify_img" src="', $settings['images_url'], '/icons/field_valid.gif" alt="*" />
-              </span>
             </div>
           </div>
         ';
