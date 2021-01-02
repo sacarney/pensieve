@@ -110,21 +110,6 @@ function template_main()
     <form action="', $scripturl, '?action=', $context['destination'], ';', empty($context['current_board']) ? '' : 'board=' . $context['current_board'], '" method="post" accept-charset="', $context['character_set'], '" name="postmodify" id="postmodify" class="" onsubmit="', ($context['becomes_approved'] ? '' : 'alert(\'' . $txt['js_post_will_require_approval'] . '\');'), 'submitonce(this);smc_saveEntities(\'postmodify\', [\'subject\', \'', $context['post_box_name'], '\', \'guestname\', \'evtitle\', \'question\'], \'options\');" enctype="multipart/form-data">';
 
   // If the user wants to see how their message looks - the preview section is where it's at!
-  // DRAFTS component
-  if (!isset($context['draft_saved']) || $context['draft_saved'] !== true)
-    echo '
-      <div id="preview_section"', isset($context['preview_message']) ? '' : ' style="display: none;"', '>
-        <div class="cat_bar">
-          <h2 class="title is-5 mb-1">
-          <span id="preview_subject">', empty($context['preview_subject']) ? '' : $context['preview_subject'], '</span>
-          </h2>
-        </div>
-      </div>
-      <div>
-        <div id="preview_body">
-          ', empty($context['preview_message']) ? '' : $context['preview_message'], '
-        </div>
-      </div>';
 
   if ($context['make_event'] && (!$context['event']['new'] || !empty($context['current_board'])))
     echo '
@@ -138,15 +123,6 @@ function template_main()
     <div>', isset($context['current_topic']) ? '
       <input type="hidden" name="topic" value="' . $context['current_topic'] . '" />' : ''
       ;
-
-  // DRAFTS
-    if (isset($context['draft_saved']) && $context['draft_saved'] === true)
-    {
-      echo '
-        <div id="drafts-success" class="message is-success">
-          <div class="message-body">', $txt['drafts'][1], '</div>
-        </div>';
-    }
 
   // If an error occurred, explain what happened.
   echo '
@@ -221,10 +197,6 @@ function template_main()
           </div>
         </div>';
   }
-
-  // Drafts Modification for SMF 2.0 / 1.1
-  if (!$context['make_event'] && ($drafts_template_loaded = loadTemplate('Drafts', false)) !== false)
-    template_drafts_post_extra_inputs();
   // Now show the subject box for this post.
 
   // SUBACCOUNTS
@@ -717,9 +689,6 @@ function template_main()
           <p id="post_confirm_buttons" class="righttext">
             ', template_control_richedit_buttons($context['post_box_name']);
 
-  // DRAFTS
-  if (!$context['make_event'] && $drafts_template_loaded !== false)
-    template_drafts_post_save_as_draft_button();
 
   // Option to delete an event if user is editing one.
   if ($context['make_event'] && !$context['event']['new'])
@@ -742,10 +711,6 @@ function template_main()
       <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
       <input type="hidden" name="seqnum" value="', $context['form_sequence_number'], '" />
     </form></div>';
-
-  // DRAFTS
-    if (!$context['make_event'] && $drafts_template_loaded !== false)
-    template_drafts_post_list_of_drafts();
 
   echo '
     <script type="text/javascript"><!-- // --><![CDATA[';
